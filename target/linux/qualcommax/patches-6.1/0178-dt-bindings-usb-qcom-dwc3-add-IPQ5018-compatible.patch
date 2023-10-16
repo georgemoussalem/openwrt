@@ -1,0 +1,10 @@
+--- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
++++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+@@ -14,6 +14,7 @@ properties:
+     items:
+       - enum:
+           - qcom,ipq4019-dwc3
++          - qcom,ipq5018-dwc3
+           - qcom,ipq6018-dwc3
+           - qcom,ipq8064-dwc3
+           - qcom,ipq8074-dwc3

@@ -1,0 +1,66 @@
+--- a/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
++++ b/Documentation/devicetree/bindings/pci/qcom,pcie.yaml
+@@ -23,6 +23,7 @@ properties:
+       - qcom,pcie-apq8084
+       - qcom,pcie-msm8996
+       - qcom,pcie-ipq4019
++      - qcom,pcie-ipq5018
+       - qcom,pcie-ipq8074
+       - qcom,pcie-qcs404
+       - qcom,pcie-sa8540p
+@@ -142,6 +143,7 @@ allOf:
+         compatible:
+           contains:
+             enum:
++              - qcom,pcie-ipq5018
+               - qcom,pcie-ipq6018
+     then:
+       properties:
+@@ -300,6 +302,39 @@ allOf:
+         compatible:
+           contains:
+             enum:
++              - qcom,pcie-ipq5018
++    then:
++      properties:
++        clocks:
++          minItems: 6
++          maxItems: 6
++        clock-names:
++          items:
++            - const: iface # PCIe to SysNOC BIU clock
++            - const: axi_m # AXI Master clock
++            - const: axi_s # AXI Slave clock
++            - const: ahb # AHB clock
++            - const: aux # Auxiliary clock
++            - const: axi_bridge # AXI bridge clock
++        resets:
++          minItems: 8
++          maxItems: 8
++        reset-names:
++          items:
++            - const: pipe # PIPE reset
++            - const: sleep # Sleep reset
++            - const: sticky # Core sticky reset
++            - const: axi_m # AXI master reset
++            - const: axi_s # AXI slave reset
++            - const: ahb # AHB reset
++            - const: axi_m_sticky # AXI master sticky reset
++            - const: axi_s_sticky # AXI slave sticky reset
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
+               - qcom,pcie-msm8996
+     then:
+       oneOf:
+@@ -639,6 +674,7 @@ allOf:
+               enum:
+                 - qcom,pcie-apq8064
+                 - qcom,pcie-ipq4019
++                - qcom,pcie-ipq5018
+                 - qcom,pcie-ipq8064
+                 - qcom,pcie-ipq8064v2
+                 - qcom,pcie-ipq8074

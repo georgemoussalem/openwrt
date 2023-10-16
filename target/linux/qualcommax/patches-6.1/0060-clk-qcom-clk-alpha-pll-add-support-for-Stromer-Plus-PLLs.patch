@@ -1,0 +1,30 @@
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -200,6 +200,17 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MA
+ 		[PLL_OFF_TEST_CTL_U] = 0x34,
+ 		[PLL_OFF_STATUS] = 0x28,
+ 	},
++	[CLK_ALPHA_PLL_TYPE_STROMER_PLUS] =  {
++		[PLL_OFF_L_VAL] = 0x04,
++		[PLL_OFF_USER_CTL] = 0x08,
++		[PLL_OFF_USER_CTL_U] = 0x0c,
++		[PLL_OFF_CONFIG_CTL] = 0x10,
++		[PLL_OFF_TEST_CTL] = 0x14,
++		[PLL_OFF_TEST_CTL_U] = 0x18,
++		[PLL_OFF_STATUS] = 0x1c,
++		[PLL_OFF_ALPHA_VAL] = 0x24,
++		[PLL_OFF_ALPHA_VAL_U] = 0x28,
++	},
+ };
+ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
+ 
+--- a/drivers/clk/qcom/clk-alpha-pll.h
++++ b/drivers/clk/qcom/clk-alpha-pll.h
+@@ -25,6 +25,7 @@ enum {
+ 	CLK_ALPHA_PLL_TYPE_DEFAULT_EVO,
+ 	CLK_ALPHA_PLL_TYPE_BRAMMO_EVO,
+ 	CLK_ALPHA_PLL_TYPE_STROMER,
++	CLK_ALPHA_PLL_TYPE_STROMER_PLUS,
+ 	CLK_ALPHA_PLL_TYPE_MAX,
+ };
+ 

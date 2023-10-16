@@ -1,0 +1,40 @@
+--- a/drivers/mtd/nand/raw/qcom_nandc.c
++++ b/drivers/mtd/nand/raw/qcom_nandc.c
+@@ -830,13 +830,18 @@ static void update_rw_regs(struct qcom_n
+ 	u32 cmd, cfg0, cfg1, ecc_bch_cfg;
+ 	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
+ 
++	cmd = (PAGE_ACC | LAST_PAGE);
++
++	if (nandc->props->is_serial_nand)
++		cmd |= (SPI_TRANSFER_MODE_x1 | SPI_WP | SPI_HOLD);
++
+ 	if (read) {
+ 		if (host->use_ecc)
+-			cmd = OP_PAGE_READ_WITH_ECC | PAGE_ACC | LAST_PAGE;
++			cmd |= OP_PAGE_READ_WITH_ECC;
+ 		else
+-			cmd = OP_PAGE_READ | PAGE_ACC | LAST_PAGE;
++			cmd |= OP_PAGE_READ;
+ 	} else {
+-		cmd = OP_PROGRAM_PAGE | PAGE_ACC | LAST_PAGE;
++		cmd |= OP_PROGRAM_PAGE;
+ 	}
+ 
+ 	if (host->use_ecc) {
+@@ -1403,9 +1408,13 @@ static int erase_block(struct qcom_nand_
+ {
+ 	struct nand_chip *chip = &host->chip;
+ 	struct qcom_nand_controller *nandc = get_qcom_nand_controller(chip);
++	u32 ers_cmd = OP_BLOCK_ERASE | PAGE_ACC | LAST_PAGE;
+ 
+-	nandc_set_reg(chip, NAND_FLASH_CMD,
+-		      OP_BLOCK_ERASE | PAGE_ACC | LAST_PAGE);
++	if (nandc->props->is_serial_nand) {
++		ers_cmd |= (SPI_WP | SPI_HOLD | SPI_TRANSFER_MODE_x1);
++		page_addr <<= 16;
++	}
++	nandc_set_reg(chip, NAND_FLASH_CMD, ers_cmd);
+ 	nandc_set_reg(chip, NAND_ADDR0, page_addr);
+ 	nandc_set_reg(chip, NAND_ADDR1, 0);
+ 	nandc_set_reg(chip, NAND_DEV0_CFG0,

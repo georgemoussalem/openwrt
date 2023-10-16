@@ -1,0 +1,29 @@
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -227,6 +227,26 @@
+ 			#thermal-sensor-cells = <1>;
+ 		};
+ 
++		mdio: mdio@88000 {
++			compatible = "qcom,ipq5018-mdio", "qcom,ipq4019-mdio";
++			reg = <0x00088000 0x64>, <0x19475C4 0x4>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			clocks = <&gcc GCC_MDIO0_AHB_CLK>;
++			clock-names = "gcc_mdio0_ahb_clk";
++			status = "disabled";
++		};
++
++		mdio1: mdio@90000 {
++			compatible = "qcom,ipq5018-mdio";
++			reg = <0x00090000 0x64>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			clocks = <&gcc GCC_MDIO1_AHB_CLK>;
++			clock-names = "gcc_mdio1_ahb_clk";
++			status = "disabled";
++		};
++
+ 		prng: rng@e3000 {
+ 			compatible = "qcom,prng-ee";
+ 			reg = <0x000e3000 0x1000>;

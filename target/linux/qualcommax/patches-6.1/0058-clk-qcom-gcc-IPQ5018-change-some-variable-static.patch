@@ -1,0 +1,20 @@
+--- a/drivers/clk/qcom/gcc-ipq5018.c
++++ b/drivers/clk/qcom/gcc-ipq5018.c
+@@ -826,7 +826,7 @@ static const struct freq_tbl ftbl_lpass_
+ 	{ }
+ };
+ 
+-struct clk_rcg2 lpass_axim_clk_src = {
++static struct clk_rcg2 lpass_axim_clk_src = {
+ 	.cmd_rcgr = 0x2e028,
+ 	.freq_tbl = ftbl_lpass_axim_clk_src,
+ 	.hid_width = 5,
+@@ -844,7 +844,7 @@ static const struct freq_tbl ftbl_lpass_
+ 	{ }
+ };
+ 
+-struct clk_rcg2 lpass_sway_clk_src = {
++static struct clk_rcg2 lpass_sway_clk_src = {
+ 	.cmd_rcgr = 0x2e040,
+ 	.freq_tbl = ftbl_lpass_sway_clk_src,
+ 	.hid_width = 5,

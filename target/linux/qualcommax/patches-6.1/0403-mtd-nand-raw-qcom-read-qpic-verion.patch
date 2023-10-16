@@ -1,0 +1,36 @@
+--- a/drivers/mtd/nand/raw/qcom_nandc.c
++++ b/drivers/mtd/nand/raw/qcom_nandc.c
+@@ -432,6 +432,7 @@ struct qcom_nand_controller {
+ 	struct bam_transaction *bam_txn;
+ 
+ 	const struct qcom_nandc_props *props;
++	u32 hw_version;
+ 
+ 	struct nand_controller controller;
+ 	struct list_head host_list;
+@@ -2761,6 +2762,7 @@ static int qcom_nand_attach_chip(struct
+ 	int ecc_mode = 1;
+ 	int num_addr_cycle = 5, dsbl_sts_aftr_write = 0;
+ 	int wr_rd_bsy_gap = 2, recovery_cycle = 7;
++	u32 version_reg;
+ 
+ 	/* controller only supports 512 bytes data steps */
+ 	ecc->size = NANDC_STEP_SIZE;
+@@ -2774,6 +2776,17 @@ static int qcom_nand_attach_chip(struct
+ 	if (chip->base.eccreq.strength >= 8)
+ 		ecc->strength = 8;
+ 
++	/* Read QPIC version register */
++	version_reg = (NAND_VERSION + 0x4000);
++	nandc->hw_version = nandc_read(nandc, version_reg);
++	pr_info("QPIC controller hw version Major:%d, Minor:%d\n",
++			((nandc->hw_version & NAND_VERSION_MAJOR_MASK)
++			 >> NAND_VERSION_MAJOR_SHIFT),
++			((nandc->hw_version & NAND_VERSION_MINOR_MASK)
++			 >> NAND_VERSION_MINOR_SHIFT));
++	nandc->hw_version = ((nandc->hw_version & NAND_VERSION_MAJOR_MASK)
++			>> NAND_VERSION_MAJOR_SHIFT);
++
+ 	/*
+ 	 * Each CW has 4 available OOB bytes which will be protected with ECC
+ 	 * so remaining bytes can be used for ECC.

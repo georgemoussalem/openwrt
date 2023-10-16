@@ -1,0 +1,18 @@
+--- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
++++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+@@ -37,6 +37,7 @@ properties:
+       - description: v1 of TSENS
+         items:
+           - enum:
++              - qcom,ipq5018-tsens
+               - qcom,msm8976-tsens
+               - qcom,qcs404-tsens
+           - const: qcom,tsens-v1
+@@ -116,6 +117,7 @@ allOf:
+         compatible:
+           contains:
+             enum:
++              - qcom,ipq5018-tsens
+               - qcom,ipq8064-tsens
+               - qcom,mdm9607-tsens
+               - qcom,msm8916-tsens

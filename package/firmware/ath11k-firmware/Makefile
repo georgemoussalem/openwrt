@@ -32,9 +32,19 @@ define Package/ath11k-firmware-default
   DEPENDS:=
 endef
 
+define Package/ath11k-firmware-ipq5018
+$(Package/ath11k-firmware-default)
+  TITLE:=IPQ5018 ath11k firmware
+endef
+
 define Package/ath11k-firmware-ipq8074
 $(Package/ath11k-firmware-default)
   TITLE:=IPQ8074 ath11k firmware
+endef
+
+define Package/ath11k-firmware-qcn6122
+$(Package/ath11k-firmware-default)
+  TITLE:=QCN6122 ath11k firmware
 endef
 
 define Package/ath11k-firmware-qcn9074
@@ -57,11 +67,46 @@ define Download/qcn9074-board
 endef
 $(eval $(call Download,qcn9074-board))
 
+IPQ5018_BOARD_REV:=7b968c25e8c88d62ff3dcc0aa3d2d1ad787369f4
+IPQ5018_BOARD_FILE:=board-2.bin.$(IPQ5018_BOARD_REV)
+
+define Download/ipq5018-board
+  URL:=https://github.com/kvalo/ath11k-firmware/raw/master/IPQ5018/hw1.0/
+  URL_FILE:=board-2.bin
+  FILE:=$(IPQ5018_BOARD_FILE)
+  HASH:=dfc1f2246d65385bf30a414d140e1b6e1ef60b57ea13e3b14f0c8cda25eac9ca
+endef
+$(eval $(call Download,ipq5018-board))
+
+define Package/ath11k-firmware-ipq5018/install
+	$(INSTALL_DIR) $(1)/lib/firmware/ath11k/IPQ5018/hw1.0/
+	$(INSTALL_DATA) \
+		$(PKG_BUILD_DIR)/ath11k-firmware/IPQ5018_QCN6122_QCN6122/hw1.0/2.7.0.1/WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1/m3* \
+		$(1)/lib/firmware/ath11k/IPQ5018/hw1.0/
+	$(INSTALL_DATA) \
+		$(PKG_BUILD_DIR)/ath11k-firmware/IPQ5018_QCN6122_QCN6122/hw1.0/2.7.0.1/WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1/q6* \
+		$(1)/lib/firmware/ath11k/IPQ5018/hw1.0/
+	$(INSTALL_BIN) \
+		$(DL_DIR)/$(IPQ5018_BOARD_FILE) $(1)/lib/firmware/ath11k/IPQ5018/hw1.0/board-2.bin
+endef
+
 define Package/ath11k-firmware-ipq8074/install
 	$(INSTALL_DIR) $(1)/lib/firmware/IPQ8074
 	$(INSTALL_DATA) \
 		$(PKG_BUILD_DIR)/ath11k-firmware/IPQ8074/hw2.0/2.9.0.1/WLAN.HK.2.9.0.1-01890-QCAHKSWPL_SILICONZ-1/* \
 		$(1)/lib/firmware/IPQ8074/
+endef
+
+define Package/ath11k-firmware-qcn6122/install
+	$(INSTALL_DIR) $(1)/lib/firmware/ath11k/QCN6122/hw1.0/
+	$(INSTALL_DATA) \
+		$(PKG_BUILD_DIR)/ath11k-firmware/IPQ5018_QCN6122_QCN6122/hw1.0/2.7.0.1/WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1/q6* \
+		$(1)/lib/firmware/ath11k/QCN6122/hw1.0/
+	$(INSTALL_DATA) \
+		$(PKG_BUILD_DIR)/ath11k-firmware/IPQ5018_QCN6122_QCN6122/hw1.0/2.7.0.1/WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1/qcn6122/* \
+		$(1)/lib/firmware/ath11k/QCN6122/hw1.0/
+	$(INSTALL_BIN) \
+		$(DL_DIR)/$(IPQ5018_BOARD_FILE) $(1)/lib/firmware/ath11k/QCN6122/hw1.0/board-2.bin
 endef
 
 define Package/ath11k-firmware-qcn9074/install

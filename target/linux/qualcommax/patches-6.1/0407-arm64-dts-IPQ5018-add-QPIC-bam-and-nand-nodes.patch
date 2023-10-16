@@ -1,0 +1,38 @@
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -554,6 +554,35 @@
+ 			};
+ 		};
+ 
++		qpic_bam: dma-controller@7984000 {
++			compatible = "qcom,bam-v1.7.0";
++			reg = <0x7984000 0x1c000>;
++			interrupts = <GIC_SPI 146 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_QPIC_AHB_CLK>;
++			clock-names = "bam_clk";
++			#dma-cells = <1>;
++			qcom,ee = <0>;
++			status = "disabled";
++		};
++
++		qpic_nand: nand-controller@79b0000 {
++			compatible = "qcom,ipq5018-nand";
++			reg = <0x79b0000 0x10000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			clocks = <&gcc GCC_QPIC_CLK>,
++				<&gcc GCC_QPIC_AHB_CLK>,
++				<&gcc GCC_QPIC_IO_MACRO_CLK>;
++			clock-names = "core", "aon", "io_macro";
++
++			dmas = <&qpic_bam 0>,
++				<&qpic_bam 1>,
++				<&qpic_bam 2>,
++				<&qpic_bam 3>;
++			dma-names = "tx", "rx", "cmd", "status";
++			status = "disabled";
++		};
++
+ 		intc: interrupt-controller@b000000 {
+ 			compatible = "qcom,msm-qgic2";
+ 			reg = <0x0b000000 0x1000>,  /* GICD */

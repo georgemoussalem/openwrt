@@ -1,0 +1,96 @@
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -83,6 +83,34 @@
+ 		};
+ 	};
+ 
++	wcss: smp2p-wcss {
++		compatible = "qcom,smp2p";
++		qcom,smem = <435>, <428>;
++
++		interrupt-parent = <&intc>;
++		interrupts = <GIC_SPI 177 IRQ_TYPE_EDGE_RISING>;
++
++		mboxes = <&apcs_glb 8 9>;
++
++		qcom,local-pid = <0>;
++		qcom,remote-pid = <1>;
++		/*global_timer = <0x4A5000>;*/
++
++		status = "disabled";
++
++		wcss_smp2p_out: master-kernel {
++			qcom,entry-name = "master-kernel";
++			qcom,smp2p-feature-ssr-ack;
++			#qcom,smem-state-cells = <1>;
++		};
++
++		wcss_smp2p_in: slave-kernel {
++			qcom,entry-name = "slave-kernel";
++			interrupt-controller;
++			#interrupt-cells = <2>;
++		};
++	};
++
+ 	memory@40000000 {
+ 		device_type = "memory";
+ 		/* We expect the bootloader to fill in the size */
+@@ -500,6 +528,58 @@
+ 				status = "disabled";
+ 			};
+ 		};
++
++		q6v5_wcss: remoteproc@cd00000 {
++			compatible = "qcom,ipq5018-wcss-pil";
++			reg = <0x0cd00000 0x4040>,
++				<0x004ab000 0x20>;
++			reg-names = "qdsp6",
++				"rmb";
++			qca,auto-restart;
++			qca,extended-intc;
++			interrupts-extended = <&intc 0 291 1>,
++					      <&wcss_smp2p_in 0 0>,
++					      <&wcss_smp2p_in 1 0>,
++					      <&wcss_smp2p_in 2 0>,
++					      <&wcss_smp2p_in 3 0>;
++			interrupt-names = "wdog",
++					  "fatal",
++					  "ready",
++					  "handover",
++					  "stop-ack";
++
++			resets = <&gcc GCC_WCSSAON_RESET>,
++				<&gcc GCC_WCSS_BCR>,
++				<&gcc GCC_WCSS_Q6_BCR>,
++				<&gcc GCC_CE_BCR>;
++
++			reset-names = "wcss_aon_reset",
++				"wcss_reset",
++				"wcss_q6_reset",
++				"ce_reset";
++
++			clocks = <&gcc GCC_PRNG_AHB_CLK>;
++			clock-names = "prng";
++
++			qcom,halt-regs = <&tcsr_q6 0xa000 0xd000 0x0>;
++
++			qcom,smem-states = <&wcss_smp2p_out 0>,
++					   <&wcss_smp2p_out 1>;
++			qcom,smem-state-names = "shutdown",
++						"stop";
++
++			status = "disabled";
++
++			glink-edge {
++				interrupts = <GIC_SPI 179 IRQ_TYPE_EDGE_RISING>;
++				qcom,remote-pid = <1>;
++				mboxes = <&apcs_glb 8>;
++
++				rpm_requests {
++					qcom,glink-channels = "IPCRTR";
++				};
++			};
++		};
+ 	};
+ 
+ 	thermal-zones {

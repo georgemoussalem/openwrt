@@ -1,0 +1,10 @@
+--- a/Documentation/devicetree/bindings/remoteproc/qcom,q6v5.txt
++++ b/Documentation/devicetree/bindings/remoteproc/qcom,q6v5.txt
+@@ -8,6 +8,7 @@ on the Qualcomm Hexagon core.
+ 	Value type: <string>
+ 	Definition: must be one of:
+ 		    "qcom,q6v5-pil",
++		    "qcom,ipq5018-wcss-pil"
+ 		    "qcom,ipq8074-wcss-pil"
+ 		    "qcom,qcs404-wcss-pil"
+ 		    "qcom,msm8916-mss-pil",

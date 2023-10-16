@@ -1,0 +1,31 @@
+--- a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
++++ b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+@@ -33,6 +33,7 @@ properties:
+               - qcom,sm8450-tcsr
+               - qcom,tcsr-apq8064
+               - qcom,tcsr-apq8084
++              - qcom,tcsr-ipq5018
+               - qcom,tcsr-ipq5332
+               - qcom,tcsr-ipq8064
+               - qcom,tcsr-ipq8074
+@@ -47,7 +48,10 @@ properties:
+               - qcom,tcsr-msm8996
+           - const: syscon
+       - items:
+-          - const: qcom,tcsr-ipq6018
++          - enum:
++              - qcom,tcsr-ipq5018
++              - qcom,tcsr-ipq5332
++              - qcom,tcsr-ipq6018
+           - const: syscon
+           - const: simple-mfd
+ 
+@@ -78,6 +82,8 @@ allOf:
+           compatible:
+             contains:
+               enum:
++                - qcom,tcsr-ipq5018
++                - qcom,tcsr-ipq5332
+                 - qcom,tcsr-ipq6018
+     then:
+       patternProperties:

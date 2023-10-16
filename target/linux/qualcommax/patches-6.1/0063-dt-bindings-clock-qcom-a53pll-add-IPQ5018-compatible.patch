@@ -1,0 +1,10 @@
+--- a/Documentation/devicetree/bindings/clock/qcom,a53pll.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,a53pll.yaml
+@@ -16,6 +16,7 @@ description:
+ properties:
+   compatible:
+     enum:
++      - qcom,ipq5018-a53pll
+       - qcom,ipq6018-a53pll
+       - qcom,ipq8074-a53pll
+       - qcom,msm8916-a53pll

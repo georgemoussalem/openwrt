@@ -1,0 +1,10 @@
+--- a/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
++++ b/Documentation/devicetree/bindings/mtd/qcom,nandc.yaml
+@@ -14,6 +14,7 @@ properties:
+     enum:
+       - qcom,ipq806x-nand
+       - qcom,ipq4019-nand
++      - qcom,ipq5018-nand
+       - qcom,ipq6018-nand
+       - qcom,ipq8074-nand
+       - qcom,sdx55-nand

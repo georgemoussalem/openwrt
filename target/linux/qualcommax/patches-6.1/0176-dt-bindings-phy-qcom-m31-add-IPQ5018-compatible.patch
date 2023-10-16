@@ -1,0 +1,10 @@
+--- a/Documentation/devicetree/bindings/phy/qcom,ipq5332-usb-hsphy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,ipq5332-usb-hsphy.yaml
+@@ -17,6 +17,7 @@ description:
+ properties:
+   compatible:
+     items:
++      - const: qcom,ipq5018-usb-hsphy
+       - const: qcom,ipq5332-usb-hsphy
+ 
+   "#phy-cells":

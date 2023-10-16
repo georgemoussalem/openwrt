@@ -1,0 +1,17 @@
+--- a/Documentation/devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml
++++ b/Documentation/devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml
+@@ -11,7 +11,13 @@ maintainers:
+ 
+ properties:
+   compatible:
+-    const: qcom,ipq6018-pwm
++    oneOf:
++      - items:
++          - enum:
++              - qcom,ipq5018-pwm
++          - const: qcom,ipq6018-pwm
++      - enum:
++          - qcom,ipq6018-pwm
+ 
+   reg:
+     description: Offset of PWM register in the TCSR block.

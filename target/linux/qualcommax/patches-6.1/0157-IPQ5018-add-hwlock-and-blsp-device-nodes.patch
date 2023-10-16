@@ -1,0 +1,74 @@
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -294,6 +294,17 @@
+ 			#power-domain-cells = <1>;
+ 		};
+ 
++		tcsr_mutex: hwlock@1905000 {
++			compatible = "qcom,tcsr-mutex";
++			reg = <0x01905000 0x20000>;
++			#hwlock-cells = <1>;
++		};
++
++		tcsr_q6: syscon@1945000 {
++			compatible = "syscon";
++			reg = <0x1945000 0xe000>;
++		};
++
+ 		sdhc_1: mmc@7804000 {
+ 			compatible = "qcom,ipq5018-sdhci", "qcom,sdhci-msm-v5";
+ 			reg = <0x7804000 0x1000>;
+@@ -311,6 +322,16 @@
+ 			status = "disabled";
+ 		};
+ 
++		blsp_dma: dma-controller@7884000 {
++			compatible = "qcom,bam-v1.7.0";
++			reg = <0x07884000 0x1d000>;
++			interrupts = <GIC_SPI 238 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "bam_clk";
++			#dma-cells = <1>;
++			qcom,ee = <0>;
++		};
++
+ 		blsp1_uart1: serial@78af000 {
+ 			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
+ 			reg = <0x078af000 0x200>;
+@@ -321,6 +342,36 @@
+ 			status = "disabled";
+ 		};
+ 
++		blsp1_spi1: spi@78b5000 {
++			compatible = "qcom,spi-qup-v2.2.1";
++			reg = <0x078b5000 0x600>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			interrupts = <GIC_SPI 95 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_BLSP1_QUP1_SPI_APPS_CLK>,
++				<&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			dmas = <&blsp_dma 4 &blsp_dma 5>;
++			dma-names = "tx", "rx";
++			spi-max-frequency = <50000000>;
++			status = "disabled";
++		};
++
++		blsp1_i2c3: i2c@78b7000 {
++			compatible = "qcom,i2c-qup-v2.2.1";
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg = <0x078b7000 0x600>;
++			interrupts = <GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>;
++			clocks = <&gcc GCC_BLSP1_QUP3_I2C_APPS_CLK>,
++				 <&gcc GCC_BLSP1_AHB_CLK>;
++			clock-names = "core", "iface";
++			clock-frequency = <400000>;
++			dmas = <&blsp_dma 9>, <&blsp_dma 8>;
++			dma-names = "tx", "rx";
++			status = "disabled";
++		};
++
+ 		intc: interrupt-controller@b000000 {
+ 			compatible = "qcom,msm-qgic2";
+ 			reg = <0x0b000000 0x1000>,  /* GICD */

@@ -1,0 +1,1678 @@
+make[2]: Entering directory '/home/gemous/openwrt/ipq5018/scripts/config'
+make[2]: 'conf' is up to date.
+make[2]: Leaving directory '/home/gemous/openwrt/ipq5018/scripts/config'
+make[1]: Entering directory '/home/gemous/openwrt/ipq5018'
+make[2]: Entering directory '/home/gemous/openwrt/ipq5018'
+make[2]: Entering directory '/home/gemous/openwrt/ipq5018'
+rm -rf /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/target/linux'
+make[2]: Leaving directory '/home/gemous/openwrt/ipq5018'
+make[4]: Entering directory '/home/gemous/openwrt/ipq5018/target/linux/qualcommax'
+rm -f /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/localversion
+/home/gemous/openwrt/ipq5018/scripts/kconfig.pl  + /home/gemous/openwrt/ipq5018/target/linux/generic/config-6.1 /home/gemous/openwrt/ipq5018/target/linux/qualcommax/config-6.1 > /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.target
+awk '/^(#[[:space:]]+)?CONFIG_KERNEL/{sub("CONFIG_KERNEL_","CONFIG_");print}' /home/gemous/openwrt/ipq5018/.config >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.target
+echo "# CONFIG_KALLSYMS_EXTRA_PASS is not set" >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.target
+echo "# CONFIG_KALLSYMS_ALL is not set" >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.target
+echo "CONFIG_KALLSYMS_UNCOMPRESSED=y" >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.target
+/home/gemous/openwrt/ipq5018/scripts/package-metadata.pl kconfig /home/gemous/openwrt/ipq5018/tmp/.packageinfo /home/gemous/openwrt/ipq5018/.config 6.1 > /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.override
+/home/gemous/openwrt/ipq5018/scripts/kconfig.pl 'm+' '+' /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.target /dev/null /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.override > /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.set
+mv /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.set /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.old
+grep -v INITRAMFS /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.old > /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.set
+echo 'CONFIG_INITRAMFS_SOURCE=""' >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.set
+echo '# CONFIG_INITRAMFS_FORCE is not set' >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.set
+echo "# CONFIG_INITRAMFS_PRESERVE_MTIME is not set" >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.set
+rm -rf /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/modules
+cmp -s /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.set /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.prev || { cp /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.set /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config; cp /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.set /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.prev; }
+export MAKEFLAGS= ; [ -d /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/user_headers ] || make -C /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57 KCFLAGS="-fmacro-prefix-map=/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl=target-aarch64_cortex-a53_musl -fno-caller-saves " HOSTCFLAGS="-O2 -I/home/gemous/openwrt/ipq5018/staging_dir/host/include  -Wall -Wmissing-prototypes -Wstrict-prototypes" CROSS_COMPILE="aarch64-openwrt-linux-musl-" ARCH="arm64" KBUILD_HAVE_NLS=no KBUILD_BUILD_USER="" KBUILD_BUILD_HOST="" KBUILD_BUILD_TIMESTAMP="Sat Oct 14 13:51:53 2023" KBUILD_BUILD_VERSION="0" KBUILD_HOSTLDFLAGS="-L/home/gemous/openwrt/ipq5018/staging_dir/host/lib" CONFIG_SHELL="bash" V=''  cmd_syscalls=  KERNELRELEASE=6.1.57 CC="aarch64-openwrt-linux-musl-gcc"  INSTALL_HDR_PATH=/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/user_headers headers_install
+grep '=[ym]' /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.set | LC_ALL=C sort | /home/gemous/openwrt/ipq5018/staging_dir/host/bin/mkhash md5 > /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.vermagic
+touch /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.configured
+rm -f /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/vmlinux /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/System.map
+make -C /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57 KCFLAGS="-fmacro-prefix-map=/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl=target-aarch64_cortex-a53_musl -fno-caller-saves " HOSTCFLAGS="-O2 -I/home/gemous/openwrt/ipq5018/staging_dir/host/include  -Wall -Wmissing-prototypes -Wstrict-prototypes" CROSS_COMPILE="aarch64-openwrt-linux-musl-" ARCH="arm64" KBUILD_HAVE_NLS=no KBUILD_BUILD_USER="" KBUILD_BUILD_HOST="" KBUILD_BUILD_TIMESTAMP="Sat Oct 14 13:51:53 2023" KBUILD_BUILD_VERSION="0" KBUILD_HOSTLDFLAGS="-L/home/gemous/openwrt/ipq5018/staging_dir/host/lib" CONFIG_SHELL="bash" V=''  cmd_syscalls=  KERNELRELEASE=6.1.57 CC="aarch64-openwrt-linux-musl-gcc" Image dtbs modules
+make[5]: Entering directory '/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57'
+  CALL    scripts/checksyscalls.sh
+  LD      .tmp_vmlinux.kallsyms1
+  NM      .tmp_vmlinux.kallsyms1.syms
+  KSYMS   .tmp_vmlinux.kallsyms1.S
+  AS      .tmp_vmlinux.kallsyms1.S
+  LD      .tmp_vmlinux.kallsyms2
+  NM      .tmp_vmlinux.kallsyms2.syms
+  KSYMS   .tmp_vmlinux.kallsyms2.S
+  AS      .tmp_vmlinux.kallsyms2.S
+  LD      vmlinux
+  NM      System.map
+  SORTTAB vmlinux
+  OBJCOPY arch/arm64/boot/Image
+make[5]: Leaving directory '/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57'
+# If .config did not change, use the previous timestamp to avoid package rebuilds
+cmp -s /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.modules.save && mv /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.modules.save /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config; cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.modules.save
+touch /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.modules
+make -C image compile TARGET_BUILD=
+make[5]: Entering directory '/home/gemous/openwrt/ipq5018/target/linux/qualcommax'
+make[5]: Nothing to be done for 'compile'.
+make[5]: Leaving directory '/home/gemous/openwrt/ipq5018/target/linux/qualcommax/image'
+make[4]: Leaving directory '/home/gemous/openwrt/ipq5018/target/linux/qualcommax'
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/target/linux'
+time: target/linux/compile#10.91#2.21#4.37
+make[2]: Leaving directory '/home/gemous/openwrt/ipq5018'
+export MAKEFLAGS= ;make -w -r buildinfo
+make[2]: Entering directory '/home/gemous/openwrt/ipq5018'
+make[2]: Entering directory '/home/gemous/openwrt/ipq5018'
+ make[3] diffconfig buildversion feedsversion
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/libs/libjson-c'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/libs/toolchain'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/kernel/gpio-button-hotplug'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/system/fwtool'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/system/usign'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/libs/ncurses'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/utils/e2fsprogs'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/kernel/qca-ssdk'
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/libs/libjson-c'
+time: package/libs/libjson-c/host-compile#0.23#0.06#0.27
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/libs/libubox'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/gpio-button-hotplug/.pkgdir/kmod-gpio-button-hotplug/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-gpio-button-hotplug_installed
+echo "kmod-gpio-button-hotplug" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/gpio-button-hotplug.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/kernel/gpio-button-hotplug'
+time: package/kernel/gpio-button-hotplug/compile#0.28#0.06#0.33
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/system/usign'
+time: package/system/usign/host-compile#0.31#0.05#0.33
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/qca-ssdk-2023-06-06-74caf88a/.pkgdir/kmod-qca-ssdk/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-qca-ssdk_installed
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/libs/ncurses'
+echo "kmod-qca-ssdk" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/qca-ssdk.default.install
+time: package/libs/ncurses/host-compile#0.33#0.06#0.37
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/kernel/qca-ssdk'
+time: package/kernel/qca-ssdk/compile#0.34#0.06#0.37
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/kernel/qca-nss-dp'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/toolchain/.pkgdir/libc/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/utils/e2fsprogs'
+time: package/utils/e2fsprogs/host-compile#0.36#0.07#0.39
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libc_installed
+echo "libc" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/toolchain.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo '1' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libgcc.version || { echo '1' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libgcc.version;  } 
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/toolchain/.pkgdir/libgcc/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libgcc_installed
+echo "libgcc" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/toolchain.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/toolchain/.pkgdir/libpthread/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libpthread_installed
+echo "libpthread" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/toolchain.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/toolchain/.pkgdir/librt/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.librt_installed
+echo "librt" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/toolchain.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/libs/toolchain'
+time: package/libs/toolchain/compile#0.41#0.07#0.49
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/utils/lua'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/libs/libnl-tiny'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/libs/libjson-c'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/libs/zlib'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/firmware/linux-firmware'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/firmware/ipq-wifi'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/system/openwrt-keyring'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/firmware/wireless-regdb'
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/libs/libubox'
+time: package/libs/libubox/host-compile#0.25#0.04#0.27
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/libs/mbedtls'
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/system/fwtool'
+time: package/system/fwtool/host-compile#0.53#0.08#0.60
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/libs/jansson'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/qca-nss-dp-2023-06-06-fa674644/.pkgdir/kmod-qca-nss-dp/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-qca-nss-dp_installed
+echo "kmod-qca-nss-dp" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/qca-nss-dp.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/kernel/qca-nss-dp'
+time: package/kernel/qca-nss-dp/compile#0.23#0.06#0.41
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/libs/libmnl'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/wireless-regdb-2023.09.01/.pkgdir/wireless-regdb/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.wireless-regdb_installed
+echo '1' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libnl-tiny.version || { echo '1' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libnl-tiny.version;  } 
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/libnl-tiny-2023-07-27-bc92a280/.pkgdir/libnl-tiny/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libnl-tiny_installed
+make[3]: Nothing to be done for 'compile'.
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/firmware/linux-firmware'
+echo "wireless-regdb" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/wireless-regdb.default.install
+time: package/firmware/linux-firmware/compile#0.28#0.05#0.36
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/firmware/wireless-regdb'
+time: package/firmware/wireless-regdb/compile#0.23#0.07#0.37
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/ipq-wifi-2023-09-16-57aa1b15/.pkgdir/ipq-wifi-linksys_mx2000/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/network/services/dropbear'
+echo "libnl-tiny" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libnl-tiny.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/libs/libnl-tiny'
+time: package/libs/libnl-tiny/compile#0.27#0.04#0.39
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.ipq-wifi-linksys_mx2000_installed
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/libs/zlib'
+time: package/libs/zlib/compile#0.26#0.05#0.39
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/libs/libpcap'
+echo "ipq-wifi-linksys_mx2000" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/ipq-wifi.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/firmware/ipq-wifi'
+time: package/firmware/ipq-wifi/compile#0.25#0.07#0.40
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/network/utils/linux-atm'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/network/utils/resolveip'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo '12' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libmbedtls.version || { echo '12' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libmbedtls.version;  } 
+echo '5' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libjson-c.version || { echo '5' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libjson-c.version;  } 
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/json-c-0.17/.pkgdir/libjson-c/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/mbedtls-2.28.5/.pkgdir/libmbedtls/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/system/ca-certificates'
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/openwrt-keyring-2022-03-25-62471e69/.pkgdir/openwrt-keyring/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libjson-c_installed
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libmbedtls_installed
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.openwrt-keyring_installed
+echo "libjson-c" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libjson-c.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/libs/libjson-c'
+time: package/libs/libjson-c/compile#0.31#0.06#0.45
+echo "libmbedtls" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/mbedtls.default.install
+echo "openwrt-keyring" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/openwrt-keyring.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/libs/mbedtls'
+time: package/libs/mbedtls/compile#0.23#0.09#0.39
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/system/openwrt-keyring'
+time: package/system/openwrt-keyring/compile#0.35#0.04#0.45
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/utils/lua'
+time: package/utils/lua/compile#0.28#0.06#0.47
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/libs/libsepol'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/libs/pcre2'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/libs/musl-fts'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/system/opkg'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo '4' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/jansson.version || { echo '4' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/jansson.version;  } 
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/jansson-2.14/.pkgdir/jansson/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.jansson_installed
+echo "jansson" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/jansson.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/libs/jansson'
+time: package/libs/jansson/compile#0.25#0.09#0.47
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/libs/libubox'
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/libs/libpcap'
+time: package/libs/libpcap/compile#0.24#0.06#0.37
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/dropbear-2022.82/.pkgdir/dropbear/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/kernel/linux'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.dropbear_installed
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/network/utils/linux-atm'
+time: package/network/utils/linux-atm/compile#0.25#0.09#0.41
+echo "dropbear" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/dropbear.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/network/services/dropbear'
+time: package/network/services/dropbear/compile#0.27#0.06#0.45
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/system/fwtool'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/libs/ncurses'
+echo '0' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libmnl.version || { echo '0' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libmnl.version;  } 
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/libmnl-1.0.5/.pkgdir/libmnl/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libmnl_installed
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/ca-certificates-20230311/.pkgdir/ca-bundle/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.ca-bundle_installed
+echo "libmnl" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libmnl.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/libs/libmnl'
+time: package/libs/libmnl/compile#0.35#0.04#0.59
+echo "ca-bundle" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/ca-certificates.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/system/ca-certificates'
+time: package/system/ca-certificates/compile#0.31#0.06#0.49
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/system/ucert'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/network/utils/iw'
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/libs/libsepol'
+time: package/libs/libsepol/compile#0.32#0.04#0.52
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/libs/pcre2'
+time: package/libs/pcre2/compile#0.30#0.09#0.54
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/libs/libnftnl'
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/system/opkg'
+time: package/system/opkg/host-compile#0.32#0.08#0.56
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/libs/musl-fts'
+time: package/libs/musl-fts/compile#0.38#0.09#0.61
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/libs/libselinux'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo '20230523' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libubox.version || { echo '20230523' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libubox.version;  } 
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/libubox-2023-05-23-75a3b870/.pkgdir/libubox/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libubox_installed
+echo "libubox" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libubox.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo '20230523' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libblobmsg-json.version || { echo '20230523' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libblobmsg-json.version;  } 
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/libubox-2023-05-23-75a3b870/.pkgdir/libblobmsg-json/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libblobmsg-json_installed
+echo "libblobmsg-json" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libubox.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/libubox-2023-05-23-75a3b870/.pkgdir/jshn/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.jshn_installed
+echo "jshn" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libubox.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo '20230523' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libjson-script.version || { echo '20230523' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libjson-script.version;  } 
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/libubox-2023-05-23-75a3b870/.pkgdir/libjson-script/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libjson-script_installed
+echo "libjson-script" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libubox.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/libs/libubox'
+time: package/libs/libubox/compile#0.39#0.12#0.65
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/system/uci'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/utils/jsonfilter'
+make[3]: Nothing to be done for 'compile'.
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/network/utils/resolveip'
+time: package/network/utils/resolveip/compile#0.73#0.10#0.86
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/system/ubus'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/system/usign'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/iw-tiny/iw-5.19/.pkgdir/iw/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.iw_installed
+echo "iw" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/iw.tiny.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/network/utils/iw'
+time: package/network/utils/iw/tiny/compile#0.29#0.07#0.49
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/libs/ustream-ssl'
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/libs/ncurses'
+time: package/libs/ncurses/compile#0.40#0.12#0.64
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo '11' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libnftnl.version || { echo '11' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libnftnl.version;  } 
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/libnftnl-1.2.6/.pkgdir/libnftnl/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libnftnl_installed
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/network/ipv6/odhcp6c'
+echo "libnftnl" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libnftnl.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/libs/libnftnl'
+time: package/libs/libnftnl/compile#0.28#0.15#0.53
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/system/mtd'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo '20130104' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libuci.version || { echo '20130104' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libuci.version;  } 
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/uci-2023-08-10-5781664d/.pkgdir/libuci/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libuci_installed
+echo '20230605' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libubus.version || { echo '20230605' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libubus.version;  } 
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/libs/libselinux'
+time: package/libs/libselinux/compile#0.34#0.09#0.61
+echo "libuci" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/uci.default.install
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/ubus-2023-06-05-f787c97b/.pkgdir/libubus/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/uci-2023-08-10-5781664d/.pkgdir/uci/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/system/urngd'
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/fwtool-2019-11-12-8f7fe925/.pkgdir/fwtool/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libubus_installed
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.uci_installed
+echo "uci" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/uci.default.install
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.fwtool_installed
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/system/uci'
+echo "libubus" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/ubus.default.install
+time: package/system/uci/compile#0.28#0.09#0.49
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/ubus-2023-06-05-f787c97b/.pkgdir/ubus/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+echo "fwtool" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/fwtool.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/system/fwtool'
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/system/ucert'
+time: package/system/fwtool/compile#0.65#0.07#0.93
+time: package/system/ucert/host-compile#0.59#0.12#0.86
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.ubus_installed
+echo "ubus" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/ubus.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/ubus-2023-06-05-f787c97b/.pkgdir/ubusd/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.ubusd_installed
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/utils/util-linux'
+echo "ubusd" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/ubus.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/system/ubus'
+time: package/system/ubus/compile#0.37#0.08#0.53
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/utils/ucode'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/system/ubox'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/network/config/netifd'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/jsonfilter-2018-02-04-c7e938d6/.pkgdir/jsonfilter/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.jsonfilter_installed
+echo "jsonfilter" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/jsonfilter.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/usign-2020-05-23-f1f65026/.pkgdir/usign/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.usign_installed
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/utils/jsonfilter'
+time: package/utils/jsonfilter/compile#0.39#0.12#0.63
+echo "usign" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/usign.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/system/usign'
+time: package/system/usign/compile#0.33#0.12#0.62
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/network/utils/iwinfo'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/odhcp6c-2023-05-12-bcd28363/.pkgdir/odhcp6c/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/network/services/dnsmasq'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.odhcp6c_installed
+echo "odhcp6c" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/odhcp6c.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/network/ipv6/odhcp6c'
+time: package/network/ipv6/odhcp6c/compile#0.28#0.07#0.47
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo '20201210' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libustream-mbedtls.version || { echo '20201210' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libustream-mbedtls.version;  } 
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/ustream-ssl-mbedtls/ustream-ssl-2023-02-25-498f6e26/.pkgdir/libustream-mbedtls/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libustream-mbedtls_installed
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/network/services/odhcpd'
+echo "libustream-mbedtls" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/ustream-ssl.mbedtls.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/libs/ustream-ssl'
+time: package/libs/ustream-ssl/mbedtls/compile#0.36#0.05#0.58
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/utils/busybox'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/mtd/.pkgdir/mtd/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.mtd_installed
+echo "mtd" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/mtd.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/system/mtd'
+time: package/system/mtd/compile#0.32#0.10#0.54
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/libs/uclient'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/urngd-2023-07-25-7aefb47b/.pkgdir/urngd/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.urngd_installed
+echo "urngd" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/urngd.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/system/urngd'
+time: package/system/urngd/compile#0.25#0.14#0.47
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo '1' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libuuid.version || { echo '1' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libuuid.version;  } 
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/util-linux-2.39.2/.pkgdir/libuuid/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libuuid_installed
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/netifd-2023-09-19-7a58b995/.pkgdir/netifd/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+echo "libuuid" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/util-linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.netifd_installed
+echo '1' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libblkid.version || { echo '1' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libblkid.version;  } 
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/util-linux-2.39.2/.pkgdir/libblkid/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+echo "netifd" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/netifd.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/network/config/netifd'
+time: package/network/config/netifd/compile#0.29#0.08#0.53
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libblkid_installed
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo "libblkid" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/util-linux.default.install
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/ubox-2022-08-13-4c7b720b/.pkgdir/ubox/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo '1' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libsmartcols.version || { echo '1' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libsmartcols.version;  } 
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo '20230701' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libiwinfo.version || { echo '20230701' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libiwinfo.version;  } 
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.ubox_installed
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/libiwinfo-2023-07-01-ca79f641/.pkgdir/libiwinfo/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/util-linux-2.39.2/.pkgdir/libsmartcols/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+echo "ubox" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/ubox.default.install
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libiwinfo_installed
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libsmartcols_installed
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo "libsmartcols" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/util-linux.default.install
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/ubox-2022-08-13-4c7b720b/.pkgdir/getrandom/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/util-linux-2.39.2/.pkgdir/losetup/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+echo "libiwinfo" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/iwinfo.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.getrandom_installed
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/dnsmasq-nodhcpv6/dnsmasq-2.89/.pkgdir/dnsmasq/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.losetup_installed
+echo "getrandom" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/ubox.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo "losetup" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/util-linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/libiwinfo-2023-07-01-ca79f641/.pkgdir/libiwinfo-data/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/utils/util-linux'
+echo '20220812' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libucode.version || { echo '20220812' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libucode.version;  } 
+time: package/utils/util-linux/compile#0.46#0.09#0.63
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.dnsmasq_installed
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/ubox-2022-08-13-4c7b720b/.pkgdir/logd/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/ucode-2023-06-06-c7d84aae/.pkgdir/libucode/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libiwinfo-data_installed
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.logd_installed
+echo "logd" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/ubox.default.install
+echo "libiwinfo-data" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/iwinfo.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/system/ubox'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libucode_installed
+time: package/system/ubox/compile#0.35#0.13#0.60
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/utils/e2fsprogs'
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/libiwinfo-2023-07-01-ca79f641/.pkgdir/iwinfo/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+echo "dnsmasq" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/dnsmasq.nodhcpv6.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/network/services/dnsmasq'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/utils/mtd-utils'
+time: package/network/services/dnsmasq/nodhcpv6/compile#0.26#0.12#0.50
+echo "libucode" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/ucode.default.install
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.iwinfo_installed
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/system/urandom-seed'
+echo "iwinfo" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/iwinfo.default.install
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/ucode-2023-06-06-c7d84aae/.pkgdir/ucode/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/network/utils/iwinfo'
+time: package/network/utils/iwinfo/compile#0.27#0.14#0.52
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.ucode_installed
+echo "ucode" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/ucode.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/ucode-2023-06-06-c7d84aae/.pkgdir/ucode-mod-fs/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.ucode-mod-fs_installed
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo "ucode-mod-fs" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/ucode.default.install
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/odhcpd-ipv6only/odhcpd-2023-06-24-52112643/.pkgdir/odhcpd-ipv6only/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/ucode-2023-06-06-c7d84aae/.pkgdir/ucode-mod-nl80211/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.odhcpd-ipv6only_installed
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.ucode-mod-nl80211_installed
+echo "ucode-mod-nl80211" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/ucode.default.install
+echo "odhcpd-ipv6only" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/odhcpd.ipv6only.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/network/services/odhcpd'
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/ucode-2023-06-06-c7d84aae/.pkgdir/ucode-mod-rtnl/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+time: package/network/services/odhcpd/ipv6only/compile#0.38#0.06#0.54
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.ucode-mod-rtnl_installed
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/busybox-default/busybox-1.36.1/.pkgdir/busybox/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+echo '20201210' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libuclient.version || { echo '20201210' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libuclient.version;  } 
+echo "ucode-mod-rtnl" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/ucode.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/uclient-2023-04-13-007d9454/.pkgdir/libuclient/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.busybox_installed
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/ucode-2023-06-06-c7d84aae/.pkgdir/ucode-mod-ubus/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libuclient_installed
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.ucode-mod-ubus_installed
+echo "ucode-mod-ubus" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/ucode.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo "libuclient" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/uclient.default.install
+echo "busybox" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/busybox.default.install
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/ucode-2023-06-06-c7d84aae/.pkgdir/ucode-mod-uci/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/utils/busybox'
+time: package/utils/busybox/default/compile#0.33#0.15#0.53
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.ucode-mod-uci_installed
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/uclient-2023-04-13-007d9454/.pkgdir/uclient-fetch/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+echo "ucode-mod-uci" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/ucode.default.install
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.uclient-fetch_installed
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo "uclient-fetch" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/uclient.default.install
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/ucode-2023-06-06-c7d84aae/.pkgdir/ucode-mod-uloop/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/libs/uclient'
+time: package/libs/uclient/compile#0.35#0.08#0.48
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.ucode-mod-uloop_installed
+echo "ucode-mod-uloop" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/ucode.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/utils/ucode'
+time: package/utils/ucode/compile#0.47#0.13#0.76
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/system/opkg'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/network/services/hostapd'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/mtd-utils-2.1.5/.pkgdir/ubi-utils/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.ubi-utils_installed
+echo "ubi-utils" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/mtd-utils.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/utils/mtd-utils'
+time: package/utils/mtd-utils/compile#0.29#0.04#0.30
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/urandom-seed/.pkgdir/urandom-seed/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.urandom-seed_installed
+echo "urandom-seed" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/urandom-seed.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/system/urandom-seed'
+time: package/system/urandom-seed/compile#0.33#0.05#0.35
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo '0' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libcomerr.version || { echo '0' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libcomerr.version;  } 
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/e2fsprogs-1.47.0/.pkgdir/libcomerr/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libcomerr_installed
+echo "libcomerr" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/e2fsprogs.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo '2' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libss.version || { echo '2' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libss.version;  } 
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/e2fsprogs-1.47.0/.pkgdir/libss/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libss_installed
+echo "libss" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/e2fsprogs.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo '2' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libext2fs.version || { echo '2' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/libext2fs.version;  } 
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/e2fsprogs-1.47.0/.pkgdir/libext2fs/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.libext2fs_installed
+echo "libext2fs" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/e2fsprogs.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/e2fsprogs-1.47.0/.pkgdir/e2fsprogs/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.e2fsprogs_installed
+echo "e2fsprogs" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/e2fsprogs.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/utils/e2fsprogs'
+time: package/utils/e2fsprogs/compile#0.44#0.11#0.49
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/opkg-2022-02-24-d038e5b6/.pkgdir/opkg/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.opkg_installed
+echo "opkg" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/opkg.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/system/opkg'
+time: package/system/opkg/compile#0.36#0.05#0.35
+ make[4] scripts/config/conf
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/hostapd-wpad-basic-mbedtls/hostapd-2023-09-08-e5ccbfc6/.pkgdir/hostapd-common/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.hostapd-common_installed
+echo "hostapd-common" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/hostapd.wpad-basic-mbedtls.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/hostapd-wpad-basic-mbedtls/hostapd-2023-09-08-e5ccbfc6/.pkgdir/wpad-basic-mbedtls/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.wpad-basic-mbedtls_installed
+echo "wpad-basic-mbedtls" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/hostapd.wpad-basic-mbedtls.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/network/services/hostapd'
+time: package/network/services/hostapd/wpad-basic-mbedtls/compile#0.57#0.13#0.63
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kernel/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kernel_installed
+echo "kernel" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-crypto-acompress/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-crypto-acompress_installed
+echo "kmod-crypto-acompress" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-crypto-aead/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-crypto-aead_installed
+echo "kmod-crypto-aead" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-crypto-ccm/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-crypto-ccm_installed
+echo "kmod-crypto-ccm" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-crypto-cmac/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-crypto-cmac_installed
+echo "kmod-crypto-cmac" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-crypto-crc32c/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-crypto-crc32c_installed
+echo "kmod-crypto-crc32c" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-crypto-ctr/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-crypto-ctr_installed
+echo "kmod-crypto-ctr" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-crypto-ecb/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-crypto-ecb_installed
+echo "kmod-crypto-ecb" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-crypto-ecdh/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-crypto-ecdh_installed
+echo "kmod-crypto-ecdh" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-crypto-gcm/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-crypto-gcm_installed
+echo "kmod-crypto-gcm" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-crypto-gf128/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-crypto-gf128_installed
+echo "kmod-crypto-gf128" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-crypto-ghash/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-crypto-ghash_installed
+echo "kmod-crypto-ghash" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-crypto-hash/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-crypto-hash_installed
+echo "kmod-crypto-hash" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-crypto-hmac/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-crypto-hmac_installed
+echo "kmod-crypto-hmac" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-crypto-kpp/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-crypto-kpp_installed
+echo "kmod-crypto-kpp" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-crypto-manager/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-crypto-manager_installed
+echo "kmod-crypto-manager" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-crypto-michael-mic/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-crypto-michael-mic_installed
+echo "kmod-crypto-michael-mic" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-crypto-null/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-crypto-null_installed
+echo "kmod-crypto-null" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-crypto-rng/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-crypto-rng_installed
+echo "kmod-crypto-rng" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-crypto-seqiv/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-crypto-seqiv_installed
+echo "kmod-crypto-seqiv" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-crypto-sha512/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-crypto-sha512_installed
+echo "kmod-crypto-sha512" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-fs-ext4/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-fs-ext4_installed
+echo "kmod-fs-ext4" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-hwmon-core/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-hwmon-core_installed
+echo "kmod-hwmon-core" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-hid/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-hid_installed
+echo "kmod-hid" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-input-core/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-input-core_installed
+echo "kmod-input-core" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-input-evdev/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-input-evdev_installed
+echo "kmod-input-evdev" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-leds-gpio/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-leds-gpio_installed
+echo "kmod-leds-gpio" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-lib-crc-ccitt/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-lib-crc-ccitt_installed
+echo "kmod-lib-crc-ccitt" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-lib-crc16/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-lib-crc16_installed
+echo "kmod-lib-crc16" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-lib-crc32c/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-lib-crc32c_installed
+echo "kmod-lib-crc32c" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-lib-lzo/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-lib-lzo_installed
+echo "kmod-lib-lzo" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-nf-reject/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-nf-reject_installed
+echo "kmod-nf-reject" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-nf-reject6/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-nf-reject6_installed
+echo "kmod-nf-reject6" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-nf-conntrack/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-nf-conntrack_installed
+echo "kmod-nf-conntrack" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-nf-conntrack6/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-nf-conntrack6_installed
+echo "kmod-nf-conntrack6" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-nf-log/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-nf-log_installed
+echo "kmod-nf-log" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-nf-log6/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-nf-log6_installed
+echo "kmod-nf-log6" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-nf-nat/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-nf-nat_installed
+echo "kmod-nf-nat" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-nf-flow/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-nf-flow_installed
+echo "kmod-nf-flow" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-nfnetlink/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-nfnetlink_installed
+echo "kmod-nfnetlink" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-nft-core/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-nft-core_installed
+echo "kmod-nft-core" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-nft-nat/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-nft-nat_installed
+echo "kmod-nft-nat" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-nft-offload/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-nft-offload_installed
+echo "kmod-nft-offload" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-nft-fib/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-nft-fib_installed
+echo "kmod-nft-fib" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-slhc/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-slhc_installed
+echo "kmod-slhc" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-ppp/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-ppp_installed
+echo "kmod-ppp" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-pppox/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-pppox_installed
+echo "kmod-pppox" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-pppoe/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-pppoe_installed
+echo "kmod-pppoe" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-qrtr/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-qrtr_installed
+echo "kmod-qrtr" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-qrtr-smd/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-qrtr-smd_installed
+echo "kmod-qrtr-smd" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-nls-base/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-nls-base_installed
+echo "kmod-nls-base" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-thermal/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-thermal_installed
+echo "kmod-thermal" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-spi-dev/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-spi-dev_installed
+echo "kmod-spi-dev" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-usb-core/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-usb-core_installed
+echo "kmod-usb-core" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-usb-dwc3/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-usb-dwc3_installed
+echo "kmod-usb-dwc3" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-usb-dwc3-qcom/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-usb-dwc3-qcom_installed
+echo "kmod-usb-dwc3-qcom" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-usb3/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-usb3_installed
+echo "kmod-usb3" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/packages/.pkgdir/kmod-usb-xhci-hcd/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-usb-xhci-hcd_installed
+echo "kmod-usb-xhci-hcd" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/linux.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/kernel/linux'
+time: package/kernel/linux/compile#3.47#0.20#3.69
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/network/services/ppp'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/kernel/mac80211'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/system/fstools'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/network/utils/nftables'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/nftables-json/nftables-1.0.8/.pkgdir/nftables-json/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.nftables-json_installed
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo "nftables-json" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/nftables.json.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/network/utils/nftables'
+time: package/network/utils/nftables/json/compile#0.20#0.03#0.20
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/ppp-default/ppp-2.4.9.git-2021-01-04/.pkgdir/ppp/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.ppp_installed
+echo "ppp" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/ppp.default.install
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/network/config/firewall4'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/ppp-default/ppp-2.4.9.git-2021-01-04/.pkgdir/ppp-mod-pppoe/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/fstools-2023-02-28-bfe882d5/.pkgdir/fstools/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.ppp-mod-pppoe_installed
+echo "ppp-mod-pppoe" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/ppp.default.install
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.fstools_installed
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/network/services/ppp'
+time: package/network/services/ppp/default/compile#0.23#0.03#0.23
+echo "fstools" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/fstools.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/system/fstools'
+time: package/system/fstools/compile#0.24#0.02#0.23
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/system/procd'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/base-files'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/package/boot/uboot-envtools'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/backports-6.5/.pkgdir/kmod-ath/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-ath_installed
+echo "kmod-ath" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/mac80211.regular.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/backports-6.5/.pkgdir/kmod-ath11k/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-ath11k_installed
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo "kmod-ath11k" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/mac80211.regular.install
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/firewall4-2023-09-01-598d9fbb/.pkgdir/firewall4/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/backports-6.5/.pkgdir/kmod-ath11k-ahb/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.firewall4_installed
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-ath11k-ahb_installed
+echo "kmod-ath11k-ahb" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/mac80211.regular.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo "firewall4" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/firewall4.default.install
+echo '6.5-1' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/kmod-cfg80211.version || { echo '6.5-1' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/kmod-cfg80211.version;  } 
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/network/config/firewall4'
+time: package/network/config/firewall4/compile#0.23#0.03#0.23
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/backports-6.5/.pkgdir/kmod-cfg80211/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-cfg80211_installed
+echo "kmod-cfg80211" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/mac80211.regular.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+echo '6.5-1' | cmp -s - /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/kmod-mac80211.version || { echo '6.5-1' > /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/kmod-mac80211.version;  } 
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/backports-6.5/.pkgdir/kmod-mac80211/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.kmod-mac80211_installed
+echo "kmod-mac80211" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/mac80211.regular.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/kernel/mac80211'
+time: package/kernel/mac80211/regular/compile#0.46#0.08#0.48
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/procd-default/procd-2023-06-25-2db83655/.pkgdir/procd/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.procd_installed
+echo "procd" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/procd.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/procd-default/procd-2023-06-25-2db83655/.pkgdir/procd-ujail/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.procd-ujail_installed
+echo "procd-ujail" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/procd.default.install
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/procd-default/procd-2023-06-25-2db83655/.pkgdir/procd-seccomp/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.procd-seccomp_installed
+echo "procd-seccomp" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/procd.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/system/procd'
+time: package/system/procd/default/compile#0.27#0.06#0.29
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/u-boot-2023.07.02/.pkgdir/uboot-envtools/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.uboot-envtools_installed
+echo "uboot-envtools" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/uboot-envtools.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/boot/uboot-envtools'
+time: package/boot/uboot-envtools/compile#0.41#0.12#0.42
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp
+SHELL= flock /home/gemous/openwrt/ipq5018/tmp/.root-copy.flock -c 'cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/base-files/.pkgdir/base-files/. /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/'
+touch /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax/stamp/.base-files_installed
+echo "base-files" >> /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/pkginfo/base-files.default.install
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/package/base-files'
+time: package/base-files/compile#1.06#0.09#1.12
+make[2]: Leaving directory '/home/gemous/openwrt/ipq5018'
+make[2]: Entering directory '/home/gemous/openwrt/ipq5018'
+make[2]: Leaving directory '/home/gemous/openwrt/ipq5018'
+rm -rf /home/gemous/openwrt/ipq5018/staging_dir/packages/qualcommax
+mkdir -p /home/gemous/openwrt/ipq5018/staging_dir/packages/qualcommax
+ln -s /home/gemous/openwrt/ipq5018/bin/targets/qualcommax/ipq5018/packages/*.ipk /home/gemous/openwrt/ipq5018/staging_dir/packages/qualcommax; ln -s /home/gemous/openwrt/ipq5018/bin/packages/aarch64_cortex-a53/base/*.ipk /home/gemous/openwrt/ipq5018/staging_dir/packages/qualcommax;    
+find /home/gemous/openwrt/ipq5018/staging_dir/target-aarch64_cortex-a53_musl/root-qualcommax -type d | xargs -r chmod 0755
+rm -rf /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root-qualcommax /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root.orig-qualcommax
+mkdir -p /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root-qualcommax/tmp
+IPKG_NO_SCRIPT=1 IPKG_INSTROOT=/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root-qualcommax TMPDIR=/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root-qualcommax/tmp /home/gemous/openwrt/ipq5018/staging_dir/host/bin/opkg --offline-root /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root-qualcommax --force-postinstall --add-dest root:/ --add-arch all:100 --add-arch aarch64_cortex-a53:200 install $(cat /home/gemous/openwrt/ipq5018/tmp/opkg_install_list)
+Installing base-files (1542-r24135-b357564463) to root...
+Installing libgcc1 (12.3.0-4) to root...
+Installing libc (1.2.4-4) to root...
+Installing libubox20230523 (2023-05-23-75a3b870-1) to root...
+Installing libuci20130104 (2023-08-10-5781664d-1) to root...
+Installing libnl-tiny1 (2023-07-27-bc92a280-1) to root...
+Installing libubus20230605 (2023-06-05-f787c97b-1) to root...
+Installing libjson-c5 (0.17-1) to root...
+Installing libblobmsg-json20230523 (2023-05-23-75a3b870-1) to root...
+Installing ubusd (2023-06-05-f787c97b-1) to root...
+Installing ubus (2023-06-05-f787c97b-1) to root...
+Installing jshn (2023-05-23-75a3b870-1) to root...
+Installing netifd (2023-09-19-7a58b995-2) to root...
+Installing jsonfilter (2018-02-04-c7e938d6-1) to root...
+Installing usign (2020-05-23-f1f65026-1) to root...
+Installing openwrt-keyring (2022-03-25-62471e69-2) to root...
+Installing ubi-utils (2.1.5-1) to root...
+Installing ubox (2022-08-13-4c7b720b-2) to root...
+Installing fstools (2023-02-28-bfe882d5-1) to root...
+Installing fwtool (2019-11-12-8f7fe925-1) to root...
+Installing uboot-envtools (2023.07.02-2) to root...
+Installing ipq-wifi-linksys_mx2000 (2023-09-16-57aa1b15-1) to root...
+Installing kmod-gpio-button-hotplug (6.1.57-3) to root...
+Installing kernel (6.1.57-1-696509c3fae94e2333c3f9c61507b003) to root...
+Package kernel (6.1.57-1-696509c3fae94e2333c3f9c61507b003) installed in root is up to date.
+Installing kmod-crypto-acompress (6.1.57-1) to root...
+Installing kmod-crypto-aead (6.1.57-1) to root...
+Installing kmod-crypto-hash (6.1.57-1) to root...
+Installing kmod-crypto-null (6.1.57-1) to root...
+Installing kmod-crypto-ccm (6.1.57-1) to root...
+Installing kmod-crypto-manager (6.1.57-1) to root...
+Installing kmod-crypto-hmac (6.1.57-1) to root...
+Installing kmod-crypto-sha512 (6.1.57-1) to root...
+Installing kmod-crypto-rng (6.1.57-1) to root...
+Installing kmod-crypto-seqiv (6.1.57-1) to root...
+Installing kmod-crypto-ctr (6.1.57-1) to root...
+Installing kmod-crypto-cmac (6.1.57-1) to root...
+Installing kmod-crypto-crc32c (6.1.57-1) to root...
+Package kmod-crypto-ctr (6.1.57-1) installed in root is up to date.
+Installing kmod-crypto-ecb (6.1.57-1) to root...
+Installing kmod-crypto-ecdh (6.1.57-1) to root...
+Installing kmod-crypto-kpp (6.1.57-1) to root...
+Installing kmod-crypto-gcm (6.1.57-1) to root...
+Installing kmod-crypto-gf128 (6.1.57-1) to root...
+Installing kmod-crypto-ghash (6.1.57-1) to root...
+Package kmod-crypto-gf128 (6.1.57-1) installed in root is up to date.
+Package kmod-crypto-ghash (6.1.57-1) installed in root is up to date.
+Package kmod-crypto-hash (6.1.57-1) installed in root is up to date.
+Package kmod-crypto-hmac (6.1.57-1) installed in root is up to date.
+Package kmod-crypto-kpp (6.1.57-1) installed in root is up to date.
+Package kmod-crypto-manager (6.1.57-1) installed in root is up to date.
+Installing kmod-crypto-michael-mic (6.1.57-1) to root...
+Package kmod-crypto-null (6.1.57-1) installed in root is up to date.
+Package kmod-crypto-rng (6.1.57-1) installed in root is up to date.
+Package kmod-crypto-seqiv (6.1.57-1) installed in root is up to date.
+Package kmod-crypto-sha512 (6.1.57-1) installed in root is up to date.
+Installing kmod-fs-ext4 (6.1.57-1) to root...
+Installing kmod-lib-crc16 (6.1.57-1) to root...
+Installing kmod-hwmon-core (6.1.57-1) to root...
+Installing kmod-hid (6.1.57-1) to root...
+Installing kmod-input-core (6.1.57-1) to root...
+Installing kmod-input-evdev (6.1.57-1) to root...
+Package kmod-input-core (6.1.57-1) installed in root is up to date.
+Package kmod-input-evdev (6.1.57-1) installed in root is up to date.
+Installing kmod-leds-gpio (6.1.57-1) to root...
+Installing kmod-lib-crc-ccitt (6.1.57-1) to root...
+Package kmod-lib-crc16 (6.1.57-1) installed in root is up to date.
+Installing kmod-lib-crc32c (6.1.57-1) to root...
+Installing kmod-lib-lzo (6.1.57-1) to root...
+Installing kmod-nf-reject (6.1.57-1) to root...
+Installing kmod-nf-reject6 (6.1.57-1) to root...
+Installing kmod-nf-conntrack (6.1.57-1) to root...
+Installing kmod-nf-conntrack6 (6.1.57-1) to root...
+Installing kmod-nf-log (6.1.57-1) to root...
+Installing kmod-nf-log6 (6.1.57-1) to root...
+Installing kmod-nf-nat (6.1.57-1) to root...
+Installing kmod-nf-flow (6.1.57-1) to root...
+Installing kmod-nfnetlink (6.1.57-1) to root...
+Installing kmod-nft-core (6.1.57-1) to root...
+Installing kmod-nft-nat (6.1.57-1) to root...
+Installing kmod-nft-offload (6.1.57-1) to root...
+Installing kmod-nft-fib (6.1.57-1) to root...
+Installing kmod-slhc (6.1.57-1) to root...
+Installing kmod-ppp (6.1.57-1) to root...
+Installing kmod-pppox (6.1.57-1) to root...
+Installing kmod-pppoe (6.1.57-1) to root...
+Installing kmod-qrtr (6.1.57-1) to root...
+Installing kmod-qrtr-smd (6.1.57-1) to root...
+Installing kmod-nls-base (6.1.57-1) to root...
+Installing kmod-thermal (6.1.57-1) to root...
+Installing kmod-spi-dev (6.1.57-1) to root...
+Installing kmod-usb-core (6.1.57-1) to root...
+Installing kmod-usb-dwc3 (6.1.57-1) to root...
+Installing kmod-usb-dwc3-qcom (6.1.57-1) to root...
+Installing kmod-usb3 (6.1.57-1) to root...
+Installing kmod-usb-xhci-hcd (6.1.57-1) to root...
+Package kmod-usb-xhci-hcd (6.1.57-1) installed in root is up to date.
+Installing kmod-ath (6.1.57+6.5-1) to root...
+Installing iw (5.19-1) to root...
+Installing libiwinfo-data (2023-07-01-ca79f641-1) to root...
+Installing libiwinfo20230701 (2023-07-01-ca79f641-1) to root...
+Installing iwinfo (2023-07-01-ca79f641-1) to root...
+Installing wireless-regdb (2023.09.01-1) to root...
+Installing kmod-cfg80211 (6.1.57+6.5-1) to root...
+Installing hostapd-common (2023-09-08-e5ccbfc6-4) to root...
+Installing kmod-mac80211 (6.1.57+6.5-1) to root...
+Installing kmod-ath11k (6.1.57+6.5-1) to root...
+Installing kmod-ath11k-ahb (6.1.57+6.5-1) to root...
+Package kmod-cfg80211 (6.1.57+6.5-1) installed in root is up to date.
+Package kmod-mac80211 (6.1.57+6.5-1) installed in root is up to date.
+Installing kmod-qca-nss-dp (6.1.57+2023-06-06-fa674644-2) to root...
+Installing kmod-qca-ssdk (6.1.57+2023-06-06-74caf88a-1) to root...
+Package kmod-qca-ssdk (6.1.57+2023-06-06-74caf88a-1) installed in root is up to date.
+Package libc (1.2.4-4) installed in root is up to date.
+Package libgcc1 (12.3.0-4) installed in root is up to date.
+Installing libpthread (1.2.4-4) to root...
+Installing librt (1.2.4-4) to root...
+Installing dropbear (2022.82-5) to root...
+Package fstools (2023-02-28-bfe882d5-1) installed in root is up to date.
+Package fwtool (2019-11-12-8f7fe925-1) installed in root is up to date.
+Installing mtd (26) to root...
+Package ubi-utils (2.1.5-1) installed in root is up to date.
+Package wireless-regdb (2023.09.01-1) installed in root is up to date.
+Installing jansson4 (2.14-3) to root...
+Package libjson-c5 (0.17-1) installed in root is up to date.
+Installing libmnl0 (1.0.5-1) to root...
+Installing libnftnl11 (1.2.6-1) to root...
+Package libnl-tiny1 (2023-07-27-bc92a280-1) installed in root is up to date.
+Package libubox20230523 (2023-05-23-75a3b870-1) installed in root is up to date.
+Package libblobmsg-json20230523 (2023-05-23-75a3b870-1) installed in root is up to date.
+Package jshn (2023-05-23-75a3b870-1) installed in root is up to date.
+Installing libjson-script20230523 (2023-05-23-75a3b870-1) to root...
+Installing libmbedtls12 (2.28.5-1) to root...
+Installing libuclient20201210 (2023-04-13-007d9454-1) to root...
+Installing uclient-fetch (2023-04-13-007d9454-1) to root...
+Installing libustream-mbedtls20201210 (2023-02-25-498f6e26-1) to root...
+Installing firewall4 (2023-09-01-598d9fbb-1) to root...
+Installing libucode20220812 (2023-06-06-c7d84aae-1) to root...
+Installing ucode (2023-06-06-c7d84aae-1) to root...
+Installing nftables-json (1.0.8-1) to root...
+Installing ucode-mod-fs (2023-06-06-c7d84aae-1) to root...
+Installing ucode-mod-ubus (2023-06-06-c7d84aae-1) to root...
+Installing ucode-mod-uci (2023-06-06-c7d84aae-1) to root...
+Package netifd (2023-09-19-7a58b995-2) installed in root is up to date.
+Installing odhcp6c (2023-05-12-bcd28363-20) to root...
+Installing dnsmasq (2.89-6) to root...
+Package hostapd-common (2023-09-08-e5ccbfc6-4) installed in root is up to date.
+Installing wpad-basic-mbedtls (2023-09-08-e5ccbfc6-4) to root...
+Installing ucode-mod-nl80211 (2023-06-06-c7d84aae-1) to root...
+Installing ucode-mod-rtnl (2023-06-06-c7d84aae-1) to root...
+Installing ucode-mod-uloop (2023-06-06-c7d84aae-1) to root...
+Installing odhcpd-ipv6only (2023-06-24-52112643-1) to root...
+Installing ppp (2.4.9.git-2021-01-04-5) to root...
+Installing ppp-mod-pppoe (2.4.9.git-2021-01-04-5) to root...
+Package iw (5.19-1) installed in root is up to date.
+Package libiwinfo20230701 (2023-07-01-ca79f641-1) installed in root is up to date.
+Package libiwinfo-data (2023-07-01-ca79f641-1) installed in root is up to date.
+Package iwinfo (2023-07-01-ca79f641-1) installed in root is up to date.
+Package nftables-json (1.0.8-1) installed in root is up to date.
+Installing ca-bundle (20230311-1) to root...
+Package openwrt-keyring (2022-03-25-62471e69-2) installed in root is up to date.
+Installing opkg (2022-02-24-d038e5b6-2) to root...
+Installing procd (2023-06-25-2db83655-3) to root...
+Installing procd-ujail (2023-06-25-2db83655-3) to root...
+Installing procd-seccomp (2023-06-25-2db83655-3) to root...
+Package ubox (2022-08-13-4c7b720b-2) installed in root is up to date.
+Installing getrandom (2022-08-13-4c7b720b-2) to root...
+Installing logd (2022-08-13-4c7b720b-2) to root...
+Package libubus20230605 (2023-06-05-f787c97b-1) installed in root is up to date.
+Package ubus (2023-06-05-f787c97b-1) installed in root is up to date.
+Package ubusd (2023-06-05-f787c97b-1) installed in root is up to date.
+Package libuci20130104 (2023-08-10-5781664d-1) installed in root is up to date.
+Installing uci (2023-08-10-5781664d-1) to root...
+Installing urandom-seed (3) to root...
+Installing urngd (2023-07-25-7aefb47b-1) to root...
+Package usign (2020-05-23-f1f65026-1) installed in root is up to date.
+Installing busybox (1.36.1-1) to root...
+Installing libcomerr0 (1.47.0-2) to root...
+Installing libuuid1 (2.39.2-1) to root...
+Installing libss2 (1.47.0-2) to root...
+Installing libext2fs2 (1.47.0-2) to root...
+Installing libblkid1 (2.39.2-1) to root...
+Installing e2fsprogs (1.47.0-2) to root...
+Package jsonfilter (2018-02-04-c7e938d6-1) installed in root is up to date.
+Package libucode20220812 (2023-06-06-c7d84aae-1) installed in root is up to date.
+Package ucode (2023-06-06-c7d84aae-1) installed in root is up to date.
+Package ucode-mod-fs (2023-06-06-c7d84aae-1) installed in root is up to date.
+Package ucode-mod-nl80211 (2023-06-06-c7d84aae-1) installed in root is up to date.
+Package ucode-mod-rtnl (2023-06-06-c7d84aae-1) installed in root is up to date.
+Package ucode-mod-ubus (2023-06-06-c7d84aae-1) installed in root is up to date.
+Package ucode-mod-uci (2023-06-06-c7d84aae-1) installed in root is up to date.
+Package ucode-mod-uloop (2023-06-06-c7d84aae-1) installed in root is up to date.
+Package libuuid1 (2.39.2-1) installed in root is up to date.
+Package libblkid1 (2.39.2-1) installed in root is up to date.
+Installing libsmartcols1 (2.39.2-1) to root...
+Installing losetup (2.39.2-1) to root...
+Configuring libgcc1.
+Configuring libc.
+Configuring libnl-tiny1.
+Configuring libubox20230523.
+Configuring libuci20130104.
+Configuring libubus20230605.
+Configuring libiwinfo-data.
+Configuring libiwinfo20230701.
+Configuring iwinfo.
+Configuring kernel.
+Configuring kmod-crypto-gf128.
+Configuring libuclient20201210.
+Configuring uclient-fetch.
+Configuring libpthread.
+Configuring opkg.
+Configuring hostapd-common.
+Configuring libjson-c5.
+Configuring libucode20220812.
+Configuring ucode.
+Configuring ucode-mod-fs.
+Configuring ucode-mod-nl80211.
+Configuring ucode-mod-rtnl.
+Configuring libblobmsg-json20230523.
+Configuring ucode-mod-ubus.
+Configuring ucode-mod-uloop.
+Configuring libmbedtls12.
+Configuring wpad-basic-mbedtls.
+Configuring kmod-nls-base.
+Configuring kmod-usb-core.
+Configuring ubusd.
+Configuring ubus.
+Configuring iw.
+Configuring kmod-crypto-hash.
+Configuring kmod-crypto-null.
+Configuring kmod-crypto-aead.
+Configuring kmod-crypto-manager.
+Configuring jsonfilter.
+Configuring busybox.
+Configuring kmod-crypto-hmac.
+Configuring kmod-crypto-sha512.
+Configuring kmod-crypto-rng.
+Configuring kmod-crypto-seqiv.
+Configuring kmod-crypto-ctr.
+Configuring kmod-nfnetlink.
+Configuring kmod-nf-reject.
+Configuring kmod-nf-reject6.
+Configuring kmod-nf-conntrack.
+Configuring kmod-nf-conntrack6.
+Configuring kmod-nf-nat.
+Configuring kmod-nf-log.
+Configuring kmod-nf-log6.
+Configuring kmod-crypto-crc32c.
+Configuring kmod-lib-crc32c.
+Configuring kmod-nft-core.
+Configuring kmod-nft-fib.
+Configuring wireless-regdb.
+Configuring kmod-cfg80211.
+Configuring kmod-crypto-cmac.
+Configuring kmod-crypto-ccm.
+Configuring kmod-crypto-ghash.
+Configuring kmod-crypto-gcm.
+Configuring kmod-mac80211.
+Configuring kmod-ath.
+Configuring kmod-crypto-michael-mic.
+Configuring kmod-hwmon-core.
+Configuring kmod-thermal.
+Configuring kmod-ath11k.
+Configuring kmod-usb-dwc3.
+Configuring kmod-nf-flow.
+Configuring kmod-lib-crc-ccitt.
+Configuring getrandom.
+Configuring kmod-slhc.
+Configuring kmod-ppp.
+Configuring kmod-pppox.
+Configuring kmod-pppoe.
+Configuring librt.
+Configuring libuuid1.
+Configuring procd-ujail.
+Configuring jshn.
+Configuring netifd.
+Configuring usign.
+Configuring openwrt-keyring.
+Configuring ubi-utils.
+Configuring ubox.
+Configuring fstools.
+Configuring fwtool.
+Configuring base-files.
+Configuring kmod-lib-crc16.
+Configuring kmod-input-core.
+Configuring ucode-mod-uci.
+Configuring libustream-mbedtls20201210.
+Configuring kmod-usb-dwc3-qcom.
+Configuring libsmartcols1.
+Configuring kmod-nft-nat.
+Configuring kmod-nft-offload.
+Configuring libmnl0.
+Configuring libnftnl11.
+Configuring jansson4.
+Configuring nftables-json.
+Configuring firewall4.
+Configuring uboot-envtools.
+Configuring kmod-usb-xhci-hcd.
+Configuring dnsmasq.
+Configuring libjson-script20230523.
+Configuring procd.
+Configuring kmod-crypto-acompress.
+Configuring kmod-qca-ssdk.
+Configuring kmod-usb3.
+Configuring libblkid1.
+Configuring odhcp6c.
+Configuring uci.
+Configuring kmod-fs-ext4.
+Configuring losetup.
+Configuring kmod-input-evdev.
+Configuring dropbear.
+Configuring kmod-crypto-kpp.
+Configuring kmod-crypto-ecdh.
+Configuring mtd.
+Configuring odhcpd-ipv6only.
+Configuring procd-seccomp.
+Configuring kmod-qrtr.
+Configuring kmod-qrtr-smd.
+Configuring urandom-seed.
+Configuring libcomerr0.
+Configuring ppp.
+Configuring kmod-leds-gpio.
+Configuring kmod-gpio-button-hotplug.
+Configuring logd.
+Configuring kmod-qca-nss-dp.
+Configuring kmod-crypto-ecb.
+Configuring libss2.
+Configuring libext2fs2.
+Configuring e2fsprogs.
+Configuring ca-bundle.
+Configuring kmod-ath11k-ahb.
+Configuring kmod-lib-lzo.
+Configuring ipq-wifi-linksys_mx2000.
+Configuring kmod-hid.
+Configuring urngd.
+Configuring ppp-mod-pppoe.
+Configuring kmod-spi-dev.
+Setting flags for package libc to hold.
+Setting flags for package libgcc1 to hold.
+Setting flags for package libpthread to hold.
+Setting flags for package librt to hold.
+cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root-qualcommax /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root.orig-qualcommax
+Enabling boot
+Enabling cron
+Enabling dnsmasq
+Enabling done
+Enabling dropbear
+Enabling firewall
+Enabling gpio_switch
+Enabling led
+Enabling log
+Enabling network
+Enabling odhcpd
+Enabling packet_steering
+Enabling sysctl
+Enabling sysfixtime
+Enabling sysntpd
+Enabling system
+Enabling umount
+Enabling urandom_seed
+Enabling urngd
+Enabling wpad
+sed -i "s/Installed-Time: .*/Installed-Time: 1697291513/" /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root-qualcommax/usr/lib/opkg/status
+rm -rf /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root-qualcommax/boot /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root-qualcommax/tmp/* /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root-qualcommax/usr/lib/opkg/info/*.postinst* /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root-qualcommax/usr/lib/opkg/lists/* /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root-qualcommax/var/lock/*.lock
+find /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root-qualcommax/ -mindepth 1 -execdir touch -hcd "@1697291513" "{}" +
+make[2]: Leaving directory '/home/gemous/openwrt/ipq5018'
+make[2]: Entering directory '/home/gemous/openwrt/ipq5018'
+make[3]: Entering directory '/home/gemous/openwrt/ipq5018/target/linux'
+make[4]: Entering directory '/home/gemous/openwrt/ipq5018/target/linux/qualcommax'
+rm -f /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/localversion
+/home/gemous/openwrt/ipq5018/scripts/kconfig.pl  + /home/gemous/openwrt/ipq5018/target/linux/generic/config-6.1 /home/gemous/openwrt/ipq5018/target/linux/qualcommax/config-6.1 > /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.target
+awk '/^(#[[:space:]]+)?CONFIG_KERNEL/{sub("CONFIG_KERNEL_","CONFIG_");print}' /home/gemous/openwrt/ipq5018/.config >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.target
+echo "# CONFIG_KALLSYMS_EXTRA_PASS is not set" >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.target
+echo "# CONFIG_KALLSYMS_ALL is not set" >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.target
+echo "CONFIG_KALLSYMS_UNCOMPRESSED=y" >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.target
+/home/gemous/openwrt/ipq5018/scripts/package-metadata.pl kconfig /home/gemous/openwrt/ipq5018/tmp/.packageinfo /home/gemous/openwrt/ipq5018/.config 6.1 > /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.override
+/home/gemous/openwrt/ipq5018/scripts/kconfig.pl 'm+' '+' /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.target /dev/null /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.override > /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.set
+mv /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.set /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.old
+grep -v INITRAMFS /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.old > /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.set
+echo 'CONFIG_INITRAMFS_SOURCE=""' >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.set
+echo '# CONFIG_INITRAMFS_FORCE is not set' >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.set
+echo "# CONFIG_INITRAMFS_PRESERVE_MTIME is not set" >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.set
+rm -rf /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/modules
+cmp -s /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.set /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.prev || { cp /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.set /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config; cp /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.set /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.prev; }
+export MAKEFLAGS= ; [ -d /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/user_headers ] || make -C /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57 KCFLAGS="-fmacro-prefix-map=/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl=target-aarch64_cortex-a53_musl -fno-caller-saves " HOSTCFLAGS="-O2 -I/home/gemous/openwrt/ipq5018/staging_dir/host/include  -Wall -Wmissing-prototypes -Wstrict-prototypes" CROSS_COMPILE="aarch64-openwrt-linux-musl-" ARCH="arm64" KBUILD_HAVE_NLS=no KBUILD_BUILD_USER="" KBUILD_BUILD_HOST="" KBUILD_BUILD_TIMESTAMP="Sat Oct 14 13:51:53 2023" KBUILD_BUILD_VERSION="0" KBUILD_HOSTLDFLAGS="-L/home/gemous/openwrt/ipq5018/staging_dir/host/lib" CONFIG_SHELL="bash" V=''  cmd_syscalls=  KERNELRELEASE=6.1.57 CC="aarch64-openwrt-linux-musl-gcc"  INSTALL_HDR_PATH=/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/user_headers headers_install
+grep '=[ym]' /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.set | LC_ALL=C sort | /home/gemous/openwrt/ipq5018/staging_dir/host/bin/mkhash md5 > /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.vermagic
+touch /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.configured
+rm -f /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root-qualcommax/init
+make -C /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57 KCFLAGS="-fmacro-prefix-map=/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl=target-aarch64_cortex-a53_musl -fno-caller-saves " HOSTCFLAGS="-O2 -I/home/gemous/openwrt/ipq5018/staging_dir/host/include  -Wall -Wmissing-prototypes -Wstrict-prototypes" CROSS_COMPILE="aarch64-openwrt-linux-musl-" ARCH="arm64" KBUILD_HAVE_NLS=no KBUILD_BUILD_USER="" KBUILD_BUILD_HOST="" KBUILD_BUILD_TIMESTAMP="Sat Oct 14 13:51:53 2023" KBUILD_BUILD_VERSION="0" KBUILD_HOSTLDFLAGS="-L/home/gemous/openwrt/ipq5018/staging_dir/host/lib" CONFIG_SHELL="bash" V=''  cmd_syscalls=  KERNELRELEASE=6.1.57 CC="aarch64-openwrt-linux-musl-gcc"  Image dtbs
+make[5]: Entering directory '/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57'
+  CALL    scripts/checksyscalls.sh
+  MODPOST vmlinux.symvers
+make[5]: Leaving directory '/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57'
+cmp -s /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/vmlinux /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/vmlinux.debug || { aarch64-openwrt-linux-musl-objcopy -O binary -R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id -S /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/vmlinux /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/vmlinux; aarch64-openwrt-linux-musl-objcopy -R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id -S /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/vmlinux /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/vmlinux.elf; cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/vmlinux /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/vmlinux.debug;  cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/arch/arm64/boot//Image /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/Image;  }
+rm -f /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.prev
+mv /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.old
+grep -v -e INITRAMFS -e CONFIG_RD_ -e CONFIG_BLK_DEV_INITRD /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config.old > /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config
+echo 'CONFIG_BLK_DEV_INITRD=y' >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config
+echo 'CONFIG_INITRAMFS_SOURCE="/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root-qualcommax /home/gemous/openwrt/ipq5018/target/linux/generic/image/initramfs-base-files.txt"' >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config
+echo "# CONFIG_INITRAMFS_PRESERVE_MTIME is not set" >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config
+echo 'CONFIG_INITRAMFS_ROOT_UID=1000' >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config
+echo 'CONFIG_INITRAMFS_ROOT_GID=1000' >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config
+echo "# CONFIG_INITRAMFS_FORCE is not set" >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config
+echo "# CONFIG_INITRAMFS_COMPRESSION_NONE is not set" >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config
+echo -e "# CONFIG_INITRAMFS_COMPRESSION_GZIP is not set\n# CONFIG_RD_GZIP is not set" >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config
+echo -e "# CONFIG_INITRAMFS_COMPRESSION_BZIP2 is not set\n# CONFIG_RD_BZIP2 is not set" >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config
+echo -e "# CONFIG_INITRAMFS_COMPRESSION_LZMA is not set\n# CONFIG_RD_LZMA is not set" >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config
+echo -e "# CONFIG_INITRAMFS_COMPRESSION_LZO is not set\n# CONFIG_RD_LZO is not set" >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config
+echo -e "# CONFIG_INITRAMFS_COMPRESSION_XZ is not set\n# CONFIG_RD_XZ is not set" >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config
+echo -e "# CONFIG_INITRAMFS_COMPRESSION_LZ4 is not set\n# CONFIG_RD_LZ4 is not set" >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config
+echo -e "CONFIG_INITRAMFS_COMPRESSION_ZSTD=y\nCONFIG_RD_ZSTD=y" >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.config
+cp -fpR /home/gemous/openwrt/ipq5018/target/linux/generic/other-files/init /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root-qualcommax/init
+touch -hcd "@1697291513" /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root-qualcommax /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root-qualcommax/init
+rm -rf /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/usr/initramfs_data.cpio*
+make -C /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57 KCFLAGS="-fmacro-prefix-map=/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl=target-aarch64_cortex-a53_musl -fno-caller-saves " HOSTCFLAGS="-O2 -I/home/gemous/openwrt/ipq5018/staging_dir/host/include  -Wall -Wmissing-prototypes -Wstrict-prototypes" CROSS_COMPILE="aarch64-openwrt-linux-musl-" ARCH="arm64" KBUILD_HAVE_NLS=no KBUILD_BUILD_USER="" KBUILD_BUILD_HOST="" KBUILD_BUILD_TIMESTAMP="Sat Oct 14 13:51:53 2023" KBUILD_BUILD_VERSION="0" KBUILD_HOSTLDFLAGS="-L/home/gemous/openwrt/ipq5018/staging_dir/host/lib" CONFIG_SHELL="bash" V=''  cmd_syscalls=  KERNELRELEASE=6.1.57 CC="aarch64-openwrt-linux-musl-gcc"  Image dtbs
+make[5]: Entering directory '/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57'
+  SYNC    include/config/auto.conf.cmd
+  CALL    scripts/checksyscalls.sh
+  GEN     usr/initramfs_data.cpio
+  CC      lib/decompress.o
+  AR      lib/lib.a
+  ZSTD    usr/initramfs_inc_data
+  AS      usr/initramfs_data.o
+  AR      usr/built-in.a
+  AR      built-in.a
+  AR      vmlinux.a
+  LD      vmlinux.o
+  OBJCOPY modules.builtin.modinfo
+  GEN     modules.builtin
+  MODPOST vmlinux.symvers
+  LD      .tmp_vmlinux.kallsyms1
+  NM      .tmp_vmlinux.kallsyms1.syms
+  KSYMS   .tmp_vmlinux.kallsyms1.S
+  AS      .tmp_vmlinux.kallsyms1.S
+  LD      .tmp_vmlinux.kallsyms2
+  NM      .tmp_vmlinux.kallsyms2.syms
+  KSYMS   .tmp_vmlinux.kallsyms2.S
+  AS      .tmp_vmlinux.kallsyms2.S
+  LD      vmlinux
+  NM      System.map
+  SORTTAB vmlinux
+  OBJCOPY arch/arm64/boot/Image
+make[5]: Leaving directory '/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57'
+cmp -s /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/vmlinux /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/vmlinux-initramfs.debug || { aarch64-openwrt-linux-musl-objcopy -O binary -R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id -S /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/vmlinux /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/vmlinux-initramfs; aarch64-openwrt-linux-musl-objcopy -R .reginfo -R .notes -R .note -R .comment -R .mdebug -R .note.gnu.build-id -S /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/vmlinux /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/vmlinux-initramfs.elf; cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/vmlinux /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/vmlinux-initramfs.debug;  cp -fpR /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/arch/arm64/boot//Image /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/Image-initramfs;  }
+touch /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/.image
+make -C image compile install TARGET_BUILD=
+make[5]: Entering directory '/home/gemous/openwrt/ipq5018/target/linux/qualcommax/image'
+make[5]: Nothing to be done for 'compile'.
+aarch64-openwrt-linux-musl-cpp -nostdinc -x assembler-with-cpp  -I/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/arch/arm64/boot/dts -I/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/arch/arm64/boot/dts/include -I/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/include/ -undef -D__DTS__  -o /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/image-ipq5018-mx2000.dtb.tmp /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/arch/arm64/boot/dts/qcom/ipq5018-mx2000.dts
+/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/scripts/dtc/dtc -O dtb -i/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/arch/arm64/boot/dts/qcom/ -Wno-unit_address_vs_reg -Wno-simple_bus_reg -Wno-unit_address_format -Wno-pci_bridge -Wno-pci_device_bus_num -Wno-pci_device_reg -Wno-avoid_unnecessary_addr_size -Wno-alias_paths -Wno-graph_child_address -Wno-graph_port -Wno-unique_unit_address    -o /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/image-ipq5018-mx2000.dtb /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/image-ipq5018-mx2000.dtb.tmp
+rm -f /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/image-ipq5018-mx2000.dtb.tmp
+mkdir -p /home/gemous/openwrt/ipq5018/bin/targets/qualcommax/ipq5018 /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp
+rm -rf /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/json_info_files
+/home/gemous/openwrt/ipq5018/staging_dir/host/bin/mksquashfs4 /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root-qualcommax /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/root.squashfs -nopad -noappend -root-owned -comp xz -Xpreset 9 -Xe -Xlc 0 -Xlp 2 -Xpb 2  -b 256k -p '/dev d 755 0 0' -p '/dev/console c 600 0 0 5 1' -no-xattrs
+rm -f /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-initramfs-uImage.itb
+rm -f /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linksys_mx2000-uImage.itb
+cp /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/Image-initramfs /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-initramfs-uImage.itb
+cp /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/Image /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linksys_mx2000-uImage.itb
+Parallel mksquashfs: Using 12 processors
+Creating 4.0 filesystem on /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/root.squashfs, block size 262144.
+[|                                                               ]   0/879   0%/home/gemous/openwrt/ipq5018/staging_dir/host/bin/libdeflate-gzip -f -12 -c /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linksys_mx2000-uImage.itb  > /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linksys_mx2000-uImage.itb.new
+/home/gemous/openwrt/ipq5018/staging_dir/host/bin/libdeflate-gzip -f -12 -c /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-initramfs-uImage.itb  > /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-initramfs-uImage.itb.new
+[===============================================================/] 879/879 100%
+
+Exportable Squashfs 4.0 filesystem, xz compressed, data block size 262144
+	compressed data, compressed metadata, compressed fragments,
+	no xattrs, compressed ids
+	duplicates are removed
+Filesystem size 4244.94 Kbytes (4.15 Mbytes)
+	24.67% of uncompressed filesystem size (17210.10 Kbytes)
+Inode table size 7694 bytes (7.51 Kbytes)
+	19.92% of uncompressed inode table size (38632 bytes)
+Directory table size 11072 bytes (10.81 Kbytes)
+	44.16% of uncompressed directory table size (25075 bytes)
+Number of duplicate files found 151
+Number of inodes 1161
+Number of files 864
+Number of fragments 46
+Number of symbolic links 214
+Number of device nodes 1
+Number of fifo nodes 0
+Number of socket nodes 0
+Number of directories 82
+Number of hard-links 0
+Number of ids (unique uids + gids) 1
+Number of uids 1
+	root (0)
+Number of gids 1
+	root (0)
+/home/gemous/openwrt/ipq5018/scripts/mkits.sh -D linksys_mx2000 -o /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linksys_mx2000-uImage.itb.its -k /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linksys_mx2000-uImage.itb -C gzip   -d /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/image-ipq5018-mx2000.dtb   -a 0x41000000 -e 0x41000000     -c config@1 -A arm64 -v 6.1.57
+PATH=/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/scripts/dtc:/home/gemous/openwrt/ipq5018/staging_dir/toolchain-aarch64_cortex-a53_gcc-12.3.0_musl/bin:/home/gemous/openwrt/ipq5018/staging_dir/toolchain-aarch64_cortex-a53_gcc-12.3.0_musl/bin:/home/gemous/openwrt/ipq5018/staging_dir/toolchain-aarch64_cortex-a53_gcc-12.3.0_musl/bin:/home/gemous/openwrt/ipq5018/staging_dir/toolchain-aarch64_cortex-a53_gcc-12.3.0_musl/bin:/home/gemous/openwrt/ipq5018/staging_dir/host/bin:/home/gemous/openwrt/ipq5018/staging_dir/toolchain-aarch64_cortex-a53_gcc-12.3.0_musl/bin:/home/gemous/openwrt/ipq5018/staging_dir/host/bin:/home/gemous/openwrt/ipq5018/staging_dir/host/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib mkimage  -f /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linksys_mx2000-uImage.itb.its /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linksys_mx2000-uImage.itb.new
+FIT description: ARM64 OpenWrt FIT (Flattened Image Tree)
+Created:         Sat Oct 14 13:51:53 2023
+ Image 0 (kernel-1)
+  Description:  ARM64 OpenWrt Linux-6.1.57
+  Created:      Sat Oct 14 13:51:53 2023
+  Type:         Kernel Image
+  Compression:  gzip compressed
+  Data Size:    4830438 Bytes = 4717.22 KiB = 4.61 MiB
+  Architecture: AArch64
+  OS:           Linux
+  Load Address: 0x41000000
+  Entry Point:  0x41000000
+  Hash algo:    crc32
+  Hash value:   a9706ff3
+  Hash algo:    sha1
+  Hash value:   7c505f4a89029e266d890e36e85b5db17771aad1
+ Image 1 (fdt-1)
+  Description:  ARM64 OpenWrt linksys_mx2000 device tree blob
+  Created:      Sat Oct 14 13:51:53 2023
+  Type:         Flat Device Tree
+  Compression:  uncompressed
+  Data Size:    23009 Bytes = 22.47 KiB = 0.02 MiB
+  Architecture: AArch64
+  Hash algo:    crc32
+  Hash value:   fac9550a
+  Hash algo:    sha1
+  Hash value:   e2c87119723223198d23e7be334e5a4f6ff664c3
+ Default Configuration: 'config@1'
+ Configuration 0 (config@1)
+  Description:  OpenWrt linksys_mx2000
+  Kernel:       kernel-1
+  FDT:          fdt-1
+[ -f /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linksys_mx2000-uImage.itb -a -f /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/root.squashfs ]
+sh /home/gemous/openwrt/ipq5018/scripts/sysupgrade-tar.sh --board linksys_mx2000 --kernel /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linksys_mx2000-uImage.itb --rootfs /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/root.squashfs /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-sysupgrade.bin
+[ -f /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linksys_mx2000-uImage.itb -a -f /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/root.squashfs ]
+dd if=/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linksys_mx2000-uImage.itb >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-factory.bin
+/home/gemous/openwrt/ipq5018/scripts/mkits.sh -D linksys_mx2000 -o /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-initramfs-uImage.itb.its -k /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-initramfs-uImage.itb -C gzip   -d /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/image-ipq5018-mx2000.dtb   -a 0x41000000 -e 0x41000000     -c config@1 -A arm64 -v 6.1.57
+PATH=/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/linux-6.1.57/scripts/dtc:/home/gemous/openwrt/ipq5018/staging_dir/toolchain-aarch64_cortex-a53_gcc-12.3.0_musl/bin:/home/gemous/openwrt/ipq5018/staging_dir/toolchain-aarch64_cortex-a53_gcc-12.3.0_musl/bin:/home/gemous/openwrt/ipq5018/staging_dir/toolchain-aarch64_cortex-a53_gcc-12.3.0_musl/bin:/home/gemous/openwrt/ipq5018/staging_dir/toolchain-aarch64_cortex-a53_gcc-12.3.0_musl/bin:/home/gemous/openwrt/ipq5018/staging_dir/host/bin:/home/gemous/openwrt/ipq5018/staging_dir/toolchain-aarch64_cortex-a53_gcc-12.3.0_musl/bin:/home/gemous/openwrt/ipq5018/staging_dir/host/bin:/home/gemous/openwrt/ipq5018/staging_dir/host/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib mkimage  -f /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-initramfs-uImage.itb.its /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-initramfs-uImage.itb.new
+sysupgrade-linksys_mx2000/
+sysupgrade-linksys_mx2000/CONTROL
+sysupgrade-linksys_mx2000/kernel
+dd if=/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-factory.bin of=/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-factory.bin.new bs=8192k conv=sync
+sysupgrade-linksys_mx2000/root
+mv /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-factory.bin.new /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-factory.bin
+echo '{  "metadata_version": "1.1", "compat_version": "1.0",   "supported_devices":["linksys,mx2000"], "version": { "dist": "OpenWrt", "version": "SNAPSHOT", "revision": "r24135-b357564463", "target": "qualcommax/ipq5018", "board": "linksys_mx2000" } }' | fwtool -I - /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-sysupgrade.bin
+sh /home/gemous/openwrt/ipq5018/scripts/ubinize-image.sh    --rootfs /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/root.squashfs /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-factory.bin.tmp -p 128KiB -m 2048   -E 5	
+[rootfs]
+mode=ubi
+vol_id=0
+vol_type=dynamic
+vol_name=rootfs
+image=/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/root.squashfs
+vol_size=4346880
+[rootfs_data]
+mode=ubi
+vol_id=1
+vol_type=dynamic
+vol_name=rootfs_data
+vol_size=1MiB
+vol_flags=autoresize
+cat /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-factory.bin.tmp >> /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-factory.bin
+rm /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-factory.bin.tmp
+/home/gemous/openwrt/ipq5018/scripts/linksys-image.sh "MX2000" /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-factory.bin /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-factory.bin.new
+sha256sum "/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-sysupgrade.bin" | cut -d" " -f1 > "/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-sysupgrade.bin.sha256sum"
+[ ! -s "/home/gemous/openwrt/ipq5018/key-build" -o ! -s "/home/gemous/openwrt/ipq5018/key-build.ucert" -o ! -s "/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-sysupgrade.bin" ] || { cp "/home/gemous/openwrt/ipq5018/key-build.ucert" "/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-sysupgrade.bin.ucert" ; usign -S -m "/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-sysupgrade.bin" -s "/home/gemous/openwrt/ipq5018/key-build" -x "/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-sysupgrade.bin.sig" ; ucert -A -c "/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-sysupgrade.bin.ucert" -x "/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-sysupgrade.bin.sig" ; fwtool -S "/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-sysupgrade.bin.ucert" "/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-sysupgrade.bin" ; }
+mv /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-factory.bin.new /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-factory.bin
+cp /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-factory.bin /home/gemous/openwrt/ipq5018/bin/targets/qualcommax/ipq5018/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-factory.bin
+FIT description: ARM64 OpenWrt FIT (Flattened Image Tree)
+Created:         Sat Oct 14 13:51:53 2023
+ Image 0 (kernel-1)
+  Description:  ARM64 OpenWrt Linux-6.1.57
+  Created:      Sat Oct 14 13:51:53 2023
+  Type:         Kernel Image
+  Compression:  gzip compressed
+  Data Size:    9439457 Bytes = 9218.22 KiB = 9.00 MiB
+  Architecture: AArch64
+  OS:           Linux
+  Load Address: 0x41000000
+  Entry Point:  0x41000000
+  Hash algo:    crc32
+  Hash value:   f8c5166f
+  Hash algo:    sha1
+  Hash value:   37621cb1fe548356539603cbcf30aef5b886db9f
+ Image 1 (fdt-1)
+  Description:  ARM64 OpenWrt linksys_mx2000 device tree blob
+  Created:      Sat Oct 14 13:51:53 2023
+  Type:         Flat Device Tree
+  Compression:  uncompressed
+  Data Size:    23009 Bytes = 22.47 KiB = 0.02 MiB
+  Architecture: AArch64
+  Hash algo:    crc32
+  Hash value:   fac9550a
+  Hash algo:    sha1
+  Hash value:   e2c87119723223198d23e7be334e5a4f6ff664c3
+ Default Configuration: 'config@1'
+ Configuration 0 (config@1)
+  Description:  OpenWrt linksys_mx2000
+  Kernel:       kernel-1
+  FDT:          fdt-1
+DEVICE_ID="linksys_mx2000" SOURCE_DATE_EPOCH=1697291513 FILE_NAME="openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-factory.bin" FILE_DIR="/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp" FILE_TYPE=factory FILE_FILESYSTEM="squashfs" DEVICE_IMG_PREFIX="openwrt-qualcommax-ipq5018-linksys_mx2000" DEVICE_VENDOR="Linksys" DEVICE_MODEL="MX2000" DEVICE_VARIANT="" DEVICE_ALT0_VENDOR="" DEVICE_ALT0_MODEL="" DEVICE_ALT0_VARIANT="" DEVICE_ALT1_VENDOR="" DEVICE_ALT1_MODEL="" DEVICE_ALT1_VARIANT="" DEVICE_ALT2_VENDOR="" DEVICE_ALT2_MODEL="" DEVICE_ALT2_VARIANT="" DEVICE_ALT3_VENDOR="" DEVICE_ALT3_MODEL="" DEVICE_ALT3_VARIANT="" DEVICE_ALT4_VENDOR="" DEVICE_ALT4_MODEL="" DEVICE_ALT4_VARIANT="" DEVICE_ALT5_VENDOR="" DEVICE_ALT5_MODEL="" DEVICE_ALT5_VARIANT="" DEVICE_TITLE="Linksys MX2000" DEVICE_PACKAGES="ipq-wifi-linksys_mx2000 kmod-spi-dev" TARGET="qualcommax" SUBTARGET="ipq5018" VERSION_NUMBER="SNAPSHOT" VERSION_CODE="r24135-b357564463" SUPPORTED_DEVICES="linksys,mx2000" /home/gemous/openwrt/ipq5018/scripts/json_add_image_info.py /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/json_info_files/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-factory.bin.json
+cp /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-initramfs-uImage.itb /home/gemous/openwrt/ipq5018/bin/targets/qualcommax/ipq5018/openwrt-qualcommax-ipq5018-linksys_mx2000-initramfs-uImage.itb
+DEVICE_ID="linksys_mx2000" SOURCE_DATE_EPOCH=1697291513 FILE_NAME="openwrt-qualcommax-ipq5018-linksys_mx2000-initramfs-uImage.itb" FILE_DIR="/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp" FILE_TYPE="kernel" FILE_FILESYSTEM="initramfs" DEVICE_IMG_PREFIX="openwrt-qualcommax-ipq5018-linksys_mx2000" DEVICE_VENDOR="Linksys" DEVICE_MODEL="MX2000" DEVICE_VARIANT="" DEVICE_ALT0_VENDOR="" DEVICE_ALT0_MODEL="" DEVICE_ALT0_VARIANT="" DEVICE_ALT1_VENDOR="" DEVICE_ALT1_MODEL="" DEVICE_ALT1_VARIANT="" DEVICE_ALT2_VENDOR="" DEVICE_ALT2_MODEL="" DEVICE_ALT2_VARIANT="" DEVICE_ALT3_VENDOR="" DEVICE_ALT3_MODEL="" DEVICE_ALT3_VARIANT="" DEVICE_ALT4_VENDOR="" DEVICE_ALT4_MODEL="" DEVICE_ALT4_VARIANT="" DEVICE_ALT5_VENDOR="" DEVICE_ALT5_MODEL="" DEVICE_ALT5_VARIANT="" DEVICE_TITLE="Linksys MX2000" DEVICE_PACKAGES="ipq-wifi-linksys_mx2000 kmod-spi-dev" TARGET="qualcommax" SUBTARGET="ipq5018" VERSION_NUMBER="SNAPSHOT" VERSION_CODE="r24135-b357564463" SUPPORTED_DEVICES="linksys,mx2000" /home/gemous/openwrt/ipq5018/scripts/json_add_image_info.py /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/json_info_files/openwrt-qualcommax-ipq5018-linksys_mx2000-initramfs-uImage.itb.json
+cp /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-sysupgrade.bin /home/gemous/openwrt/ipq5018/bin/targets/qualcommax/ipq5018/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-sysupgrade.bin
+DEVICE_ID="linksys_mx2000" SOURCE_DATE_EPOCH=1697291513 FILE_NAME="openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-sysupgrade.bin" FILE_DIR="/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/linux-qualcommax_ipq5018/tmp" FILE_TYPE=sysupgrade FILE_FILESYSTEM="squashfs" DEVICE_IMG_PREFIX="openwrt-qualcommax-ipq5018-linksys_mx2000" DEVICE_VENDOR="Linksys" DEVICE_MODEL="MX2000" DEVICE_VARIANT="" DEVICE_ALT0_VENDOR="" DEVICE_ALT0_MODEL="" DEVICE_ALT0_VARIANT="" DEVICE_ALT1_VENDOR="" DEVICE_ALT1_MODEL="" DEVICE_ALT1_VARIANT="" DEVICE_ALT2_VENDOR="" DEVICE_ALT2_MODEL="" DEVICE_ALT2_VARIANT="" DEVICE_ALT3_VENDOR="" DEVICE_ALT3_MODEL="" DEVICE_ALT3_VARIANT="" DEVICE_ALT4_VENDOR="" DEVICE_ALT4_MODEL="" DEVICE_ALT4_VARIANT="" DEVICE_ALT5_VENDOR="" DEVICE_ALT5_MODEL="" DEVICE_ALT5_VARIANT="" DEVICE_TITLE="Linksys MX2000" DEVICE_PACKAGES="ipq-wifi-linksys_mx2000 kmod-spi-dev" TARGET="qualcommax" SUBTARGET="ipq5018" VERSION_NUMBER="SNAPSHOT" VERSION_CODE="r24135-b357564463" SUPPORTED_DEVICES="linksys,mx2000" /home/gemous/openwrt/ipq5018/scripts/json_add_image_info.py /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/json_info_files/openwrt-qualcommax-ipq5018-linksys_mx2000-squashfs-sysupgrade.bin.json
+IPKG_NO_SCRIPT=1 IPKG_INSTROOT=/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root.orig-qualcommax TMPDIR=/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root.orig-qualcommax/tmp /home/gemous/openwrt/ipq5018/staging_dir/host/bin/opkg --offline-root /home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/root.orig-qualcommax --force-postinstall --add-dest root:/ --add-arch all:100 --add-arch aarch64_cortex-a53:200 list-installed > /home/gemous/openwrt/ipq5018/bin/targets/qualcommax/ipq5018/openwrt-qualcommax-ipq5018-linksys_mx2000.manifest
+make[5]: Leaving directory '/home/gemous/openwrt/ipq5018/target/linux/qualcommax/image'
+make[4]: Leaving directory '/home/gemous/openwrt/ipq5018/target/linux/qualcommax'
+make[3]: Leaving directory '/home/gemous/openwrt/ipq5018/target/linux'
+time: target/linux/install#41.43#7.28#19.39
+make[2]: Leaving directory '/home/gemous/openwrt/ipq5018'
+export MAKEFLAGS= ;make -w -r package/index
+make[2]: Entering directory '/home/gemous/openwrt/ipq5018'
+Generating package index...
+Generating index for package ./base-files_1542-r24135-b357564463_aarch64_cortex-a53.ipk
+Generating index for package ./dropbear_2022.82-5_aarch64_cortex-a53.ipk
+Generating index for package ./fstools_2023-02-28-bfe882d5-1_aarch64_cortex-a53.ipk
+Generating index for package ./fwtool_2019-11-12-8f7fe925-1_aarch64_cortex-a53.ipk
+Generating index for package ./ipq-wifi-linksys_mx2000_2023-09-16-57aa1b15-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-ath11k-ahb_6.1.57+6.5-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-ath11k_6.1.57+6.5-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-ath_6.1.57+6.5-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-bluetooth_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-cfg80211_6.1.57+6.5-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-crypto-acompress_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-crypto-aead_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-crypto-ccm_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-crypto-cmac_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-crypto-crc32c_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-crypto-ctr_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-crypto-ecb_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-crypto-ecdh_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-crypto-gcm_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-crypto-gf128_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-crypto-ghash_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-crypto-hash_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-crypto-hmac_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-crypto-kpp_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-crypto-manager_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-crypto-michael-mic_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-crypto-null_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-crypto-rng_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-crypto-seqiv_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-crypto-sha512_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-fs-ext4_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-gpio-button-hotplug_6.1.57-3_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-hid_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-hwmon-core_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-input-core_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-input-evdev_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-leds-gpio_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-lib-crc-ccitt_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-lib-crc16_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-lib-crc32c_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-lib-lzo_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-mac80211_6.1.57+6.5-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-nf-conntrack6_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-nf-conntrack_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-nf-flow_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-nf-log6_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-nf-log_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-nf-nat_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-nf-reject6_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-nf-reject_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-nfnetlink_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-nft-core_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-nft-fib_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-nft-nat_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-nft-offload_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-nls-base_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-ppp_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-pppoe_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-pppox_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-qca-nss-dp_6.1.57+2023-06-06-fa674644-2_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-qca-ssdk_6.1.57+2023-06-06-74caf88a-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-qrtr-smd_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-qrtr_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-regmap-core_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-slhc_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-spi-dev_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-thermal_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-usb-core_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-usb-dwc3-qcom_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-usb-dwc3_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-usb-xhci-hcd_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./kmod-usb3_6.1.57-1_aarch64_cortex-a53.ipk
+Generating index for package ./libgcc1_12.3.0-4_aarch64_cortex-a53.ipk
+Generating index for package ./libpthread_1.2.4-4_aarch64_cortex-a53.ipk
+Generating index for package ./librt_1.2.4-4_aarch64_cortex-a53.ipk
+Generating index for package ./mtd_26_aarch64_cortex-a53.ipk
+Generating index for package ./ubi-utils_2.1.5-1_aarch64_cortex-a53.ipk
+Generating index for package ./uboot-envtools_2023.07.02-2_aarch64_cortex-a53.ipk
+Generating index for package ./busybox_1.36.1-1_aarch64_cortex-a53.ipk
+Generating index for package ./ca-bundle_20230311-1_all.ipk
+Generating index for package ./dnsmasq_2.89-6_aarch64_cortex-a53.ipk
+Generating index for package ./e2fsprogs_1.47.0-2_aarch64_cortex-a53.ipk
+Generating index for package ./firewall4_2023-09-01-598d9fbb-1_aarch64_cortex-a53.ipk
+Generating index for package ./getrandom_2022-08-13-4c7b720b-2_aarch64_cortex-a53.ipk
+Generating index for package ./hostapd-common_2023-09-08-e5ccbfc6-4_aarch64_cortex-a53.ipk
+Generating index for package ./iw_5.19-1_aarch64_cortex-a53.ipk
+Generating index for package ./iwinfo_2023-07-01-ca79f641-1_aarch64_cortex-a53.ipk
+Generating index for package ./jansson4_2.14-3_aarch64_cortex-a53.ipk
+Generating index for package ./jshn_2023-05-23-75a3b870-1_aarch64_cortex-a53.ipk
+Generating index for package ./jsonfilter_2018-02-04-c7e938d6-1_aarch64_cortex-a53.ipk
+Generating index for package ./libblkid1_2.39.2-1_aarch64_cortex-a53.ipk
+Generating index for package ./libblobmsg-json20230523_2023-05-23-75a3b870-1_aarch64_cortex-a53.ipk
+Generating index for package ./libcomerr0_1.47.0-2_aarch64_cortex-a53.ipk
+Generating index for package ./libext2fs2_1.47.0-2_aarch64_cortex-a53.ipk
+Generating index for package ./libiwinfo-data_2023-07-01-ca79f641-1_aarch64_cortex-a53.ipk
+Generating index for package ./libiwinfo20230701_2023-07-01-ca79f641-1_aarch64_cortex-a53.ipk
+Generating index for package ./libjson-c5_0.17-1_aarch64_cortex-a53.ipk
+Generating index for package ./libjson-script20230523_2023-05-23-75a3b870-1_aarch64_cortex-a53.ipk
+Generating index for package ./libmbedtls12_2.28.5-1_aarch64_cortex-a53.ipk
+Generating index for package ./libmnl0_1.0.5-1_aarch64_cortex-a53.ipk
+Generating index for package ./libnftnl11_1.2.6-1_aarch64_cortex-a53.ipk
+Generating index for package ./libnl-tiny1_2023-07-27-bc92a280-1_aarch64_cortex-a53.ipk
+Generating index for package ./libsmartcols1_2.39.2-1_aarch64_cortex-a53.ipk
+Generating index for package ./libss2_1.47.0-2_aarch64_cortex-a53.ipk
+Generating index for package ./libubox20230523_2023-05-23-75a3b870-1_aarch64_cortex-a53.ipk
+Generating index for package ./libubus20230605_2023-06-05-f787c97b-1_aarch64_cortex-a53.ipk
+Generating index for package ./libuci20130104_2023-08-10-5781664d-1_aarch64_cortex-a53.ipk
+Generating index for package ./libuclient20201210_2023-04-13-007d9454-1_aarch64_cortex-a53.ipk
+Generating index for package ./libucode20220812_2023-06-06-c7d84aae-1_aarch64_cortex-a53.ipk
+Generating index for package ./libustream-mbedtls20201210_2023-02-25-498f6e26-1_aarch64_cortex-a53.ipk
+Generating index for package ./libuuid1_2.39.2-1_aarch64_cortex-a53.ipk
+Generating index for package ./logd_2022-08-13-4c7b720b-2_aarch64_cortex-a53.ipk
+Generating index for package ./losetup_2.39.2-1_aarch64_cortex-a53.ipk
+Generating index for package ./netifd_2023-09-19-7a58b995-2_aarch64_cortex-a53.ipk
+Generating index for package ./nftables-json_1.0.8-1_aarch64_cortex-a53.ipk
+Generating index for package ./odhcp6c_2023-05-12-bcd28363-20_aarch64_cortex-a53.ipk
+Generating index for package ./odhcpd-ipv6only_2023-06-24-52112643-1_aarch64_cortex-a53.ipk
+Generating index for package ./openwrt-keyring_2022-03-25-62471e69-2_aarch64_cortex-a53.ipk
+Generating index for package ./opkg_2022-02-24-d038e5b6-2_aarch64_cortex-a53.ipk
+Generating index for package ./ppp-mod-pppoe_2.4.9.git-2021-01-04-5_aarch64_cortex-a53.ipk
+Generating index for package ./ppp_2.4.9.git-2021-01-04-5_aarch64_cortex-a53.ipk
+Generating index for package ./procd-seccomp_2023-06-25-2db83655-3_aarch64_cortex-a53.ipk
+Generating index for package ./procd-ujail_2023-06-25-2db83655-3_aarch64_cortex-a53.ipk
+Generating index for package ./procd_2023-06-25-2db83655-3_aarch64_cortex-a53.ipk
+Generating index for package ./ubox_2022-08-13-4c7b720b-2_aarch64_cortex-a53.ipk
+Generating index for package ./ubus_2023-06-05-f787c97b-1_aarch64_cortex-a53.ipk
+Generating index for package ./ubusd_2023-06-05-f787c97b-1_aarch64_cortex-a53.ipk
+Generating index for package ./uci_2023-08-10-5781664d-1_aarch64_cortex-a53.ipk
+Generating index for package ./uclient-fetch_2023-04-13-007d9454-1_aarch64_cortex-a53.ipk
+Generating index for package ./ucode-mod-fs_2023-06-06-c7d84aae-1_aarch64_cortex-a53.ipk
+Generating index for package ./ucode-mod-nl80211_2023-06-06-c7d84aae-1_aarch64_cortex-a53.ipk
+Generating index for package ./ucode-mod-rtnl_2023-06-06-c7d84aae-1_aarch64_cortex-a53.ipk
+Generating index for package ./ucode-mod-ubus_2023-06-06-c7d84aae-1_aarch64_cortex-a53.ipk
+Generating index for package ./ucode-mod-uci_2023-06-06-c7d84aae-1_aarch64_cortex-a53.ipk
+Generating index for package ./ucode-mod-uloop_2023-06-06-c7d84aae-1_aarch64_cortex-a53.ipk
+Generating index for package ./ucode_2023-06-06-c7d84aae-1_aarch64_cortex-a53.ipk
+Generating index for package ./urandom-seed_3_aarch64_cortex-a53.ipk
+Generating index for package ./urngd_2023-07-25-7aefb47b-1_aarch64_cortex-a53.ipk
+Generating index for package ./usign_2020-05-23-f1f65026-1_aarch64_cortex-a53.ipk
+Generating index for package ./wireless-regdb_2023.09.01-1_all.ipk
+Generating index for package ./wpad-basic-mbedtls_2023-09-08-e5ccbfc6-4_aarch64_cortex-a53.ipk
+Signing package index...
+make[2]: Leaving directory '/home/gemous/openwrt/ipq5018'
+export MAKEFLAGS= ;make -w -r json_overview_image_info
+make[2]: Entering directory '/home/gemous/openwrt/ipq5018'
+WORK_DIR=/home/gemous/openwrt/ipq5018/build_dir/target-aarch64_cortex-a53_musl/json_info_files /home/gemous/openwrt/ipq5018/scripts/json_overview_image_info.py /home/gemous/openwrt/ipq5018/bin/targets/qualcommax/ipq5018/profiles.json 
+make[2]: Leaving directory '/home/gemous/openwrt/ipq5018'
+export MAKEFLAGS= ;make -w -r checksum
+make[2]: Entering directory '/home/gemous/openwrt/ipq5018'
+make[2]: Leaving directory '/home/gemous/openwrt/ipq5018'
+make[1]: Leaving directory '/home/gemous/openwrt/ipq5018'

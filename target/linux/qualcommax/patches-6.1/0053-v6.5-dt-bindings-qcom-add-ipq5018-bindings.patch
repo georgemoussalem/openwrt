@@ -1,0 +1,30 @@
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -29,6 +29,7 @@ description: |
+         apq8074
+         apq8084
+         apq8096
++        ipq5018
+         ipq6018
+         ipq8074
+         mdm9615
+@@ -75,6 +76,7 @@ description: |
+         liquid
+         mtp
+         qrd
++        rdp432-c2
+         sbc
+ 
+   The 'soc_version' and 'board_version' elements take the form of v<Major>.<Minor>
+@@ -255,6 +257,11 @@ properties:
+ 
+       - items:
+           - enum:
++              - qcom,ipq5018-rdp432-c2
++          - const: qcom,ipq5018
++
++      - items:
++          - enum:
+               - qcom,ipq8064-ap148
+           - const: qcom,ipq8064
+ 
