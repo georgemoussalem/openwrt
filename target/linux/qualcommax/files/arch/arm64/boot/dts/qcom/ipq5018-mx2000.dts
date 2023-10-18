@@ -213,6 +213,7 @@
 				// MAC0 -> GE Phy -> QCA8337 Phy4
 				port@0 {
 					port_id = <1>;
+					mdiobus = <&mdio0>;
 					phy_address = <7>;
 				};
 				// MAC1 ---SGMII---> QCA8337 MAC6
@@ -240,8 +241,6 @@
 
 			reset_gpio = <&tlmm 39 GPIO_ACTIVE_LOW>;
 			
-			status = "okay";
-
 			switch_cpu_bmp = <0x40>;  	/* cpu port bitmap: port 6 */
 			switch_lan_bmp = <0x38>; 	/* lan port bitmap: port 3 4 5 */
 			switch_wan_bmp = <0x04>;  	/* wan port bitmap: port 2 */
@@ -255,32 +254,34 @@
 					0x0007c 0x4e        /* PORT0_STATUS */
 					0x00094 0x4e        /* PORT6_STATUS */
 			>;
+			
+			status = "okay";
+
 			qcom,port_phyinfo {
-				// MAC2 -> Phy0 -> WAN
+				// MAC0 -> SGMII -> IPQ5018 MAC1
 				port@0 {
 					port_id = <1>;
 					phy_address = <0>;
 				};
-
-				// MAC3 -> Phy1 -> LAN1
+				// MAC1 -> Phy0 -> WAN
 				port@1 {
 					port_id = <2>;
 					phy_address = <1>;
 				};
 
-				// MAC4 -> Phy2 -> LAN2
+				// MAC2 -> Phy1 -> LAN1
 				port@2 {
 					port_id = <3>;
 					phy_address = <2>;
 				};
 
-				// MAC5 -> Phy3 -> LAN3
+				// MAC3 -> Phy2 -> LAN2
 				port@3 {
 					port_id = <4>;
 					phy_address = <3>;
 				};
 
-				// MAC6 ---SGMII---> IPQ5018 MAC1
+				// MAC4 -> Phy3 -> LAN3
 				port@4 {
 					port_id = <5>;
 					phy_address = <4>;
@@ -293,38 +294,37 @@
 		compatible = "qcom,ess-uniphy";
 		reg = <0x98000 0x800>;
 		uniphy_access_mode = "local bus";
-
-		status = "disabled";
 	};
 
-	// MAC0 -> GE Phy
+	// IPQ5018 MAC0 -> GE Phy
 	dp1 {
 		compatible = "qcom,nss-dp";
-		reg = <0x39c00000 0x10000>;
 		device_type = "network";
+		qcom,id = <1>;
+
+		reg = <0x39C00000 0x10000>;
+		interrupts = <GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>;
 		clocks = <&gcc GCC_SNOC_GMAC0_AXI_CLK>;
 		clock-names = "nss-snoc-gmac-axi-clk";
-		qcom,id = <1>;
-		interrupts = <GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>;
-		qcom,mactype = <2>;
-		qcom,link-poll = <1>;
-		qcom,phy-mdio-addr = <7>;
-		mdio-bus = <&mdio>;
+
+		qcom,mactype = <2>; // GMAC_HAL_TYPE_SYN_GMAC
 		local-mac-address = [000000000000];
+		phy-handle = <&ipq5018_0>;
 		phy-mode = "sgmii";
-		qcom,rx-page-mode = <0>;
 		status = "okay";
 	};
 
-	// MAC1 ---SGMII---> QCA8337 SerDes
+	// IPQ5018 MAC1 -> SGMII -> QCA8337 SerDes
     dp2 {
 		compatible = "qcom,nss-dp";
 		reg = <0x39d00000 0x10000>;
 		device_type = "network";
+		qcom,id = <2>;
+
 		clocks = <&gcc GCC_SNOC_GMAC1_AXI_CLK>;
 		clock-names = "nss-snoc-gmac-axi-clk";
-		qcom,id = <2>;
 		interrupts = <GIC_SPI 109 IRQ_TYPE_LEVEL_HIGH>;
+
 		qcom,mactype = <2>;
 		local-mac-address = [000000000000];
 		phy-mode = "sgmii";
@@ -367,12 +367,11 @@
 	pinctrl-names = "default";
 };
 
-&mdio {
+&mdio0 {
 	status = "okay";
 
 	resets = <&gcc GCC_GEPHY_MDC_SW_ARES>;
 	reset-names = "gephy_mdc_rst";
-	/*reset-name = "phy";*/
 
 	//IPQ5018 GE Phy -> QCA8337 Phy0
 	ipq5018_0: ethernet-phy@0 {
@@ -385,7 +384,7 @@
 
 	pinctrl-0 = <&mdio1_pins>;
 	pinctrl-names = "default";
-	reset-gpios = <&tlmm 39 GPIO_ACTIVE_LOW>;
+	phy-reset-gpio = <&tlmm 39 GPIO_ACTIVE_LOW>;
 
 	// QCA8337 Phy0 -> IPQ5018 GE Phy
 	qca8337_0: ethernet-phy@0 {
