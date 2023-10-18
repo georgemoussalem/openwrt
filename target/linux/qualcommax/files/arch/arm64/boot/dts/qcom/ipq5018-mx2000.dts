@@ -149,7 +149,6 @@
 			compatible = "qcom,ess-switch-ipq50xx";
 			reg = <0x39c00000 0x200000>;
 			switch_access_mode = "local bus";
-			mdio-bus = <&mdio>;
 
 			clocks = <&gcc GCC_CMN_BLK_AHB_CLK>,
 				<&gcc GCC_CMN_BLK_SYS_CLK>,
@@ -239,7 +238,7 @@
 			switch_access_mode = "mdio";
 			mdio-bus = <&mdio1>;
 
-			reset_gpio = <39>;
+			reset_gpio = <&tlmm 39 GPIO_ACTIVE_LOW>;
 			
 			status = "okay";
 
@@ -294,24 +293,42 @@
 		compatible = "qcom,ess-uniphy";
 		reg = <0x98000 0x800>;
 		uniphy_access_mode = "local bus";
+
+		status = "disabled";
 	};
 
-    dp2: dp2 {
-		device_type = "network";
+	// MAC0 -> GE Phy
+	dp1 {
 		compatible = "qcom,nss-dp";
-		reg = <0x39d00000 0x10000>;
-		qcom,id = <2>;
-		clocks = <&gcc GCC_SNOC_GMAC1_AXI_CLK>;
+		reg = <0x39c00000 0x10000>;
+		device_type = "network";
+		clocks = <&gcc GCC_SNOC_GMAC0_AXI_CLK>;
 		clock-names = "nss-snoc-gmac-axi-clk";
-		interrupts = <GIC_SPI 109 IRQ_TYPE_LEVEL_HIGH>;
+		qcom,id = <1>;
+		interrupts = <GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>;
 		qcom,mactype = <2>;
-		/* 
-		*qcom,link-poll = <1>;
-		*qcom,phy-mdio-addr = <7>;
-		*mdio-bus = <&mdio0>;
-		*/
+		qcom,link-poll = <1>;
+		qcom,phy-mdio-addr = <7>;
+		mdio-bus = <&mdio>;
 		local-mac-address = [000000000000];
 		phy-mode = "sgmii";
+		qcom,rx-page-mode = <0>;
+		status = "okay";
+	};
+
+	// MAC1 ---SGMII---> QCA8337 SerDes
+    dp2 {
+		compatible = "qcom,nss-dp";
+		reg = <0x39d00000 0x10000>;
+		device_type = "network";
+		clocks = <&gcc GCC_SNOC_GMAC1_AXI_CLK>;
+		clock-names = "nss-snoc-gmac-axi-clk";
+		qcom,id = <2>;
+		interrupts = <GIC_SPI 109 IRQ_TYPE_LEVEL_HIGH>;
+		qcom,mactype = <2>;
+		local-mac-address = [000000000000];
+		phy-mode = "sgmii";
+		qcom,rx-page-mode = <0>;
 		status = "okay";
 	};
 };
@@ -357,7 +374,7 @@
 	reset-names = "gephy_mdc_rst";
 	/*reset-name = "phy";*/
 
-	//IPQ5018 -> QCA8337 Phy4
+	//IPQ5018 GE Phy -> QCA8337 Phy0
 	ipq5018_0: ethernet-phy@0 {
 		reg = <7>;
 	};
@@ -368,29 +385,29 @@
 
 	pinctrl-0 = <&mdio1_pins>;
 	pinctrl-names = "default";
-	/*reset-gpios = <&tlmm 39 0>;*/
+	reset-gpios = <&tlmm 39 GPIO_ACTIVE_LOW>;
 
-	// QCA8337 Phy0 -> WAN
+	// QCA8337 Phy0 -> IPQ5018 GE Phy
 	qca8337_0: ethernet-phy@0 {
 		reg = <0>;
 	};
 
-	// QCA8337 Phy1 -> LAN1
+	// QCA8337 Phy1 -> WAN
 	qca8337_1: ethernet-phy@1 {
 		reg = <1>;
 	};
 
-	// QCA8337 Phy2 -> LAN2
+	// QCA8337 Phy2 -> LAN1
 	qca8337_2: ethernet-phy@2 {
 		reg = <2>;
 	};
 
-	// QCA8337 Phy3 -> LAN3
+	// QCA8337 Phy3 -> LAN2
 	qca8337_3: ethernet-phy@3 {
 		reg = <3>;
 	};
 
-	// QCA8337 Phy4 -> IPQ5018
+	// QCA8337 Phy4 -> LAN3
 	qca8337_4: ethernet-phy@4 {
 		reg = <4>;
 	};

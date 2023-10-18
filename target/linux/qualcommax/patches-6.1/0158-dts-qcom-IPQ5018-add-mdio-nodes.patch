@@ -4,8 +4,8 @@
  			#thermal-sensor-cells = <1>;
  		};
  
-+		mdio: mdio@88000 {
-+			compatible = "qcom,ipq5018-mdio", "qcom,ipq4019-mdio";
++		mdio0: mdio@88000 {
++			compatible = "qcom,ipq5018-mdio", "qcom,ipq40xx-mdio";
 +			reg = <0x00088000 0x64>, <0x19475C4 0x4>;
 +			#address-cells = <1>;
 +			#size-cells = <0>;
