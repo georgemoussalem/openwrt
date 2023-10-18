@@ -1,8 +1,6 @@
-diff --git a/drivers/net/wireless/ath/ath11k/hw.c b/drivers/net/wireless/ath/ath11k/hw.c
-index 39a97a779b61..ab8f0ccacc6b 100644
 --- a/drivers/net/wireless/ath/ath11k/hw.c
 +++ b/drivers/net/wireless/ath/ath11k/hw.c
-@@ -791,6 +791,49 @@ static void ath11k_hw_wcn6855_reo_setup(struct ath11k_base *ab)
+@@ -791,6 +791,49 @@ static void ath11k_hw_wcn6855_reo_setup(
  			   ring_hash_map);
  }
  
@@ -52,7 +50,7 @@ index 39a97a779b61..ab8f0ccacc6b 100644
  static u16 ath11k_hw_ipq8074_mpdu_info_get_peerid(u8 *tlv_data)
  {
  	u16 peer_id = 0;
-@@ -1117,6 +1160,7 @@ const struct ath11k_hw_ops ipq5018_ops = {
+@@ -1117,6 +1160,7 @@ const struct ath11k_hw_ops ipq5018_ops =
  	.rx_desc_get_mpdu_ppdu_id = ath11k_hw_qcn9074_rx_desc_get_mpdu_ppdu_id,
  	.rx_desc_set_msdu_len = ath11k_hw_qcn9074_rx_desc_set_msdu_len,
  	.rx_desc_get_attention = ath11k_hw_qcn9074_rx_desc_get_attention,

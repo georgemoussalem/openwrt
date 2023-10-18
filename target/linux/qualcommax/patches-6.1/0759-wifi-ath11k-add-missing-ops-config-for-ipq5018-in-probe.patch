@@ -1,8 +1,6 @@
-diff --git a/drivers/net/wireless/ath/ath11k/ahb.c b/drivers/net/wireless/ath/ath11k/ahb.c
-index 5cbba9a8b6ba..396548e57022 100644
 --- a/drivers/net/wireless/ath/ath11k/ahb.c
 +++ b/drivers/net/wireless/ath/ath11k/ahb.c
-@@ -1127,6 +1127,7 @@ static int ath11k_ahb_probe(struct platform_device *pdev)
+@@ -1127,6 +1127,7 @@ static int ath11k_ahb_probe(struct platf
  	switch (hw_rev) {
  	case ATH11K_HW_IPQ8074:
  	case ATH11K_HW_IPQ6018_HW10:

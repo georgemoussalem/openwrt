@@ -1,6 +1,6 @@
 --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-@@ -557,6 +557,117 @@
+@@ -559,6 +559,117 @@
  			};
  		};
  

@@ -1,5 +1,3 @@
-diff --git a/Documentation/devicetree/bindings/net/wireless/qcom,ath11k.yaml b/Documentation/devicetree/bindings/net/wireless/qcom,ath11k.yaml
-index f7cf135aa37f..a29ca77db6aa 100644
 --- a/Documentation/devicetree/bindings/net/wireless/qcom,ath11k.yaml
 +++ b/Documentation/devicetree/bindings/net/wireless/qcom,ath11k.yaml
 @@ -21,6 +21,7 @@ properties:

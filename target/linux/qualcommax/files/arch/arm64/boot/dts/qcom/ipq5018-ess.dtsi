@@ -2,7 +2,7 @@
 
 &soc {
     switch: ess-switch@0x39c00000 {
-        compatible = "qcom,ess-switch-ipq50xx";	/* checked - in qca-ssdk */
+        compatible = "qcom,ess-switch-ipq50xx";
         reg = <0x39c00000 0x200000>;
         device_id = <0>;
         switch_access_mode = "local bus";

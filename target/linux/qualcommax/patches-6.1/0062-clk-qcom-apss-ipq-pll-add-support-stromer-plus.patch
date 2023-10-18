@@ -1,8 +1,6 @@
-diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
-index 4f2a147e9fb2..cf4f0d340cbf 100644
 --- a/drivers/clk/qcom/apss-ipq-pll.c
 +++ b/drivers/clk/qcom/apss-ipq-pll.c
-@@ -24,6 +24,17 @@ static const u8 ipq_pll_offsets[][PLL_OFF_MAX_REGS] = {
+@@ -24,6 +24,17 @@ static const u8 ipq_pll_offsets[][PLL_OF
  		[PLL_OFF_TEST_CTL] = 0x30,
  		[PLL_OFF_TEST_CTL_U] = 0x34,
  	},
@@ -20,7 +18,7 @@ index 4f2a147e9fb2..cf4f0d340cbf 100644
  };
  
  static struct clk_alpha_pll ipq_pll_huayra = {
-@@ -44,6 +55,38 @@ static struct clk_alpha_pll ipq_pll_huayra = {
+@@ -44,6 +55,38 @@ static struct clk_alpha_pll ipq_pll_huay
  	},
  };
  
@@ -59,7 +57,7 @@ index 4f2a147e9fb2..cf4f0d340cbf 100644
  static const struct alpha_pll_config ipq6018_pll_config = {
  	.l = 0x37,
  	.config_ctl_val = 0x240d4828,
-@@ -69,16 +112,25 @@ static const struct alpha_pll_config ipq8074_pll_config = {
+@@ -69,16 +112,25 @@ static const struct alpha_pll_config ipq
  };
  
  struct apss_pll_data {
@@ -85,7 +83,7 @@ index 4f2a147e9fb2..cf4f0d340cbf 100644
  	.pll = &ipq_pll_huayra,
  	.pll_config = &ipq6018_pll_config,
  };
-@@ -111,7 +163,10 @@ static int apss_ipq_pll_probe(struct platform_device *pdev)
+@@ -111,7 +163,10 @@ static int apss_ipq_pll_probe(struct pla
  	if (!data)
  		return -ENODEV;
  
@@ -97,7 +95,7 @@ index 4f2a147e9fb2..cf4f0d340cbf 100644
  
  	ret = devm_clk_register_regmap(dev, &data->pll->clkr);
  	if (ret)
-@@ -122,6 +177,7 @@ static int apss_ipq_pll_probe(struct platform_device *pdev)
+@@ -122,6 +177,7 @@ static int apss_ipq_pll_probe(struct pla
  }
  
  static const struct of_device_id apss_ipq_pll_match_table[] = {

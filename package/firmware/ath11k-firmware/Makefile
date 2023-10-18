@@ -79,15 +79,15 @@ endef
 $(eval $(call Download,ipq5018-board))
 
 define Package/ath11k-firmware-ipq5018/install
-	$(INSTALL_DIR) $(1)/lib/firmware/ath11k/IPQ5018/hw1.0/
+	$(INSTALL_DIR) $(1)/lib/firmware/IPQ5018/
 	$(INSTALL_DATA) \
 		$(PKG_BUILD_DIR)/ath11k-firmware/IPQ5018_QCN6122_QCN6122/hw1.0/2.7.0.1/WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1/m3* \
-		$(1)/lib/firmware/ath11k/IPQ5018/hw1.0/
+		$(1)/lib/firmware/IPQ5018/
 	$(INSTALL_DATA) \
 		$(PKG_BUILD_DIR)/ath11k-firmware/IPQ5018_QCN6122_QCN6122/hw1.0/2.7.0.1/WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1/q6* \
-		$(1)/lib/firmware/ath11k/IPQ5018/hw1.0/
+		$(1)/lib/firmware/IPQ5018/
 	$(INSTALL_BIN) \
-		$(DL_DIR)/$(IPQ5018_BOARD_FILE) $(1)/lib/firmware/ath11k/IPQ5018/hw1.0/board-2.bin
+		$(DL_DIR)/$(IPQ5018_BOARD_FILE) $(1)/lib/firmware/IPQ5018/board-2.bin
 endef
 
 define Package/ath11k-firmware-ipq8074/install
@@ -98,15 +98,15 @@ define Package/ath11k-firmware-ipq8074/install
 endef
 
 define Package/ath11k-firmware-qcn6122/install
-	$(INSTALL_DIR) $(1)/lib/firmware/ath11k/QCN6122/hw1.0/
+	$(INSTALL_DIR) $(1)/lib/firmware/QCN6122/
 	$(INSTALL_DATA) \
 		$(PKG_BUILD_DIR)/ath11k-firmware/IPQ5018_QCN6122_QCN6122/hw1.0/2.7.0.1/WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1/q6* \
-		$(1)/lib/firmware/ath11k/QCN6122/hw1.0/
+		$(1)/lib/firmware/QCN6122/
 	$(INSTALL_DATA) \
 		$(PKG_BUILD_DIR)/ath11k-firmware/IPQ5018_QCN6122_QCN6122/hw1.0/2.7.0.1/WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1/qcn6122/* \
-		$(1)/lib/firmware/ath11k/QCN6122/hw1.0/
+		$(1)/lib/firmware/QCN6122/
 	$(INSTALL_BIN) \
-		$(DL_DIR)/$(IPQ5018_BOARD_FILE) $(1)/lib/firmware/ath11k/QCN6122/hw1.0/board-2.bin
+		$(DL_DIR)/$(IPQ5018_BOARD_FILE) $(1)/lib/firmware/QCN6122/board-2.bin
 endef
 
 define Package/ath11k-firmware-qcn9074/install
@@ -118,5 +118,7 @@ define Package/ath11k-firmware-qcn9074/install
 		$(DL_DIR)/$(QCN9074_BOARD_FILE) $(1)/lib/firmware/ath11k/QCN9074/hw1.0/board-2.bin
 endef
 
+$(eval $(call BuildPackage,ath11k-firmware-ipq5018))
 $(eval $(call BuildPackage,ath11k-firmware-ipq8074))
+$(eval $(call BuildPackage,ath11k-firmware-qcn6122))
 $(eval $(call BuildPackage,ath11k-firmware-qcn9074))

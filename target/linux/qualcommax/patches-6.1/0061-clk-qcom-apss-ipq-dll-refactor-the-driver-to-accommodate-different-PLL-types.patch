@@ -1,5 +1,3 @@
-diff --git a/drivers/clk/qcom/apss-ipq-pll.c b/drivers/clk/qcom/apss-ipq-pll.c
-index a5aea27eb867..4f2a147e9fb2 100644
 --- a/drivers/clk/qcom/apss-ipq-pll.c
 +++ b/drivers/clk/qcom/apss-ipq-pll.c
 @@ -8,20 +8,27 @@
@@ -41,7 +39,7 @@ index a5aea27eb867..4f2a147e9fb2 100644
  	.flags = SUPPORTS_DYNAMIC_UPDATE,
  	.clkr = {
  		.enable_reg = 0x0,
-@@ -61,6 +68,21 @@ static const struct alpha_pll_config ipq8074_pll_config = {
+@@ -61,6 +68,21 @@ static const struct alpha_pll_config ipq
  	.test_ctl_hi_val = 0x4000,
  };
  
@@ -63,7 +61,7 @@ index a5aea27eb867..4f2a147e9fb2 100644
  static const struct regmap_config ipq_pll_regmap_config = {
  	.reg_bits		= 32,
  	.reg_stride		= 4,
-@@ -71,7 +93,7 @@ static const struct regmap_config ipq_pll_regmap_config = {
+@@ -71,7 +93,7 @@ static const struct regmap_config ipq_pl
  
  static int apss_ipq_pll_probe(struct platform_device *pdev)
  {
@@ -72,7 +70,7 @@ index a5aea27eb867..4f2a147e9fb2 100644
  	struct device *dev = &pdev->dev;
  	struct regmap *regmap;
  	void __iomem *base;
-@@ -85,23 +107,23 @@ static int apss_ipq_pll_probe(struct platform_device *pdev)
+@@ -85,23 +107,23 @@ static int apss_ipq_pll_probe(struct pla
  	if (IS_ERR(regmap))
  		return PTR_ERR(regmap);
  

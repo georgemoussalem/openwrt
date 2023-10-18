@@ -1,6 +1,3 @@
-diff --git a/Documentation/devicetree/bindings/clock/qcom,ipq5018-gcc.yaml b/Documentation/devicetree/bindings/clock/qcom,ipq5018-gcc.yaml
-new file mode 100644
-index 0000000..ef84a0c
 --- /dev/null
 +++ b/Documentation/devicetree/bindings/clock/qcom,ipq5018-gcc.yaml
 @@ -0,0 +1,63 @@
@@ -67,9 +64,6 @@ index 0000000..ef84a0c
 +      #power-domain-cells = <1>;
 +    };
 +...
-diff --git a/include/dt-bindings/clock/qcom,gcc-ipq5018.h b/include/dt-bindings/clock/qcom,gcc-ipq5018.h
-new file mode 100644
-index 0000000..f3de2fd
 --- /dev/null
 +++ b/include/dt-bindings/clock/qcom,gcc-ipq5018.h
 @@ -0,0 +1,183 @@
@@ -256,9 +250,6 @@ index 0000000..f3de2fd
 +#define GMAC1_RX_DIV_CLK_SRC				172
 +#define GMAC1_TX_DIV_CLK_SRC				173
 +#endif
-diff --git a/include/dt-bindings/reset/qcom,gcc-ipq5018.h b/include/dt-bindings/reset/qcom,gcc-ipq5018.h
-new file mode 100644
-index 0000000..8f03c92
 --- /dev/null
 +++ b/include/dt-bindings/reset/qcom,gcc-ipq5018.h
 @@ -0,0 +1,122 @@

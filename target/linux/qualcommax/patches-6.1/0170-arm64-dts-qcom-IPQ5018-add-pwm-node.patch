@@ -1,13 +1,13 @@
 --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-@@ -376,6 +376,24 @@
+@@ -378,6 +378,24 @@
  			#hwlock-cells = <1>;
  		};
  
 +		tcsr: syscon@1937000 {
 +			compatible = "qcom,tcsr-ipq5018", "syscon", "simple-mfd";
 +			reg = <0x01937000 0x21000>;
-+			ranges = <0x0 0x01937000 0x21000>;
++			ranges = <0x0 0x0 0x01937000 0x21000>;
 +			#address-cells = <1>;
 +			#size-cells = <1>;
 +

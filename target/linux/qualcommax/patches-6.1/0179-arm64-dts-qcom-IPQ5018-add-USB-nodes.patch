@@ -1,6 +1,6 @@
 --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-@@ -173,6 +173,19 @@
+@@ -175,6 +175,19 @@
  		#size-cells = <1>;
  		ranges = <0 0 0 0xffffffff>;
  
@@ -20,7 +20,7 @@
  		qfprom: efuse@a0000 {
  			compatible = "qcom,ipq5018-qfprom", "qcom,qfprom";
  			reg = <0xa0000 0x1000>;
-@@ -499,6 +512,48 @@
+@@ -501,6 +514,48 @@
  			status = "disabled";
  		};
  

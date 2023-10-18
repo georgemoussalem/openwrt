@@ -1,7 +1,7 @@
 /dts-v1/;
 
 #include "ipq5018.dtsi"
-#include "ipq5018-ess.dtsi"
+/*#include "ipq5018-ess.dtsi"*/
 
 #include <dt-bindings/gpio/gpio.h>
 #include <dt-bindings/input/input.h>
@@ -13,6 +13,13 @@
 
     aliases {
 		serial0 = &blsp1_uart1;
+
+		/*
+		led-boot = &led_system_blue;
+		led-failsafe = &led_system_red;
+		led-running = &led_system_blue;
+		led-upgrade = &led_system_red;
+		*/
 	};
 
     chosen {
@@ -39,12 +46,32 @@
 		};
 	};
 
-	reserved-memory {
-		q6_mem_regions: q6_mem_regions@4b000000 {
-			no-map;
-			reg = <0x0 0x4b000000 0x0 0x5400000>;
+	/*
+	leds {
+		compatible = "pwm-leds";
+
+		led_system_red: red {
+			label = "red:system";
+			pwms = <&pwm 3 1250000>;
+			max-brightness = <255>;
 		};
 
+		green {
+			label = "green:system";
+			pwms = <&pwm 0 1250000>;
+			max-brightness = <255>;
+		};
+
+		led_system_blue: blue {
+			label = "blue:system";
+			pwms = <&pwm 1 1250000>;
+			max-brightness = <255>;
+			linux,default-trigger = "default-on";
+		};
+	};
+	*/
+
+	reserved-memory {
 		/*
 		q6_code_data: q6_code_data@4b000000 {
 			no-map;
@@ -115,58 +142,177 @@
 };
 
 &soc {
-	switch1: ess-switch@1 {
-		compatible = "qcom,ess-switch-qca83xx";
-		device_id = <1>;
-		switch_access_mode = "mdio";
-		mdio-bus = <&mdio1>;
-		
-		status = "okay";
+	ess-instance {
+		num_devices = <2>;
 
-		switch_cpu_bmp = <0x40>;  	/* cpu port bitmap: port 6 */
-		switch_lan_bmp = <0x38>; 	/* lan port bitmap: port 3 4 5 */
-		switch_wan_bmp = <0x04>;  	/* wan port bitmap: port 2 */
-		qca,ar8327-initvals = <
-				0x00004 0x7600000   /* PAD0_MODE */
-				0x00008 0x1000000   /* PAD5_MODE */
-				0x0000c 0x80        /* PAD6_MODE */
-				0x00010 0x2613a0    /* PORT6 FORCE MODE*/
-				0x000e4 0xaa545     /* MAC_POWER_SEL */
-				0x000e0 0xc74164de  /* SGMII_CTRL */
-				0x0007c 0x4e        /* PORT0_STATUS */
-				0x00094 0x4e        /* PORT6_STATUS */
-		>;
-		qcom,port_phyinfo {
-			// MAC2 -> Phy0 -> WAN
-			port@0 {
-				port_id = <1>;
-				phy_address = <0>;
+		ess-switch@0x39c00000 {
+			compatible = "qcom,ess-switch-ipq50xx";
+			reg = <0x39c00000 0x200000>;
+			switch_access_mode = "local bus";
+			mdio-bus = <&mdio>;
+
+			clocks = <&gcc GCC_CMN_BLK_AHB_CLK>,
+				<&gcc GCC_CMN_BLK_SYS_CLK>,
+				<&gcc GCC_UNIPHY_AHB_CLK>,
+				<&gcc GCC_UNIPHY_SYS_CLK>,
+				<&gcc GCC_MDIO0_AHB_CLK>,
+				<&gcc GCC_MDIO1_AHB_CLK>,
+				<&gcc GCC_GMAC0_CFG_CLK>,
+				<&gcc GCC_GMAC0_SYS_CLK>,
+				<&gcc GCC_GMAC1_CFG_CLK>,
+				<&gcc GCC_GMAC1_SYS_CLK>,
+				<&gcc GCC_GEPHY_RX_CLK>,
+				<&gcc GCC_GEPHY_TX_CLK>,
+				<&gcc GCC_UNIPHY_RX_CLK>,
+				<&gcc GCC_UNIPHY_TX_CLK>,
+				<&gcc GCC_GMAC0_RX_CLK>,
+				<&gcc GCC_GMAC0_TX_CLK>,
+				<&gcc GCC_GMAC1_RX_CLK>,
+				<&gcc GCC_GMAC1_TX_CLK>,
+				<&gcc GCC_SNOC_GMAC0_AHB_CLK>,
+				<&gcc GCC_SNOC_GMAC1_AHB_CLK>,
+				<&gcc GCC_GMAC0_PTP_CLK>,
+				<&gcc GCC_GMAC1_PTP_CLK>;
+			clock-names = "cmn_ahb_clk", "cmn_sys_clk",
+					"uniphy_ahb_clk", "uniphy_sys_clk",
+					"gcc_mdio0_ahb_clk",
+					"gcc_mdio1_ahb_clk",
+					"gcc_gmac0_cfg_clk",
+					"gcc_gmac0_sys_clk",
+					"gcc_gmac1_cfg_clk",
+					"gcc_gmac1_sys_clk",
+					"uniphy0_port1_rx_clk",
+					"uniphy0_port1_tx_clk",
+					"uniphy1_port5_rx_clk",
+					"uniphy1_port5_tx_clk",
+					"nss_port1_rx_clk", "nss_port1_tx_clk",
+					"nss_port2_rx_clk", "nss_port2_tx_clk",
+					"gcc_snoc_gmac0_ahb_clk",
+					"gcc_snoc_gmac1_ahb_clk",
+					"gcc_gmac0_ptp_clk",
+					"gcc_gmac1_ptp_clk";
+			resets = <&gcc GCC_GEPHY_BCR>, 
+				<&gcc GCC_UNIPHY_BCR>,
+				<&gcc GCC_GMAC0_BCR>,
+				<&gcc GCC_GMAC1_BCR>,
+				<&gcc GCC_UNIPHY_SOFT_RESET>,
+				<&gcc GCC_GEPHY_MISC_ARES>;
+			reset-names = "gephy_bcr_rst",
+				"uniphy_bcr_rst",
+				"gmac0_bcr_rst",
+				"gmac1_bcr_rst",
+				"uniphy1_soft_rst",
+				"gephy_misc_rst";
+			
+			device_id = <0>;
+			switch_mac_mode = <0xf>; /* mac mode for uniphy instance*/
+			cmnblk_clk = "internal_96MHz"; /* cmnblk clk*/
+
+			status = "okay";
+
+			qcom,port_phyinfo {
+				// MAC0 -> GE Phy -> QCA8337 Phy4
+				port@0 {
+					port_id = <1>;
+					phy_address = <7>;
+				};
+				// MAC1 ---SGMII---> QCA8337 MAC6
+				port@1 {
+					port_id = <2>;
+					forced-speed = <1000>;
+					forced-duplex = <1>;
+				};
 			};
 
-			// MAC3 -> Phy1 -> LAN1
-			port@1 {
-				port_id = <2>;
-				phy_address = <1>;
-			};
-
-			// MAC4 -> Phy2 -> LAN2
-			port@2 {
-				port_id = <3>;
-				phy_address = <2>;
-			};
-
-			// MAC5 -> Phy3 -> LAN3
-			port@3 {
-				port_id = <4>;
-				phy_address = <3>;
-			};
-
-			// MAC6 ---SGMII---> IPQ5018 MAC1
-			port@4 {
-				port_id = <5>;
-				phy_address = <4>;
+			led_source@0 {
+				source = <0>;
+				mode = "normal";
+				speed = "all";
+				blink_en = "enable";
+				active = "high";
 			};
 		};
+
+		switch1: ess-switch1@1 {
+			compatible = "qcom,ess-switch-qca83xx";
+			device_id = <1>;
+			switch_access_mode = "mdio";
+			mdio-bus = <&mdio1>;
+
+			reset_gpio = <39>;
+			
+			status = "okay";
+
+			switch_cpu_bmp = <0x40>;  	/* cpu port bitmap: port 6 */
+			switch_lan_bmp = <0x38>; 	/* lan port bitmap: port 3 4 5 */
+			switch_wan_bmp = <0x04>;  	/* wan port bitmap: port 2 */
+			qca,ar8327-initvals = <
+					0x00004 0x7600000   /* PAD0_MODE */
+					0x00008 0x1000000   /* PAD5_MODE */
+					0x0000c 0x80        /* PAD6_MODE */
+					0x00010 0x2613a0    /* PORT6 FORCE MODE*/
+					0x000e4 0xaa545     /* MAC_POWER_SEL */
+					0x000e0 0xc74164de  /* SGMII_CTRL */
+					0x0007c 0x4e        /* PORT0_STATUS */
+					0x00094 0x4e        /* PORT6_STATUS */
+			>;
+			qcom,port_phyinfo {
+				// MAC2 -> Phy0 -> WAN
+				port@0 {
+					port_id = <1>;
+					phy_address = <0>;
+				};
+
+				// MAC3 -> Phy1 -> LAN1
+				port@1 {
+					port_id = <2>;
+					phy_address = <1>;
+				};
+
+				// MAC4 -> Phy2 -> LAN2
+				port@2 {
+					port_id = <3>;
+					phy_address = <2>;
+				};
+
+				// MAC5 -> Phy3 -> LAN3
+				port@3 {
+					port_id = <4>;
+					phy_address = <3>;
+				};
+
+				// MAC6 ---SGMII---> IPQ5018 MAC1
+				port@4 {
+					port_id = <5>;
+					phy_address = <4>;
+				};
+			};
+		};
+	};
+
+	ess-uniphy@98000 {
+		compatible = "qcom,ess-uniphy";
+		reg = <0x98000 0x800>;
+		uniphy_access_mode = "local bus";
+	};
+
+    dp2: dp2 {
+		device_type = "network";
+		compatible = "qcom,nss-dp";
+		reg = <0x39d00000 0x10000>;
+		qcom,id = <2>;
+		clocks = <&gcc GCC_SNOC_GMAC1_AXI_CLK>;
+		clock-names = "nss-snoc-gmac-axi-clk";
+		interrupts = <GIC_SPI 109 IRQ_TYPE_LEVEL_HIGH>;
+		qcom,mactype = <2>;
+		/* 
+		*qcom,link-poll = <1>;
+		*qcom,phy-mdio-addr = <7>;
+		*mdio-bus = <&mdio0>;
+		*/
+		local-mac-address = [000000000000];
+		phy-mode = "sgmii";
+		status = "okay";
 	};
 };
 
@@ -204,12 +350,12 @@
 	pinctrl-names = "default";
 };
 
-&dp1 {
-	status = "okay";
-};
-
 &mdio {
 	status = "okay";
+
+	resets = <&gcc GCC_GEPHY_MDC_SW_ARES>;
+	reset-names = "gephy_mdc_rst";
+	/*reset-name = "phy";*/
 
 	//IPQ5018 -> QCA8337 Phy4
 	ipq5018_0: ethernet-phy@0 {
@@ -222,7 +368,7 @@
 
 	pinctrl-0 = <&mdio1_pins>;
 	pinctrl-names = "default";
-	phy-reset-gpio = <&tlmm 39 0>;
+	/*reset-gpios = <&tlmm 39 0>;*/
 
 	// QCA8337 Phy0 -> WAN
 	qca8337_0: ethernet-phy@0 {
@@ -276,10 +422,13 @@
 	status = "okay";
 };
 
-&q6v5_wcss {
+&pwm {
 	status = "okay";
 
-	memory-region = <&q6_mem_regions>;
+	#pwm-cells = <2>;
+
+	pinctrl-0 = "&pwm_pins";
+	pinctrl-names = "default";
 };
 
 &qfprom {
@@ -417,36 +566,6 @@
     };
 };
 
-&switch {
-	status = "okay";
-
-	device_id = <0>;
-	switch_mac_mode = <0xf>; /* mac mode for uniphy instance*/
-	cmnblk_clk = "internal_96MHz"; /* cmnblk clk*/
-
-	qcom,port_phyinfo {
-		// MAC0 -> GE Phy -> QCA8337 Phy4
-		port@0 {
-			port_id = <1>;
-			phy_address = <7>;
-		};
-		// MAC1 ---SGMII---> QCA8337 MAC6
-		port@1 {
-			port_id = <2>;
-			forced-speed = <1000>;
-			forced-duplex = <1>;
-		};
-	};
-
-	led_source@0 {
-		source = <0>;
-		mode = "normal";
-		speed = "all";
-		blink_en = "enable";
-		active = "high";
-	};
-};
-
 &tlmm {
 	button_pins: button-state {
         pins = "gpio27", "gpio28";
@@ -475,6 +594,26 @@
 			function = "mdio";
 			drive-strength = <8>;
 			bias-pull-up;
+		};
+	};
+
+	pwm_pins: pwm-state {
+		mux_1 {
+			pins = "gpio1";
+			function = "";
+			drive-strength = <8>;
+		};
+
+		mux_2 {
+			pins = "gpio30";
+			function = "pwm3";
+			drive-strength = <8>;
+		};
+
+		mux_3 {
+			pins = "gpio46";
+			function = "pwm0";
+			drive-strength = <8>;
 		};
 	};
 
@@ -509,6 +648,9 @@
 	status = "okay";
 };
 
-&wcss {
-	status = "okay";
+&wifi0 {
+	status = "disabled";
+
+	qcom,ath11k-calibration-variant = "Linksys-MX2000";
+	qcom,ath11k-fw-memory-mode = <1>;
 };
