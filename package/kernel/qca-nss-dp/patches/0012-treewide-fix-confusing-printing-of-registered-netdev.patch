@@ -1,0 +1,23 @@
+--- a/hal/dp_ops/syn_gmac_dp/syn_dp.c
++++ b/hal/dp_ops/syn_gmac_dp/syn_dp.c
+@@ -150,7 +150,7 @@ static int syn_dp_if_init(struct nss_dp_
+ 	dev_info->mac_base = rx_info->mac_base = tx_info->mac_base = mac_base;
+ 	rx_info->netdev = tx_info->netdev = netdev;
+ 	rx_info->dev = tx_info->dev = &gmac_dev->pdev->dev;
+-	netdev_info(netdev, "nss_dp_gmac: Registering netdev %s(qcom-id:%d) with GMAC, mac_base: 0x%px\n", netdev->name, macid, mac_base);
++	netdev_dbg(netdev, "nss_dp_gmac: Registering netdev %s(qcom-id:%d) with GMAC, mac_base: 0x%px\n", netdev->name, macid, mac_base);
+ 
+ 	/*
+ 	 * Forcing the kernel to use 32-bit DMA addressing
+--- a/nss_dp_main.c
++++ b/nss_dp_main.c
+@@ -875,6 +875,9 @@ static int32_t nss_dp_probe(struct platf
+ 		goto phy_setup_fail;
+ 	}
+ 
++	netdev_info(netdev, "Registered netdev %s(qcom-id:%d)\n",
++		    netdev->name, dp_priv->macid);
++
+ 	dp_global_ctx.nss_dp[nss_dp_get_idx_from_macid(dp_priv->macid)] = dp_priv;
+ 	dp_global_ctx.slowproto_acl_bm = 0;
+ 

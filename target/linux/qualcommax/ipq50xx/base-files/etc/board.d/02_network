@@ -13,16 +13,37 @@ ipq50xx_setup_interfaces()
 	case "$board" in
 	linksys,mx2000|\
 	linksys,mx5500)
+		hw_mac_addr=$(mtd_get_mac_ascii u_env ethaddr)
 		#ucidef_set_interfaces_lan_wan "lan1 lan2 lan3" "wan"
 		ucidef_add_switch "switch1" \
-				"6u@eth0" \
-				"5:lan:1" "4:lan:2" "3:lan:3" \
+				"6t@eth0" \
+				"3:lan:1" "4:lan:2" "5:lan:3" \
 				"2:wan"
+		ucidef_set_interface_macaddr "lan" "$hw_mac_addr"
+		ucidef_set_interface_macaddr "wan" "$hw_mac_addr"
 		;;
 	*)
 		echo "Unsupported hardware. Network interfaces not initialized"
 		;;
 	esac
+}
+
+ipq50xx_setup_macs()
+{
+	local board="$1"
+
+	case "$board" in
+	linksys,mx2000|\
+	linksys,mx5500)
+		ucidef_set_interface_macaddr "lan" $lan_mac
+		ucidef_set_interface_macaddr "lan" $lan_mac
+	;;
+
+	esac
+
+	[ -n "$lan_mac" ] && ucidef_set_interface_macaddr "lan" $lan_mac
+	[ -n "$wan_mac" ] && ucidef_set_interface_macaddr "wan" $wan_mac
+	[ -n "$label_mac" ] && ucidef_set_label_macaddr $label_mac
 }
 
 board_config_update

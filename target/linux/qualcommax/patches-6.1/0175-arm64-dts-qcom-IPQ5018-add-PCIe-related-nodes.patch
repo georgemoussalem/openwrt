@@ -1,5 +1,5 @@
 --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
 @@ -9,6 +9,7 @@
  #include <dt-bindings/interrupt-controller/arm-gic.h>
  #include <dt-bindings/clock/qcom,gcc-ipq5018.h>
@@ -43,26 +43,26 @@
 +			reset-names = "phy", "phy_phy";
 +			status = "disabled";
 +		};
-+
- 		mdio: mdio@88000 {
- 			compatible = "qcom,ipq5018-mdio", "qcom,ipq4019-mdio";
+
+ 		mdio0: mdio@88000 {
+ 			compatible = "qcom,ipq5018-mdio", "qcom,qca-mdio";
  			reg = <0x00088000 0x64>, <0x19475C4 0x4>;
-@@ -360,8 +393,8 @@
- 			reg = <0x01800000 0x80000>;
- 			clocks = <&xo_board_clk>,
+@@ -362,8 +395,8 @@
  				 <&sleep_clk>,
+ 				 <0>,
+ 				 <0>,
 -				 <0>,
 -				 <0>,
 +				 <&pcie_x2phy>,
 +				 <&pcie_x1phy>,
  				 <0>,
  				 <0>,
- 				 <0>,
+ 				 <0>;
 @@ -739,6 +772,154 @@
  				};
  			};
  		};
-+
+
 +		pcie_x1: pci@80000000 {
 +			compatible = "qcom,pcie-ipq5018";
 +			reg =  <0x80000000 0xf1d

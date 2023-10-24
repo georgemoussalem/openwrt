@@ -57,10 +57,10 @@ Signed-off-by: Robert Marko <robimarko@gmail.com>
  	}
  
 +	dp_priv->phy_node = of_parse_phandle(np, "phy-handle", 0);
-+	if (!dp_priv->phy_node) {
++	/*if (!dp_priv->phy_node) {
 +		pr_err("%s: error parsing phy-handle\n", np->name);
 +		return -EFAULT;
-+	}
++	}*/
 +
  	if (of_property_read_u32(np, "qcom,mactype", &hal_pdata->mactype)) {
  		pr_err("%s: error reading mactype\n", np->name);

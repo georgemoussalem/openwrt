@@ -14,6 +14,8 @@
     aliases {
 		serial0 = &blsp1_uart1;
 
+		ethernet0 = &mac1;
+
 		/*
 		led-boot = &led_system_blue;
 		led-failsafe = &led_system_red;
@@ -142,10 +144,22 @@
 };
 
 &soc {
+	
+	ess-uniphy@98000 {
+		compatible = "qcom,ess-uniphy";
+		reg = <0x98000 0x800>;
+		uniphy_access_mode = "local bus";
+	};
+
+	nss-dp-common {
+		compatible = "qcom,nss-dp-common";
+		qcom,tcsr-base = <0x01937000>;
+	};
+
 	ess-instance {
 		num_devices = <2>;
 
-		ess-switch@0x39c00000 {
+		ess-switch@0x39c00000 {	
 			compatible = "qcom,ess-switch-ipq50xx";
 			reg = <0x39c00000 0x200000>;
 			switch_access_mode = "local bus";
@@ -202,38 +216,30 @@
 				"gmac1_bcr_rst",
 				"uniphy1_soft_rst",
 				"gephy_misc_rst";
-			
+
 			device_id = <0>;
 			switch_mac_mode = <0xf>; /* mac mode for uniphy instance*/
-			cmnblk_clk = "internal_96MHz"; /* cmnblk clk*/
+			cmnblk_clk = "internal_96MHz";
 
 			status = "okay";
 
 			qcom,port_phyinfo {
-				// MAC0 -> GE Phy -> QCA8337 Phy4
+				// ipq5018 MAC0 -> Phy7 -> Phy0 -> qca8337 MAC1
 				port@0 {
 					port_id = <1>;
 					mdiobus = <&mdio0>;
 					phy_address = <7>;
 				};
-				// MAC1 ---SGMII---> QCA8337 MAC6
+				// ipq5018 MAC1 -> SGMII -> qca8337 MAC6
 				port@1 {
 					port_id = <2>;
 					forced-speed = <1000>;
 					forced-duplex = <1>;
 				};
 			};
-
-			led_source@0 {
-				source = <0>;
-				mode = "normal";
-				speed = "all";
-				blink_en = "enable";
-				active = "high";
-			};
 		};
 
-		switch1: ess-switch1@1 {
+		ess-switch1@1 {
 			compatible = "qcom,ess-switch-qca83xx";
 			device_id = <1>;
 			switch_access_mode = "mdio";
@@ -252,119 +258,68 @@
 					0x000e4 0xaa545     /* MAC_POWER_SEL */
 					0x000e0 0xc74164de  /* SGMII_CTRL */
 					0x0007c 0x4e        /* PORT0_STATUS */
-					0x00094 0x4e        /* PORT6_STATUS */
+					0x00094 0x10ce      /* PORT6_STATUS */
 			>;
 			
 			status = "okay";
 
 			qcom,port_phyinfo {
-				// MAC0 -> SGMII -> IPQ5018 MAC1
-				port@0 {
+				// MAC1 -> Phy0 -> IPQ5018 GE Phy
+				port@1 {
 					port_id = <1>;
 					phy_address = <0>;
 				};
-				// MAC1 -> Phy0 -> WAN
-				port@1 {
+
+				// MAC2 -> Phy0 -> WAN
+				port@2 {
 					port_id = <2>;
 					phy_address = <1>;
 				};
 
-				// MAC2 -> Phy1 -> LAN1
-				port@2 {
+				// MAC3 -> Phy1 -> LAN1
+				port@3 {
 					port_id = <3>;
 					phy_address = <2>;
 				};
 
-				// MAC3 -> Phy2 -> LAN2
-				port@3 {
+				// MAC4 -> Phy2 -> LAN2
+				port@4 {
 					port_id = <4>;
 					phy_address = <3>;
 				};
 
-				// MAC4 -> Phy3 -> LAN3
-				port@4 {
+				// MAC5 -> Phy3 -> LAN3
+				port@5 {
 					port_id = <5>;
 					phy_address = <4>;
+				};
+
+				// MAC6 ---SGMII---> ipq5018 MAC1
+				port@6 {
+					port_id = <6>;
+
+					forced-speed = <1000>;
+					forced-duplex = <1>;
 				};
 			};
 		};
 	};
 
-	ess-uniphy@98000 {
-		compatible = "qcom,ess-uniphy";
-		reg = <0x98000 0x800>;
-		uniphy_access_mode = "local bus";
-	};
-
-	// IPQ5018 MAC0 -> GE Phy
-	dp1 {
+	// ipq5018 MAC1 ---SGMII---> QCA8337 SerDes
+	mac1: dp2 {
 		compatible = "qcom,nss-dp";
 		device_type = "network";
-		qcom,id = <1>;
+		qcom,id = <2>;
 
-		reg = <0x39C00000 0x10000>;
-		interrupts = <GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>;
-		clocks = <&gcc GCC_SNOC_GMAC0_AXI_CLK>;
+		reg = <0x39d00000 0x10000>;
+		interrupts = <GIC_SPI 109 IRQ_TYPE_LEVEL_HIGH>;
+		clocks = <&gcc GCC_SNOC_GMAC1_AXI_CLK>;
 		clock-names = "nss-snoc-gmac-axi-clk";
 
 		qcom,mactype = <2>; // GMAC_HAL_TYPE_SYN_GMAC
 		local-mac-address = [000000000000];
-		phy-handle = <&ipq5018_0>;
 		phy-mode = "sgmii";
-		status = "okay";
 	};
-
-	// IPQ5018 MAC1 -> SGMII -> QCA8337 SerDes
-    dp2 {
-		compatible = "qcom,nss-dp";
-		reg = <0x39d00000 0x10000>;
-		device_type = "network";
-		qcom,id = <2>;
-
-		clocks = <&gcc GCC_SNOC_GMAC1_AXI_CLK>;
-		clock-names = "nss-snoc-gmac-axi-clk";
-		interrupts = <GIC_SPI 109 IRQ_TYPE_LEVEL_HIGH>;
-
-		qcom,mactype = <2>;
-		local-mac-address = [000000000000];
-		phy-mode = "sgmii";
-		qcom,rx-page-mode = <0>;
-		status = "okay";
-	};
-};
-
-&sleep_clk {
-	clock-frequency = <32000>;
-};
-
-&xo_board_clk {
-	clock-frequency = <24000000>;
-};
-
-&uart1_pins {
-	pins = "gpio20", "gpio21";
-	function = "blsp0_uart0";
-};
-
-&blsp1_uart1 {
-	status = "okay";
-
-	pinctrl-0 = <&uart1_pins>;
-	pinctrl-names = "default";
-};
-
-&blsp1_spi1 {
-	status = "okay";
-
-	pinctrl-0 = <&spi_0_pins>;
-	pinctrl-names = "default";
-};
-
-&blsp1_i2c3 {
-	status = "okay";
-
-	pinctrl-0 = <&i2c_1_pins>;
-	pinctrl-names = "default";
 };
 
 &mdio0 {
@@ -410,6 +365,87 @@
 	qca8337_4: ethernet-phy@4 {
 		reg = <4>;
 	};
+
+	switch@10 {
+		compatible = "qca,qca8337";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		reg = <0x10>;
+
+		ports {
+			#address-cells = <1>;
+			#size-cells = <0>;
+
+			port@2 {
+				reg = <2>;
+				label = "wan";
+				phy-handle = <&qca8337_1>;
+			};
+
+			port@3 {
+				reg = <3>;
+				label = "lan1";
+				phy-handle = <&qca8337_2>;
+			};
+
+			port@4 {
+				reg = <4>;
+				label = "lan2";
+				phy-handle = <&qca8337_3>;
+			};
+
+			port@5 {
+				reg = <5>;
+				label = "lan3";
+				phy-handle = <&qca8337_4>;
+			};
+
+			port@6 {
+				reg = <6>;
+				label = "cpu";
+				ethernet = <&mac1>;
+				phy-mode = "sgmii";
+				fixed-link {
+					speed = <1000>;
+					full-duplex;
+				};
+			};
+		};
+	};
+};
+
+&sleep_clk {
+	clock-frequency = <32000>;
+};
+
+&xo_board_clk {
+	clock-frequency = <24000000>;
+};
+
+&uart1_pins {
+	pins = "gpio20", "gpio21";
+	function = "blsp0_uart0";
+};
+
+&blsp1_uart1 {
+	status = "okay";
+
+	pinctrl-0 = <&uart1_pins>;
+	pinctrl-names = "default";
+};
+
+&blsp1_spi1 {
+	status = "okay";
+
+	pinctrl-0 = <&spi_0_pins>;
+	pinctrl-names = "default";
+};
+
+&blsp1_i2c3 {
+	status = "okay";
+
+	pinctrl-0 = <&i2c_1_pins>;
+	pinctrl-names = "default";
 };
 
 /*
@@ -616,7 +652,7 @@
 	pwm_pins: pwm-state {
 		mux_1 {
 			pins = "gpio1";
-			function = "";
+			function = "_";
 			drive-strength = <8>;
 		};
 

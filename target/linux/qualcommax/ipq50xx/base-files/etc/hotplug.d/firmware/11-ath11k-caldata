@@ -11,16 +11,23 @@ case "$FIRMWARE" in
 	case "$board" in
 	linksys,mx2000|\
 	linksys,mx5500)
-		caldata_extract "0:ART" 0x440000 0x100000
+		caldata_extract "0:ART" 0x1000 0x20000
 		;;
 	esac
 	;;
-"ath11k/QCN9024/hw1.0/cal-pci-0000:01:00.0.bin"|\
-"ath11k/QCN9024/hw1.0/cal-pci-0001:01:00.0.bin")
+"ath11k/QCN6122/hw1.0/cal-pci-0000:01:00.0.bin"|\
+"ath11k/QCN6122/hw1.0/cal-pci-0001:01:00.0.bin")
 	case "$board" in
-	linksys,mx2000|\
+	linksys,mx2000)
+                caldata_extract "0:ART" 0x26800 0x20000
+		;;
+	esac
+	;;
+"ath11k/QCN9074/hw1.0/cal-pci-0000:01:00.0.bin"|\
+"ath11k/QCN9074/hw1.0/cal-pci-0001:01:00.0.bin")
+	case "$board" in
 	linksys,mx5500)
-                caldata_extract "0:ART" 0x440000 0x100000
+                caldata_extract "0:ART" 0x26800 0x20000
 		;;
 	esac
 	;;

@@ -785,13 +785,14 @@
 \ No newline at end of file
 --- a/drivers/pinctrl/qcom/Kconfig
 +++ b/drivers/pinctrl/qcom/Kconfig
-@@ -39,6 +39,15 @@ config PINCTRL_IPQ4019
+@@ -39,6 +39,16 @@ config PINCTRL_IPQ4019
  	  This is the pinctrl, pinmux, pinconf and gpiolib driver for the
  	  Qualcomm TLMM block found in the Qualcomm IPQ4019 platform.
  
 +config PINCTRL_IPQ5018
 +	tristate "Qualcomm Technologies, Inc. IPQ5018 pin controller driver"
 +	depends on ARM64 || COMPILE_TEST
++	select PINCTRL_MSM
 +	help
 +	  This is the pinctrl, pinmux, pinconf and gpiolib driver for
 +	  the Qualcomm Technologies Inc. TLMM block found on the

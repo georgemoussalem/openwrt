@@ -1,0 +1,20 @@
+--- a/include/nss_dp_dev.h
++++ b/include/nss_dp_dev.h
+@@ -22,7 +22,7 @@
+ #include <linux/etherdevice.h>
+ #include <linux/netdevice.h>
+ #include <linux/platform_device.h>
+-#include <linux/switch.h>
++#include <linux/phy.h>
+ #include <linux/version.h>
+ #if (LINUX_VERSION_CODE >= KERNEL_VERSION(5, 12, 0))
+ #include <net/switchdev.h>
+@@ -208,7 +208,7 @@ struct nss_dp_dev {
+ 	struct device_node *phy_node;	/* Phy device OF node */
+ 	struct phy_device *phydev;	/* Phy device */
+ 	struct mii_bus *miibus;		/* MII bus */
+-	uint32_t phy_mii_type;		/* RGMII/SGMII/QSGMII */
++	phy_interface_t phy_mii_type;	/* RGMII/SGMII/QSGMII */
+ 	uint32_t link_state;		/* Current link state */
+ 	uint32_t pause;			/* Current flow control settings */
+ 
