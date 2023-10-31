@@ -20,7 +20,7 @@ define KernelPackage/qca-ssdk
   CATEGORY:=Kernel modules
   SUBMENU:=Network Devices
   TITLE:=Qualcom SSDK switch driver
-  DEPENDS:=@(TARGET_ipq807x)
+  DEPENDS:=@(TARGET_ipq50xx||TARGET_ipq807x)
   FILES:=$(PKG_BUILD_DIR)/build/bin/qca-ssdk.ko
   AUTOLOAD:=$(call AutoLoad,30,qca-ssdk)
 endef
@@ -49,7 +49,12 @@ MAKE_FLAGS+= \
 	TARGET_SUFFIX=$(CONFIG_TARGET_SUFFIX) \
 	GCC_VERSION=$(GCC_VERSION) \
 	EXTRA_CFLAGS=-fno-stack-protector -I$(STAGING_DIR)/usr/include \
+	SoC="$(CONFIG_TARGET_BOARD)" \
 	$(LNX_CONFIG_OPTS)
+
+ifeq ($(CONFIG_TARGET_BOARD), "ipq50xx")
+    MAKE_FLAGS+= CHIP_TYPE=MP MINI_SSDK=enable ISISC_ENABLE=enable PTP_FEATURE=disable
+endif
 
 ifeq ($(CONFIG_TARGET_BOARD), "ipq807x")
     MAKE_FLAGS+= CHIP_TYPE=HPPE PTP_FEATURE=disable SWCONFIG_FEATURE=disable

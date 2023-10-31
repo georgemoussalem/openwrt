@@ -1,0 +1,35 @@
+#
+# Copyright (c) 2015 The Linux Foundation. All rights reserved.
+# Copyright (c) 2011-2015 OpenWrt.org
+#
+
+. /lib/functions/uci-defaults.sh
+. /lib/functions/system.sh
+
+ipq50xx_setup_interfaces()
+{
+	local board="$1"
+
+	case "$board" in
+	linksys,mx2000|\
+	linksys,mx5500)
+		hw_mac_addr=$(mtd_get_mac_ascii devinfo hw_mac_addr)
+		ucidef_add_switch "switch1" \
+				"6t@eth0" \
+				"3:lan:1" "4:lan:2" "5:lan:3" \
+				"2:wan"
+		ucidef_set_interface_macaddr "lan" "$hw_mac_addr"
+		ucidef_set_interface_macaddr "wan" "$hw_mac_addr"
+		;;
+	*)
+		echo "Unsupported hardware. Network interfaces not initialized"
+		;;
+	esac
+}
+
+board_config_update
+board=$(board_name)
+ipq50xx_setup_interfaces $board
+board_config_flush
+
+exit 0
