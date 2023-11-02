@@ -12,7 +12,7 @@
 		uniphy_access_mode = "local bus";
 	};
 	
-    switch: ess-switch@0x39c00000 {
+    switch0: ess-switch@0x39c00000 {
         compatible = "qcom,ess-switch-ipq50xx";
         reg = <0x39c00000 0x200000>;
         device_id = <0>;

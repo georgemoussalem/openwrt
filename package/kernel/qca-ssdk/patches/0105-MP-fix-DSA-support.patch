@@ -1,0 +1,11 @@
+--- a/config
++++ b/config
+@@ -294,6 +294,8 @@ else ifeq (CPPE, $(CHIP_TYPE))
+ else ifeq (DESS, $(CHIP_TYPE))
+ 	IN_MALIBU_PHY=TRUE
+ else ifeq (MP, $(CHIP_TYPE))
++	IN_VSI=TRUE
++	IN_CTRLPKT=TRUE
+ 	IN_QCA803X_PHY=TRUE
+ 	IN_QCA808X_PHY=TRUE
+ else ifeq (APPE, $(CHIP_TYPE))
