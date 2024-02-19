@@ -1,0 +1,46 @@
+--- a/include/dt-bindings/clock/qcom,gcc-ipq5018.h
++++ b/include/dt-bindings/clock/qcom,gcc-ipq5018.h
+@@ -74,15 +74,6 @@
+ #define GCC_PCIE1_AXI_S_BRIDGE_CLK			82
+ #define GCC_PCIE1_AXI_S_CLK				83
+ #define GCC_PRNG_AHB_CLK				84
+-#define GCC_Q6_AXIM_CLK					85
+-#define GCC_Q6_AXIM2_CLK				86
+-#define GCC_Q6_AXIS_CLK					87
+-#define GCC_Q6_AHB_CLK					88
+-#define GCC_Q6_AHB_S_CLK				89
+-#define GCC_Q6_TSCTR_1TO2_CLK				90
+-#define GCC_Q6SS_ATBM_CLK				91
+-#define GCC_Q6SS_PCLKDBG_CLK				92
+-#define GCC_Q6SS_TRIG_CLK				93
+ #define GCC_QDSS_AT_CLK					94
+ #define GCC_QDSS_CFG_AHB_CLK				95
+ #define GCC_QDSS_DAP_AHB_CLK				96
+@@ -109,7 +100,6 @@
+ #define GCC_SYS_NOC_PCIE1_AXI_CLK			120
+ #define GCC_SYS_NOC_QDSS_STM_AXI_CLK			121
+ #define GCC_SYS_NOC_USB0_AXI_CLK			123
+-#define GCC_SYS_NOC_WCSS_AHB_CLK			124
+ #define GCC_UBI0_AXI_CLK				128
+ #define GCC_UBI0_CFG_CLK				129
+ #define GCC_UBI0_CORE_CLK				130
+@@ -127,19 +117,6 @@
+ #define GCC_USB0_MOCK_UTMI_CLK				142
+ #define GCC_USB0_PHY_CFG_AHB_CLK			143
+ #define GCC_USB0_SLEEP_CLK				144
+-#define GCC_WCSS_ACMT_CLK				145
+-#define GCC_WCSS_AHB_S_CLK				146
+-#define GCC_WCSS_AXI_M_CLK				147
+-#define GCC_WCSS_AXI_S_CLK				148
+-#define GCC_WCSS_DBG_IFC_APB_BDG_CLK			149
+-#define GCC_WCSS_DBG_IFC_APB_CLK			150
+-#define GCC_WCSS_DBG_IFC_ATB_BDG_CLK			151
+-#define GCC_WCSS_DBG_IFC_ATB_CLK			152
+-#define GCC_WCSS_DBG_IFC_DAPBUS_BDG_CLK			153
+-#define GCC_WCSS_DBG_IFC_DAPBUS_CLK			154
+-#define GCC_WCSS_DBG_IFC_NTS_BDG_CLK			155
+-#define GCC_WCSS_DBG_IFC_NTS_CLK			156
+-#define GCC_WCSS_ECAHB_CLK				157
+ #define GCC_XO_CLK					158
+ #define GCC_XO_CLK_SRC					159
+ #define GMAC0_RX_CLK_SRC				161

@@ -1,0 +1,31 @@
+From e85aa36e5971d4264108b2665ef8c4c353e12609 Mon Sep 17 00:00:00 2001
+From: Atchaya R <quic_ratchaya@quicinc.com>
+Date: Tue, 2 Aug 2022 22:29:31 +0530
+Subject: [PATCH] remote_proc : Initialize ret value for BT driver stop call
+
+Change-Id: I5fe4b455309dcea98be96fe19e55e3bb25361c24
+Signed-off-by: Atchaya R <quic_ratchaya@quicinc.com>
+---
+ drivers/remoteproc/bt_rproc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+--- a/drivers/remoteproc/bt_rproc.c
++++ b/drivers/remoteproc/bt_rproc.c
+@@ -51,7 +51,7 @@ int m0_btss_load_address(struct rproc *r
+ 
+ int m0_btss_start(struct rproc *rproc)
+ {
+-	int ret;
++	int ret = 0;
+ 	struct bt_descriptor *btDesc = rproc->priv;
+ 
+ 	if (rproc->state == RPROC_OFFLINE) {
+@@ -82,7 +82,7 @@ int m0_btss_start(struct rproc *rproc)
+ 
+ int m0_btss_stop(struct rproc *rproc)
+ {
+-	int ret;
++	int ret = 0;
+ 	struct bt_descriptor *btDesc = rproc->priv;
+ 
+ 	if (!atomic_read(&rproc->power) && ((rproc->state == RPROC_RUNNING) |

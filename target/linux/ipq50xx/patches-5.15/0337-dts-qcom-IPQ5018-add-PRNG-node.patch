@@ -1,0 +1,17 @@
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -188,6 +188,14 @@
+ 			};
+ 		};
+ 
++		prng: rng@e3000 {
++			compatible = "qcom,prng-ee";
++			reg = <0x000e3000 0x1000>;
++			clocks = <&gcc GCC_PRNG_AHB_CLK>;
++			clock-names = "core";
++			status = "disabled";
++		};
++
+ 		tsens: thermal-sensor@4a9000 {
+ 			compatible = "qcom,ipq5018-tsens";
+ 			reg = <0x4a9000 0x1000>, /* TM */

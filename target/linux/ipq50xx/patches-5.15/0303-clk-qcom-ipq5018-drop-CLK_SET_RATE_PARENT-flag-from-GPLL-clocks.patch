@@ -1,0 +1,26 @@
+--- a/drivers/clk/qcom/gcc-ipq5018.c
++++ b/drivers/clk/qcom/gcc-ipq5018.c
+@@ -128,7 +128,6 @@ static struct clk_alpha_pll_postdiv gpll
+ 		},
+ 		.num_parents = 1,
+ 		.ops = &clk_alpha_pll_postdiv_ro_ops,
+-		.flags = CLK_SET_RATE_PARENT,
+ 	},
+ };
+ 
+@@ -143,7 +142,6 @@ static struct clk_alpha_pll_postdiv gpll
+ 		},
+ 		.num_parents = 1,
+ 		.ops = &clk_alpha_pll_postdiv_ro_ops,
+-		.flags = CLK_SET_RATE_PARENT,
+ 	},
+ };
+ 
+@@ -158,7 +156,6 @@ static struct clk_alpha_pll_postdiv gpll
+ 		},
+ 		.num_parents = 1,
+ 		.ops = &clk_alpha_pll_postdiv_ro_ops,
+-		.flags = CLK_SET_RATE_PARENT,
+ 	},
+ };
+ 

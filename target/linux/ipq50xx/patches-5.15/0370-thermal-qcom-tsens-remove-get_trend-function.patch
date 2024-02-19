@@ -1,0 +1,66 @@
+From 198fa45252d84baea593456cfda01deeb9dff13f Mon Sep 17 00:00:00 2001
+From: Daniel Lezcano <daniel.lezcano@linaro.org>
+Date: Thu, 16 Jun 2022 22:25:35 +0200
+Subject: [PATCH] thermal/drivers/qcom: Remove get_trend function
+
+There is a get_trend function which is a wrapper to call a private
+get_trend function. However, this private get_trend function is not
+assigned anywhere.
+
+Remove this dead code.
+
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Acked-by: Amit Kucheria <amitk@kernel.org>
+Link: https://lore.kernel.org/r/20220616202537.303655-1-daniel.lezcano@linaro.org
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+---
+ drivers/thermal/qcom/tsens.c | 12 ------------
+ drivers/thermal/qcom/tsens.h |  2 --
+ 2 files changed, 14 deletions(-)
+
+--- a/drivers/thermal/qcom/tsens.c
++++ b/drivers/thermal/qcom/tsens.c
+@@ -1008,17 +1008,6 @@ static int tsens_get_temp(void *data, in
+ 	return priv->ops->get_temp(s, temp);
+ }
+ 
+-static int tsens_get_trend(void *data, int trip, enum thermal_trend *trend)
+-{
+-	struct tsens_sensor *s = data;
+-	struct tsens_priv *priv = s->priv;
+-
+-	if (priv->ops->get_trend)
+-		return priv->ops->get_trend(s, trend);
+-
+-	return -ENOTSUPP;
+-}
+-
+ static int  __maybe_unused tsens_suspend(struct device *dev)
+ {
+ 	struct tsens_priv *priv = dev_get_drvdata(dev);
+@@ -1085,7 +1074,6 @@ MODULE_DEVICE_TABLE(of, tsens_table);
+ 
+ static const struct thermal_zone_of_device_ops tsens_of_ops = {
+ 	.get_temp = tsens_get_temp,
+-	.get_trend = tsens_get_trend,
+ 	.set_trips = tsens_set_trips,
+ };
+ 
+--- a/drivers/thermal/qcom/tsens.h
++++ b/drivers/thermal/qcom/tsens.h
+@@ -68,7 +68,6 @@ struct tsens_sensor {
+  * @disable: Function to disable the tsens device
+  * @suspend: Function to suspend the tsens device
+  * @resume: Function to resume the tsens device
+- * @get_trend: Function to get the thermal/temp trend
+  */
+ struct tsens_ops {
+ 	/* mandatory callbacks */
+@@ -80,7 +79,6 @@ struct tsens_ops {
+ 	void (*disable)(struct tsens_priv *priv);
+ 	int (*suspend)(struct tsens_priv *priv);
+ 	int (*resume)(struct tsens_priv *priv);
+-	int (*get_trend)(struct tsens_sensor *s, enum thermal_trend *trend);
+ };
+ 
+ #define REG_FIELD_FOR_EACH_SENSOR11(_name, _offset, _startbit, _stopbit) \

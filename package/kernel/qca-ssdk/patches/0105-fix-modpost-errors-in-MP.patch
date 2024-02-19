@@ -1,0 +1,11 @@
+--- a/config
++++ b/config
+@@ -357,6 +357,8 @@ endif
+ 
+ ifneq (, $(filter MP, $(CHIP_TYPE)))
+ 	IN_UNIPHY=TRUE
++	IN_CTRLPKT=TRUE
++	IN_VSI=TRUE
+ endif
+ 
+ #############################################

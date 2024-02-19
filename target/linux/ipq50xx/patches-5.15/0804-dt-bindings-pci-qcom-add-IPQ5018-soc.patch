@@ -1,0 +1,10 @@
+--- a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
++++ b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
+@@ -10,6 +10,7 @@
+ 			- "qcom,pcie-apq8084" for apq8084
+ 			- "qcom,pcie-msm8996" for msm8996 or apq8096
+ 			- "qcom,pcie-ipq4019" for ipq4019
++			- "qcom,pcie-ipq5018" for ipq5018
+ 			- "qcom,pcie-ipq8074" for ipq8074
+ 			- "qcom,pcie-qcs404" for qcs404
+ 			- "qcom,pcie-sdm845" for sdm845

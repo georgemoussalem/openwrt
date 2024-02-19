@@ -1,0 +1,52 @@
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -104,6 +104,11 @@
+ 		#size-cells = <2>;
+ 		ranges;
+ 
++		bt_mem_region: bt@7000000 {
++			reg = <0x0 0x07000000 0x0 0x00058000>;
++			no-map;
++		};
++
+ 		bootloader@4a800000 {
+ 			reg = <0x0 0x4a800000 0x0 0x200000>;
+ 			no-map;
+@@ -342,6 +347,25 @@
+ 				#pwm-cells = <2>;
+ 				status = "disabled";
+ 			};
++
++			bt_tty: serial@c008 {
++				compatible = "qcom,bt";
++				reg = <0x0000c008 0x8>;
++				reg-names = "bt_warm_rst";
++				interrupts = <GIC_SPI 162 IRQ_TYPE_EDGE_RISING>;
++				clocks = <&gcc GCC_BTSS_LPO_CLK>;
++				clock-names = "lpo_clk";
++				resets = <&gcc GCC_BTSS_BCR>;
++				reset-names = "btss_reset";
++				memory-region = <&bt_mem_region>;
++				qcom,ipc = <&apcs 8 23>;
++				status = "disabled";
++
++				bluetooth: bluetooth {
++					compatible = "qcom,maple-bt";
++					status = "disabled";
++				};
++			};
+ 		};
+ 
+ 		sdhc_1: mmc@7804000 {
+@@ -454,6 +478,11 @@
+ 			clocks = <&sleep_clk>;
+ 		};
+ 
++		apcs: syscon@b111000 {
++			compatible = "syscon";
++			reg = <0x0B111000 0x1000>;
++		};
++
+ 		apcs_glb: mailbox@b111000 {
+ 			compatible = "qcom,ipq5018-apcs-apps-global",
+ 				     "qcom,ipq6018-apcs-apps-global";

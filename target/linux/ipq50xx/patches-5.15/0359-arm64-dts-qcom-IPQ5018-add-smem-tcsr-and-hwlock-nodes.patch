@@ -1,0 +1,33 @@
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -125,6 +125,18 @@
+ 		};
+ 	};
+ 
++	smem: smem {
++		compatible = "qcom,smem";
++		memory-region = <&smem_region>;
++		hwlocks = <&tcsr_mutex 3>;
++	};
++
++	tcsr_mutex: hwlock {
++		compatible = "qcom,tcsr-mutex";
++		syscon = <&tcsr_mutex_regs 0 0x1000>;
++		#hwlock-cells = <1>;
++	};
++
+ 	soc: soc@0 {
+ 		compatible = "simple-bus";
+ 		#address-cells = <1>;
+@@ -309,6 +321,11 @@
+ 			#power-domain-cells = <1>;
+ 		};
+ 
++		tcsr_mutex_regs: syscon@1905000 {
++			compatible = "syscon";
++			reg = <0x01905000 0x20000>;
++		};
++
+ 		tcsr: syscon@1937000 {
+ 			compatible = "qcom,tcsr-ipq5018", "syscon", "simple-mfd";
+ 			reg = <0x01937000 0x21000>;

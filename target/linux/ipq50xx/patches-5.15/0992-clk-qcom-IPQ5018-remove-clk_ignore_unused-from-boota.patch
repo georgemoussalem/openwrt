@@ -1,0 +1,109 @@
+From 942e57176ffe11422c2393994b66e431949ba22d Mon Sep 17 00:00:00 2001
+From: Kathiravan T <quic_kathirav@quicinc.com>
+Date: Thu, 16 Dec 2021 16:42:18 +0530
+Subject: [PATCH] clk: qcom: ipq5018: remove clk_ignore_unused from bootargs
+
+Align the GCC driver with linux-4.4 to remove the clk_ignore_unused
+from the bootargs.
+
+Change-Id: Ic976621e14012e59cf70f1254acd32e0be665525
+Signed-off-by: Kathiravan T <quic_kathirav@quicinc.com>
+
+Pick from https://git.codelinaro.org/clo/qsdk/oss/kernel/linux-ipq-5.4/-/commit/a0f27a75b3a8cde26435df2631b881ae4a082834
+
+Signed-off-by: hzy <hzyitc@outlook.com>
+---
+ drivers/clk/qcom/gcc-ipq5018.c | 42 +++++++++++++++-------------------
+ 1 file changed, 18 insertions(+), 24 deletions(-)
+
+--- a/drivers/clk/qcom/gcc-ipq5018.c
++++ b/drivers/clk/qcom/gcc-ipq5018.c
+@@ -1151,6 +1151,7 @@ static const struct freq_tbl ftbl_qpic_i
+ 	F(100000000, P_GPLL0, 8, 0, 0),
+ 	F(200000000, P_GPLL0, 4, 0, 0),
+ 	F(320000000, P_GPLL0, 2.5, 0, 0),
++	{ }
+ };
+ 
+ static struct clk_rcg2 qpic_io_macro_clk_src = {
+@@ -1398,7 +1399,7 @@ static struct clk_branch gcc_xo_clk_src
+ 			.name = "gcc_xo_clk_src",
+ 			.parent_data = gcc_xo_data,
+ 			.num_parents = ARRAY_SIZE(gcc_xo_data),
+-			.flags = CLK_SET_RATE_PARENT,
++			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1450,7 +1451,7 @@ static struct clk_branch gcc_apss_ahb_cl
+ 				&apss_ahb_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
++			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -1468,7 +1469,7 @@ static struct clk_branch gcc_apss_axi_cl
+ 				&apss_axi_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
++			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -2497,7 +2498,7 @@ static struct clk_branch gcc_qdss_cfg_ah
+ 				&pcnoc_clk_src.hw,
+ 			},
+ 			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
++			.flags = CLK_SET_RATE_PARENT | CLK_IGNORE_UNUSED,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -2701,7 +2702,7 @@ static struct clk_branch gcc_snoc_gmac0_
+ 				&gmac_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
++			.flags = CLK_SET_RATE_PARENT | CLK_IGNORE_UNUSED,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -2718,7 +2719,7 @@ static struct clk_branch gcc_snoc_gmac0_
+ 				&gmac_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
++			.flags = CLK_SET_RATE_PARENT | CLK_IGNORE_UNUSED,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -2735,7 +2736,7 @@ static struct clk_branch gcc_snoc_gmac1_
+ 				&gmac_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
++			.flags = CLK_SET_RATE_PARENT | CLK_IGNORE_UNUSED,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -2752,7 +2753,7 @@ static struct clk_branch gcc_snoc_gmac1_
+ 				&gmac_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
++			.flags = CLK_SET_RATE_PARENT | CLK_IS_CRITICAL,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},
+@@ -2960,7 +2961,7 @@ static struct clk_branch gcc_ubi0_core_c
+ 				&ubi0_core_clk_src.clkr.hw,
+ 			},
+ 			.num_parents = 1,
+-			.flags = CLK_SET_RATE_PARENT,
++			.flags = CLK_SET_RATE_PARENT | CLK_IGNORE_UNUSED,
+ 			.ops = &clk_branch2_ops,
+ 		},
+ 	},

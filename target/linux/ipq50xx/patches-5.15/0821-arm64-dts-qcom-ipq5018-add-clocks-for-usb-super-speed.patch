@@ -1,0 +1,22 @@
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -556,11 +556,17 @@
+ 			clocks = <&gcc GCC_USB0_MASTER_CLK>,
+ 				 <&gcc GCC_SYS_NOC_USB0_AXI_CLK>,
+ 				 <&gcc GCC_USB0_SLEEP_CLK>,
+-				 <&gcc GCC_USB0_MOCK_UTMI_CLK>;
++				 <&gcc GCC_USB0_MOCK_UTMI_CLK>,
++				 <&gcc GCC_USB0_AUX_CLK>,
++				 <&gcc GCC_USB0_LFPS_CLK>;
++
+ 			clock-names = "core",
+ 				      "iface",
+ 				      "sleep",
+-				      "mock_utmi";
++				      "mock_utmi",
++				      "aux_clk",
++				      "lfps_clk";
++
+ 			resets = <&gcc GCC_USB0_BCR>;
+ 			qcom,select-utmi-as-pipe-clk;
+ 			#address-cells = <1>;

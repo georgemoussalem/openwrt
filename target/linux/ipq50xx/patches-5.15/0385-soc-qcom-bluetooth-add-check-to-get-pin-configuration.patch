@@ -1,0 +1,34 @@
+From 91116ea0f758142d395cae0c3a00173f6f134a4f Mon Sep 17 00:00:00 2001
+From: "Singh, Amandeep" <amansing@codeaurora.org>
+Date: Tue, 29 Jun 2021 12:18:47 +0530
+Subject: [PATCH] soc: qcom: bt: Add check to get pin configuration
+
+Add check to get pin configuration, as it is only supported
+during debug mode.
+
+Change-Id: I0935af8e16d466ae6c136b524dc03f164886dcb6
+Signed-off-by: Singh, Amandeep <amansing@codeaurora.org>
+---
+ drivers/soc/qcom/bt_tty.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+--- a/drivers/soc/qcom/bt_tty.c
++++ b/drivers/soc/qcom/bt_tty.c
+@@ -388,10 +388,13 @@ int bt_parse_dt(struct bt_descriptor *bt
+ 		return ret;
+ 	}
+ 
+-	ret = bt_parse_pinctrl(btDesc);
+-	if (ret < 0) {
+-		dev_err(dev, "could not get pinctrl info, ret = %d\n", ret);
+-		return ret;
++	if (btss_debug) {
++		ret = bt_parse_pinctrl(btDesc);
++		if (ret < 0) {
++			dev_err(dev, "could not get pinctrl info, ret = %d\n",
++									ret);
++			return ret;
++		}
+ 	}
+ 
+ 	btDesc->nosecure = of_property_read_bool(dev->of_node, "qcom,nosecure");

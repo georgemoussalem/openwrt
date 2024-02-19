@@ -1,0 +1,10 @@
+--- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
++++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+@@ -13,6 +13,7 @@ properties:
+   compatible:
+     items:
+       - enum:
++          - qcom,ipq5018-dwc3
+           - qcom,msm8996-dwc3
+           - qcom,msm8998-dwc3
+           - qcom,sc7180-dwc3

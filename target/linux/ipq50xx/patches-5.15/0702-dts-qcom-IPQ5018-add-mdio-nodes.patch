@@ -1,0 +1,29 @@
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -148,6 +148,26 @@
+ 		#size-cells = <1>;
+ 		ranges = <0 0 0 0xffffffff>;
+ 
++		mdio0: mdio@88000 {
++			compatible = "qcom,ipq5018-mdio", "qcom,ipq40xx-mdio";
++			reg = <0x00088000 0x64>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			clocks = <&gcc GCC_MDIO0_AHB_CLK>;
++			clock-names = "gcc_mdio0_ahb_clk";
++			status = "disabled";
++		};
++
++		mdio1: mdio@90000 {
++			compatible = "qcom,ipq5018-mdio";
++			reg = <0x00090000 0x64>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			clocks = <&gcc GCC_MDIO1_AHB_CLK>;
++			clock-names = "gcc_mdio1_ahb_clk";
++			status = "disabled";
++		};
++
+ 		qfprom: efuse@a0000 {
+ 			compatible = "qcom,ipq5018-qfprom", "qcom,qfprom";
+ 			reg = <0xa0000 0x1000>;

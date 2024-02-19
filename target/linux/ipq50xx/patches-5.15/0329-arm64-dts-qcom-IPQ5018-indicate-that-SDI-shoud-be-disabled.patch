@@ -1,0 +1,10 @@
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -79,6 +79,7 @@
+ 	firmware {
+ 		scm {
+ 			compatible = "qcom,scm-ipq5018", "qcom,scm";
++			qcom,sdi-enabled;
+ 		};
+ 	};
+ 

@@ -1,0 +1,11 @@
+--- a/drivers/net/wireless/ath/ath11k/core.c
++++ b/drivers/net/wireless/ath/ath11k/core.c
+@@ -339,7 +339,7 @@ static struct ath11k_hw_params ath11k_hw
+ 		.num_peers = 128,
+ 		.supports_suspend = false,
+ 		.hal_desc_sz = sizeof(struct hal_rx_desc_qcn9074),
+-		.supports_regdb = false,
++		.supports_regdb = true,
+ 		.fix_l1ss = true,
+ 		.credit_flow = false,
+ 		.max_tx_ring = DP_TCL_NUM_RING_MAX,

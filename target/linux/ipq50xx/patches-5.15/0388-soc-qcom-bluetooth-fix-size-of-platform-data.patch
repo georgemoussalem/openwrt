@@ -1,0 +1,24 @@
+From 90bec75784d1af74e926a67db158ec3d244ce21b Mon Sep 17 00:00:00 2001
+From: Amandeep Singh <quic_amansing@quicinc.com>
+Date: Thu, 21 Apr 2022 10:34:44 +0530
+Subject: [PATCH] soc: qcom: bt: Fix size of platform data
+
+Fix size of platform data passed during probe.
+
+Signed-off-by: Amandeep Singh <quic_amansing@quicinc.com>
+Change-Id: I553987e8c1a74e3d6d9d432f0816bd329f0b11ff
+---
+ drivers/soc/qcom/bt_tty.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+--- a/drivers/soc/qcom/bt_tty.c
++++ b/drivers/soc/qcom/bt_tty.c
+@@ -613,7 +613,7 @@ static int bt_probe(struct platform_devi
+ 	btDesc->rproc_pdev = platform_device_register_data(&pdev->dev,
+ 							"bt_rproc_driver",
+ 							pdev->id, &btDesc,
+-							sizeof(*btDesc));
++							sizeof(btDesc));
+ 	if (IS_ERR(btDesc->rproc_pdev)) {
+ 		ret = PTR_ERR(btDesc->rproc_pdev);
+ 		dev_err(&pdev->dev, "err registering rproc, ret = %d\n", ret);

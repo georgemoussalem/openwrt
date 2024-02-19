@@ -1,0 +1,26 @@
+From 9be837e01a1b67a3fe3d87764c8a9beaa025cb98 Mon Sep 17 00:00:00 2001
+From: hzy <hzyitc@outlook.com>
+Date: Tue, 7 Mar 2023 13:11:20 +0000
+Subject: [PATCH 3/3] Fix build issue
+
+Signed-off-by: hzy <hzyitc@outlook.com>
+---
+ nss_dp_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/nss_dp_main.c b/nss_dp_main.c
+index cc16a6f2..0a70c2db 100644
+--- a/nss_dp_main.c
++++ b/nss_dp_main.c
+@@ -814,7 +814,7 @@ static int32_t nss_dp_probe(struct platform_device *pdev)
+ 	}
+ 
+ 	netdev_info(netdev, "Registered netdev %s(qcom-id:%d)\n",
+-		    netdev->name, port_id);
++		    netdev->name, dp_priv->macid);
+ 
+ 	dp_global_ctx.nss_dp[dp_priv->macid - 1] = dp_priv;
+ 	dp_global_ctx.slowproto_acl_bm = 0;
+-- 
+2.40.1
+

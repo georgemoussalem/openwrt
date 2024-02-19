@@ -1,0 +1,10 @@
+--- a/Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
++++ b/Documentation/devicetree/bindings/net/qualcomm-bluetooth.yaml
+@@ -23,6 +23,7 @@ properties:
+       - qcom,wcn3998-bt
+       - qcom,qca6390-bt
+       - qcom,wcn6750-bt
++      - qcom,maple-bt
+ 
+   enable-gpios:
+     maxItems: 1

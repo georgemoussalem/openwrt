@@ -1,0 +1,13 @@
+--- a/Documentation/devicetree/bindings/phy/qcom,ipq5332-usb-ss-uniphy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,ipq5332-usb-ss-uniphy.yaml
+@@ -15,7 +15,9 @@ description:
+ 
+ properties:
+   compatible:
+-    - const: qcom,ipq5332-usb-ss-uniphy
++    - enum:
++      - qcom,ipq5018-usb-ss-uniphy
++      - qcom,ipq5332-usb-ss-uniphy
+ 
+   reg:
+     maxItems: 1

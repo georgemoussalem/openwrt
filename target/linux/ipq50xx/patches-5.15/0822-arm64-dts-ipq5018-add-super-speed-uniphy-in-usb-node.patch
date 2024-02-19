@@ -1,0 +1,21 @@
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -568,7 +568,6 @@
+ 				      "lfps_clk";
+ 
+ 			resets = <&gcc GCC_USB0_BCR>;
+-			qcom,select-utmi-as-pipe-clk;
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+ 			ranges;
+@@ -581,8 +580,8 @@
+ 				clocks = <&gcc GCC_USB0_MOCK_UTMI_CLK>;
+ 				clock-names = "ref";
+ 				interrupts = <GIC_SPI 140 IRQ_TYPE_LEVEL_HIGH>;
+-				phy-names = "usb2-phy";
+-				phys = <&usbphy0>;
++				phy-names = "usb2-phy", "usb3-phy";
++				phys = <&usbphy0>, <&usbphy1>;
+ 				tx-fifo-resize;
+ 				snps,is-utmi-l1-suspend;
+ 				snps,hird-threshold = /bits/ 8 <0x0>;
