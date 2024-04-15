@@ -1,0 +1,31 @@
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -158,6 +158,19 @@
+ 			status = "disabled";
+ 		};
+ 
++		usbphy1: phy@5d000 {
++			compatible = "qcom,ipq5018-usb-ss-22ull";
++			reg = <0x0005d000 0x800>;
++			clocks = <&gcc GCC_USB0_PIPE_CLK>,
++					 <&gcc GCC_USB0_PHY_CFG_AHB_CLK>;
++			resets = <&gcc GCC_USB0_PHY_BCR>;
++			#clock-cells = <0>;
++			clock-output-names = "usb0_pipe_clk";
++			qcom,phy-usb-mux-sel = <&tcsr 0x10540>;
++			#phy-cells = <0>;
++			status = "disabled";
++		};
++
+ 		pcie_x1phy: phy@7e000{
+ 			compatible = "qcom,ipq5018-uniphy-pcie-gen2x1";
+ 			reg = <0x0007e000 0x800>;
+@@ -412,7 +425,7 @@
+ 				 <&sleep_clk>,
+ 				 <&pcie_x2phy>,
+ 				 <&pcie_x1phy>,
+-				 <0>,
++				 <&usbphy1>,
+ 				 <&gephy 0>,
+ 				 <&gephy 1>,
+ 				 <&uniphy0 0>,

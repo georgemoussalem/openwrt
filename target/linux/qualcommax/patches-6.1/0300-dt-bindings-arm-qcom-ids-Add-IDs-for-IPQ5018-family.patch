@@ -1,0 +1,46 @@
+From e5b03cd101bd3dbbc7cbbe4c6e55a37070386494 Mon Sep 17 00:00:00 2001
+From: Robert Marko <robimarko@gmail.com>
+Date: Sat, 29 Apr 2023 21:33:35 +0200
+Subject: [PATCH] dt-bindings: arm: qcom,ids: Add IDs for IPQ5018 family
+
+Add SOC IDs for the IPQ5018 family.
+
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230429193336.600629-1-robimarko@gmail.com
+---
+ include/dt-bindings/arm/qcom,ids.h | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+--- a/include/dt-bindings/arm/qcom,ids.h
++++ b/include/dt-bindings/arm/qcom,ids.h
+@@ -131,6 +131,9 @@
+ #define QCOM_ID_SC7180			425
+ #define QCOM_ID_SM6350			434
+ #define QCOM_ID_SM8350			439
++#define QCOM_ID_IPQ5010			446
++#define QCOM_ID_IPQ5018			447
++#define QCOM_ID_IPQ5028			448
+ #define QCOM_ID_SC8280XP		449
+ #define QCOM_ID_IPQ6005			453
+ #define QCOM_ID_QRB5165			455
+@@ -142,13 +145,18 @@
+ #define QCOM_ID_SM8450_3		482
+ #define QCOM_ID_SC7280			487
+ #define QCOM_ID_SC7180P			495
++#define QCOM_ID_IPQ5000			503
++#define QCOM_ID_IPQ0509			504
++#define QCOM_ID_IPQ0518			505
+ #define QCOM_ID_SM6375			507
+ #define QCOM_ID_IPQ9514			510
+ #define QCOM_ID_IPQ9550			511
+ #define QCOM_ID_IPQ9554			512
+ #define QCOM_ID_IPQ9570			513
+ #define QCOM_ID_IPQ9574			514
++#define QCOM_ID_IPQ5016			520
+ #define QCOM_ID_IPQ9510			521
++#define QCOM_ID_IPQ5019			569
+ #define QCOM_ID_IPQ5332			592
+ #define QCOM_ID_IPQ5322			593
+ #define QCOM_ID_IPQ5312			594

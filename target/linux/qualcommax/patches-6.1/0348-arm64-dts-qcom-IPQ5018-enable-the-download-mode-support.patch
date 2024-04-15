@@ -1,0 +1,10 @@
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -80,6 +80,7 @@
+ 		scm {
+ 			compatible = "qcom,scm-ipq5018", "qcom,scm";
+ 			qcom,sdi-enabled;
++			qcom,dload-mode = <&tcsr 0x6100>;
+ 		};
+ 	};
+ 

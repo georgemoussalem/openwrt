@@ -1,0 +1,11 @@
+--- a/drivers/clk/qcom/gcc-ipq5018.c
++++ b/drivers/clk/qcom/gcc-ipq5018.c
+@@ -1837,7 +1837,7 @@ static struct clk_branch gcc_gmac0_sys_c
+ 	.halt_check = BRANCH_HALT_DELAY,
+ 	.halt_bit = 31,
+ 	.clkr = {
+-		.enable_reg = 0x683190,
++		.enable_reg = 0x68190,
+ 		.enable_mask = BIT(0),
+ 		.hw.init = &(struct clk_init_data) {
+ 			.name = "gcc_gmac0_sys_clk",

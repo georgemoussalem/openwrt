@@ -1,0 +1,10 @@
+--- a/drivers/phy/qualcomm/phy-qcom-usb-ss-22ull.c
++++ b/drivers/phy/qualcomm/phy-qcom-usb-ss-22ull.c
+@@ -305,6 +305,7 @@ err:
+ }
+ 
+ static const struct of_device_id qcom_uniphy_usb_of_match[] = {
++	{ .compatible = "qcom,ipq5018-usb-ss-22ull", .data = &ipq5332_usb_uniphy_cfg},
+ 	{ .compatible = "qcom,ipq5332-usb-ss-22ull", .data = &ipq5332_usb_uniphy_cfg},
+ 	{ },
+ };

@@ -1,0 +1,10 @@
+--- a/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
++++ b/Documentation/devicetree/bindings/firmware/qcom,scm.yaml
+@@ -24,6 +24,7 @@ properties:
+           - qcom,scm-apq8064
+           - qcom,scm-apq8084
+           - qcom,scm-ipq4019
++          - qcom,scm-ipq5018
+           - qcom,scm-ipq6018
+           - qcom,scm-ipq806x
+           - qcom,scm-ipq8074

@@ -1,0 +1,178 @@
+--- a/drivers/thermal/qcom/tsens-v0_1.c
++++ b/drivers/thermal/qcom/tsens-v0_1.c
+@@ -229,6 +229,11 @@ static int calibrate_8916(struct tsens_p
+ 	u32 p1[5], p2[5];
+ 	int mode = 0;
+ 	u32 *qfprom_cdata, *qfprom_csel;
++	int ret;
++
++	ret = tsens_calibrate_nvmem(priv, 3);
++	if (!ret)
++		return 0;
+ 
+ 	qfprom_cdata = (u32 *)qfprom_read(priv->dev, "calib");
+ 	if (IS_ERR(qfprom_cdata))
+@@ -286,6 +291,11 @@ static int calibrate_8939(struct tsens_p
+ 	int mode = 0;
+ 	u32 *qfprom_cdata;
+ 	u32 cdata[4];
++	int ret;
++
++	ret = tsens_calibrate_common(priv);
++	if (!ret)
++		return 0;
+ 
+ 	qfprom_cdata = (u32 *)qfprom_read(priv->dev, "calib");
+ 	if (IS_ERR(qfprom_cdata))
+@@ -486,6 +496,11 @@ static int calibrate_9607(struct tsens_p
+ 	u32 p1[5], p2[5];
+ 	int mode = 0;
+ 	u32 *qfprom_cdata;
++	int ret;
++
++	ret = tsens_calibrate_common(priv);
++	if (!ret)
++		return 0;
+ 
+ 	qfprom_cdata = (u32 *)qfprom_read(priv->dev, "calib");
+ 	if (IS_ERR(qfprom_cdata))
+--- a/drivers/thermal/qcom/tsens-v1.c
++++ b/drivers/thermal/qcom/tsens-v1.c
+@@ -143,7 +143,11 @@ static int calibrate_v1(struct tsens_pri
+ 	u32 p1[10], p2[10];
+ 	u32 mode = 0, lsb = 0, msb = 0;
+ 	u32 *qfprom_cdata;
+-	int i;
++	int i, ret;
++
++	ret = tsens_calibrate_common(priv);
++	if (!ret)
++		return 0;
+ 
+ 	qfprom_cdata = (u32 *)qfprom_read(priv->dev, "calib");
+ 	if (IS_ERR(qfprom_cdata))
+@@ -209,6 +213,11 @@ static int calibrate_8976(struct tsens_p
+ 	u32 p1[11], p2[11];
+ 	int mode = 0, tmp = 0;
+ 	u32 *qfprom_cdata;
++	int ret;
++
++	ret = tsens_calibrate_common(priv);
++	if (!ret)
++		return 0;
+ 
+ 	qfprom_cdata = (u32 *)qfprom_read(priv->dev, "calib");
+ 	if (IS_ERR(qfprom_cdata))
+--- a/drivers/thermal/qcom/tsens.c
++++ b/drivers/thermal/qcom/tsens.c
+@@ -70,6 +70,82 @@ char *qfprom_read(struct device *dev, co
+ 	return ret;
+ }
+ 
++int tsens_calibrate_nvmem(struct tsens_priv *priv, int shift)
++{
++	u32 mode;
++	u32 base1, base2;
++	u32 p1[MAX_SENSORS], p2[MAX_SENSORS];
++	char name[] = "sXX_pY"; /* s10_p1 */
++	int i, ret;
++
++	if (priv->num_sensors > MAX_SENSORS)
++		return -EINVAL;
++
++	ret = nvmem_cell_read_variable_le_u32(priv->dev, "mode", &mode);
++	if (ret == -ENOENT)
++		dev_warn(priv->dev, "Please migrate to separate nvmem cells for calibration data\n");
++	if (ret < 0)
++		return ret;
++
++	dev_dbg(priv->dev, "calibration mode is %d\n", mode);
++
++	ret = nvmem_cell_read_variable_le_u32(priv->dev, "base1", &base1);
++	if (ret < 0)
++		return ret;
++
++	ret = nvmem_cell_read_variable_le_u32(priv->dev, "base2", &base2);
++	if (ret < 0)
++		return ret;
++
++	for (i = 0; i < priv->num_sensors; i++) {
++		ret = snprintf(name, sizeof(name), "s%d_p1", priv->sensor[i].hw_id);
++		if (ret < 0)
++			return ret;
++
++		ret = nvmem_cell_read_variable_le_u32(priv->dev, name, &p1[i]);
++		if (ret)
++			return ret;
++
++		ret = snprintf(name, sizeof(name), "s%d_p2", priv->sensor[i].hw_id);
++		if (ret < 0)
++			return ret;
++
++		ret = nvmem_cell_read_variable_le_u32(priv->dev, name, &p2[i]);
++		if (ret)
++			return ret;
++	}
++
++	switch (mode) {
++	case ONE_PT_CALIB:
++		for (i = 0; i < priv->num_sensors; i++)
++			p1[i] = p1[i] + (base1 << shift);
++		break;
++	case TWO_PT_CALIB:
++		for (i = 0; i < priv->num_sensors; i++)
++			p2[i] = (p2[i] + base2) << shift;
++		fallthrough;
++	case ONE_PT_CALIB2:
++		for (i = 0; i < priv->num_sensors; i++)
++			p1[i] = (p1[i] + base1) << shift;
++		break;
++	default:
++		dev_dbg(priv->dev, "calibrationless mode\n");
++		for (i = 0; i < priv->num_sensors; i++) {
++			p1[i] = 500;
++			p2[i] = 780;
++		}
++	}
++
++	compute_intercept_slope(priv, p1, p2, mode);
++
++	return 0;
++}
++
++int tsens_calibrate_common(struct tsens_priv *priv)
++{
++	return tsens_calibrate_nvmem(priv, 2);
++}
++
+ /*
+  * Use this function on devices where slope and offset calculations
+  * depend on calibration data read from qfprom. On others the slope
+--- a/drivers/thermal/qcom/tsens.h
++++ b/drivers/thermal/qcom/tsens.h
+@@ -6,6 +6,7 @@
+ #ifndef __QCOM_TSENS_H__
+ #define __QCOM_TSENS_H__
+ 
++#define NO_PT_CALIB		0x0
+ #define ONE_PT_CALIB		0x1
+ #define ONE_PT_CALIB2		0x2
+ #define TWO_PT_CALIB		0x3
+@@ -17,6 +18,8 @@
+ #define THRESHOLD_MAX_ADC_CODE	0x3ff
+ #define THRESHOLD_MIN_ADC_CODE	0x0
+ 
++#define MAX_SENSORS 16
++
+ #include <linux/interrupt.h>
+ #include <linux/thermal.h>
+ #include <linux/regmap.h>
+@@ -582,6 +585,8 @@ struct tsens_priv {
+ };
+ 
+ char *qfprom_read(struct device *dev, const char *cname);
++int tsens_calibrate_nvmem(struct tsens_priv *priv, int shift);
++int tsens_calibrate_common(struct tsens_priv *priv);
+ void compute_intercept_slope(struct tsens_priv *priv, u32 *pt1, u32 *pt2, u32 mode);
+ int init_common(struct tsens_priv *priv);
+ int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp);

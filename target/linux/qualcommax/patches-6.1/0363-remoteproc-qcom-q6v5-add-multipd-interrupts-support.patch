@@ -1,0 +1,130 @@
+--- a/drivers/remoteproc/qcom_q6v5.c
++++ b/drivers/remoteproc/qcom_q6v5.c
+@@ -118,7 +118,7 @@ static irqreturn_t q6v5_wdog_interrupt(i
+ 	return IRQ_HANDLED;
+ }
+ 
+-static irqreturn_t q6v5_fatal_interrupt(int irq, void *data)
++irqreturn_t q6v5_fatal_interrupt(int irq, void *data)
+ {
+ 	struct qcom_q6v5 *q6v5 = data;
+ 	size_t len;
+@@ -138,8 +138,9 @@ static irqreturn_t q6v5_fatal_interrupt(
+ 
+ 	return IRQ_HANDLED;
+ }
++EXPORT_SYMBOL_GPL(q6v5_fatal_interrupt);
+ 
+-static irqreturn_t q6v5_ready_interrupt(int irq, void *data)
++irqreturn_t q6v5_ready_interrupt(int irq, void *data)
+ {
+ 	struct qcom_q6v5 *q6v5 = data;
+ 
+@@ -147,6 +148,7 @@ static irqreturn_t q6v5_ready_interrupt(
+ 
+ 	return IRQ_HANDLED;
+ }
++EXPORT_SYMBOL_GPL(q6v5_ready_interrupt);
+ 
+ /**
+  * qcom_q6v5_wait_for_start() - wait for remote processor start signal
+@@ -183,7 +185,17 @@ static irqreturn_t q6v5_handover_interru
+ 	return IRQ_HANDLED;
+ }
+ 
+-static irqreturn_t q6v5_stop_interrupt(int irq, void *data)
++irqreturn_t q6v5_spawn_interrupt(int irq, void *data)
++{
++	struct qcom_q6v5 *q6v5 = data;
++
++	complete(&q6v5->spawn_done);
++
++	return IRQ_HANDLED;
++}
++EXPORT_SYMBOL_GPL(q6v5_spawn_interrupt);
++
++irqreturn_t q6v5_stop_interrupt(int irq, void *data)
+ {
+ 	struct qcom_q6v5 *q6v5 = data;
+ 
+@@ -191,6 +203,7 @@ static irqreturn_t q6v5_stop_interrupt(i
+ 
+ 	return IRQ_HANDLED;
+ }
++EXPORT_SYMBOL_GPL(q6v5_stop_interrupt);
+ 
+ /**
+  * qcom_q6v5_request_stop() - request the remote processor to stop
+@@ -221,6 +234,28 @@ int qcom_q6v5_request_stop(struct qcom_q
+ EXPORT_SYMBOL_GPL(qcom_q6v5_request_stop);
+ 
+ /**
++ * qcom_q6v5_request_spawn() - request the remote processor to spawn
++ * @q6v5:      reference to qcom_q6v5 context
++ *
++ * Return: 0 on success, negative errno on failure
++ */
++int qcom_q6v5_request_spawn(struct qcom_q6v5 *q6v5)
++{
++	int ret;
++
++	ret = qcom_smem_state_update_bits(q6v5->spawn_state,
++					  BIT(q6v5->spawn_bit), BIT(q6v5->spawn_bit));
++
++	ret = wait_for_completion_timeout(&q6v5->spawn_done, 5 * HZ);
++
++	qcom_smem_state_update_bits(q6v5->spawn_state,
++				    BIT(q6v5->spawn_bit), 0);
++
++	return ret == 0 ? -ETIMEDOUT : 0;
++}
++EXPORT_SYMBOL_GPL(qcom_q6v5_request_spawn);
++
++/**
+  * qcom_q6v5_panic() - panic handler to invoke a stop on the remote
+  * @q6v5:	reference to qcom_q6v5 context
+  *
+--- a/drivers/remoteproc/qcom_q6v5.h
++++ b/drivers/remoteproc/qcom_q6v5.h
+@@ -17,22 +17,28 @@ struct qcom_q6v5 {
+ 	struct rproc *rproc;
+ 
+ 	struct qcom_smem_state *state;
++	struct qcom_smem_state *shutdown_state;
++	struct qcom_smem_state *spawn_state;
+ 	struct qmp *qmp;
+ 
+ 	struct icc_path *path;
+ 
+ 	unsigned stop_bit;
++	unsigned shutdown_bit;
++	unsigned spawn_bit;
+ 
+ 	int wdog_irq;
+ 	int fatal_irq;
+ 	int ready_irq;
+ 	int handover_irq;
+ 	int stop_irq;
++	int spawn_irq;
+ 
+ 	bool handover_issued;
+ 
+ 	struct completion start_done;
+ 	struct completion stop_done;
++	struct completion spawn_done;
+ 
+ 	int crash_reason;
+ 
+@@ -50,7 +56,12 @@ void qcom_q6v5_deinit(struct qcom_q6v5 *
+ int qcom_q6v5_prepare(struct qcom_q6v5 *q6v5);
+ int qcom_q6v5_unprepare(struct qcom_q6v5 *q6v5);
+ int qcom_q6v5_request_stop(struct qcom_q6v5 *q6v5, struct qcom_sysmon *sysmon);
++int qcom_q6v5_request_spawn(struct qcom_q6v5 *q6v5);
+ int qcom_q6v5_wait_for_start(struct qcom_q6v5 *q6v5, int timeout);
+ unsigned long qcom_q6v5_panic(struct qcom_q6v5 *q6v5);
++irqreturn_t q6v5_fatal_interrupt(int irq, void *data);
++irqreturn_t q6v5_ready_interrupt(int irq, void *data);
++irqreturn_t q6v5_spawn_interrupt(int irq, void *data);
++irqreturn_t q6v5_stop_interrupt(int irq, void *data);
+ 
+ #endif

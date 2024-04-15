@@ -1,0 +1,10 @@
+--- a/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
++++ b/Documentation/devicetree/bindings/mfd/qcom,tcsr.yaml
+@@ -26,6 +26,7 @@ properties:
+           - qcom,sm8150-tcsr
+           - qcom,tcsr-apq8064
+           - qcom,tcsr-apq8084
++          - qcom,tcsr-ipq5018
+           - qcom,tcsr-ipq6018
+           - qcom,tcsr-ipq8064
+           - qcom,tcsr-mdm9615

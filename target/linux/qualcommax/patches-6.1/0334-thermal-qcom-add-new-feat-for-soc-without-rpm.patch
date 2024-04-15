@@ -1,0 +1,30 @@
+--- a/drivers/thermal/qcom/tsens.c
++++ b/drivers/thermal/qcom/tsens.c
+@@ -925,7 +925,7 @@ int __init init_common(struct tsens_priv
+ 	ret = regmap_field_read(priv->rf[TSENS_EN], &enabled);
+ 	if (ret)
+ 		goto err_put_device;
+-	if (!enabled) {
++	if (!enabled && !(priv->feat->ignore_enable)) {
+ 		dev_err(dev, "%s: device not enabled\n", __func__);
+ 		ret = -ENODEV;
+ 		goto err_put_device;
+--- a/drivers/thermal/qcom/tsens.h
++++ b/drivers/thermal/qcom/tsens.h
+@@ -501,6 +501,8 @@ enum regfield_ids {
+  * @srot_split: does the IP neatly splits the register space into SROT and TM,
+  *              with SROT only being available to secure boot firmware?
+  * @has_watchdog: does this IP support watchdog functionality?
++ * @ignore_enable: does this IP reside in a soc that does not have rpm to
++ *                 do pre-init.
+  * @max_sensors: maximum sensors supported by this version of the IP
+  * @trip_min_temp: minimum trip temperature supported by this version of the IP
+  * @trip_max_temp: maximum trip temperature supported by this version of the IP
+@@ -512,6 +514,7 @@ struct tsens_features {
+ 	unsigned int adc:1;
+ 	unsigned int srot_split:1;
+ 	unsigned int has_watchdog:1;
++	unsigned int ignore_enable:1;
+ 	unsigned int max_sensors;
+ 	int trip_min_temp;
+ 	int trip_max_temp;

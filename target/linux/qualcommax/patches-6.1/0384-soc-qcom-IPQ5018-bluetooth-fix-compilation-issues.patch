@@ -1,0 +1,48 @@
+From 818b307b6f248c62a533bdec5e3a0381a46f8e31 Mon Sep 17 00:00:00 2001
+From: "Singh, Amandeep" <amansing@codeaurora.org>
+Date: Mon, 24 May 2021 19:25:09 +0530
+Subject: [PATCH] ipq50xx: bt: Fix compilation issues
+
+Fix compilation issues by updating path of header file inclusion.
+
+Change-Id: I425d38b4b83f9b1cfd10464ee4a45fb03a5d7d27
+Signed-off-by: Singh, Amandeep <amansing@codeaurora.org>
+---
+ drivers/remoteproc/bt_rproc.c | 2 +-
+ drivers/soc/qcom/bt_ipc.c     | 2 +-
+ drivers/soc/qcom/bt_tty.c     | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+--- a/drivers/remoteproc/bt_rproc.c
++++ b/drivers/remoteproc/bt_rproc.c
+@@ -20,7 +20,7 @@
+ #include <linux/delay.h>
+ #include <linux/qcom_scm.h>
+ #include <linux/clk.h>
+-#include "bt.h"
++#include <linux/bt.h>
+ 
+ static bool auto_load;
+ module_param(auto_load, bool, 0644);
+--- a/drivers/soc/qcom/bt_ipc.c
++++ b/drivers/soc/qcom/bt_ipc.c
+@@ -32,7 +32,7 @@
+ #include <uapi/linux/major.h>
+ #include <linux/completion.h>
+ #include <linux/workqueue.h>
+-#include "bt.h"
++#include <linux/bt.h>
+ 
+ void bt_ipc_purge_tx_queue(struct bt_descriptor *btDesc)
+ {
+--- a/drivers/soc/qcom/bt_tty.c
++++ b/drivers/soc/qcom/bt_tty.c
+@@ -29,7 +29,7 @@
+ #include <uapi/linux/major.h>
+ #include <linux/remoteproc.h>
+ #include <linux/clk.h>
+-#include "bt.h"
++#include <linux/bt.h>
+ 
+ static bool btss_debug;
+ module_param(btss_debug, bool, 0644);

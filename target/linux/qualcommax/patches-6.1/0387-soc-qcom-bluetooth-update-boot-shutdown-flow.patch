@@ -1,0 +1,321 @@
+From 74ca5e8cec2858083d68f34d4eb5d7e71e58b0c7 Mon Sep 17 00:00:00 2001
+From: Amandeep Singh <quic_amansing@quicinc.com>
+Date: Mon, 21 Feb 2022 12:14:35 +0530
+Subject: [PATCH] soc: qcom: bt: Update boot/shutdown flow
+
+Update boot/shutdown flow to open/close along with ioctl.
+
+Change-Id: I057bf50d4704948b5201448684edb98b38c21769
+Signed-off-by: Amandeep Singh <quic_amansing@quicinc.com>
+---
+ drivers/remoteproc/bt_rproc.c | 94 ++++++++++++++++++++---------------
+ drivers/soc/qcom/bt_ipc.c     | 13 ++++-
+ drivers/soc/qcom/bt_tty.c     | 93 ++++++++++++++++++++++++++++------
+ include/linux/bt.h            | 14 ++++++
+ 4 files changed, 157 insertions(+), 57 deletions(-)
+
+--- a/drivers/remoteproc/bt_rproc.c
++++ b/drivers/remoteproc/bt_rproc.c
+@@ -54,10 +54,11 @@ int m0_btss_start(struct rproc *rproc)
+ 	int ret;
+ 	struct bt_descriptor *btDesc = rproc->priv;
+ 
+-	if (!btDesc->nosecure) {
+-		ret = qcom_scm_pas_auth_and_reset(PAS_ID);
++	if (rproc->state == RPROC_OFFLINE) {
++		ret = bt_ipc_init(btDesc);
+ 		if (ret) {
+-			dev_err(rproc->dev.parent, "secure reset failed\n");
++			dev_err(rproc->dev.parent, "%s err initializing IPC\n",
++					__func__);
+ 			return ret;
+ 		}
+ 
+@@ -84,36 +85,41 @@ int m0_btss_stop(struct rproc *rproc)
+ 	int ret;
+ 	struct bt_descriptor *btDesc = rproc->priv;
+ 
+-	if (!btDesc->nosecure) {
+-		ret = qcom_scm_pas_shutdown(PAS_ID);
+-		if (ret) {
+-			dev_err(rproc->dev.parent, "failed, ret = %d\n", ret);
+-			return ret;
+-		}
+-	} else {
+-		ret = reset_control_assert(btDesc->btss_reset);
+-		if (ret) {
+-			dev_err(rproc->dev.parent,
++	if (!atomic_read(&rproc->power) && ((rproc->state == RPROC_RUNNING) |
++				(rproc->state == RPROC_CRASHED))) {
++		bt_ipc_deinit(btDesc);
++
++		if (!btDesc->nosecure) {
++			ret = qcom_scm_pas_shutdown(PAS_ID);
++			if (ret) {
++				dev_err(rproc->dev.parent, "failed, ret = %d\n",
++						ret);
++				return ret;
++			}
++		} else {
++			ret = reset_control_assert(btDesc->btss_reset);
++			if (ret) {
++				dev_err(rproc->dev.parent,
+ 				"non secure assert failed, ret = %d\n", ret);
+-			return ret;
+-		}
++				return ret;
++			}
+ 
+-		mdelay(50);
++			mdelay(50);
+ 
+-		writel(0x0, btDesc->warm_reset + BT_M0_WARM_RST);
+-		writel(0x1, btDesc->warm_reset + BT_M0_WARM_RST_ORIDE);
++			writel(0x0, btDesc->warm_reset + BT_M0_WARM_RST);
++			writel(0x1, btDesc->warm_reset + BT_M0_WARM_RST_ORIDE);
+ 
+-		mdelay(50);
+-		ret = reset_control_deassert(btDesc->btss_reset);
+-		if (ret) {
+-			dev_err(rproc->dev.parent,
++			mdelay(50);
++			ret = reset_control_deassert(btDesc->btss_reset);
++			if (ret) {
++				dev_err(rproc->dev.parent,
+ 				"non secure deassert failed, ret = %d\n", ret);
+-			return ret;
++				return ret;
++			}
+ 		}
+-	}
+-
+-	dev_info(rproc->dev.parent, "%s\n", __func__);
+ 
++		dev_info(rproc->dev.parent, "%s\n", __func__);
++	}
+ 	return ret;
+ }
+ 
+@@ -125,8 +131,6 @@ int m0_btss_load(struct rproc *rproc, co
+ 
+ 	offset = m0_btss_load_address(rproc, fw);
+ 
+-
+-
+ 	if (!btDesc->nosecure) {
+ 		ret = qcom_mdt_load(rproc->dev.parent, fw, rproc->firmware,
+ 				PAS_ID, btDesc->btmem.virt + offset,
+@@ -241,7 +245,6 @@ static int bt_rproc_remove(struct platfo
+ 	atomic_set(&btDesc->state, 0);
+ 	rproc_del(rproc);
+ 	rproc_free(rproc);
+-	bt_ipc_purge_tx_queue(btDesc);
+ 	clk_disable_unprepare(btDesc->lpo_clk);
+ 
+ 	return 0;
+--- a/drivers/soc/qcom/bt_ipc.c
++++ b/drivers/soc/qcom/bt_ipc.c
+@@ -460,6 +460,10 @@ static void bt_ipc_worker(struct work_st
+ 						    ipc);
+ 	struct bt_mem *btmem = &btDesc->btmem;
+ 	bool ackReqd = false;
++	struct rproc *rproc = platform_get_drvdata(btDesc->rproc_pdev);
++
++	if (!atomic_read(&rproc->power))
++		return;
+ 
+ 	spin_lock_irqsave(&btDesc->lock, flags);
+ 
+@@ -514,6 +518,7 @@ int bt_ipc_init(struct bt_descriptor *bt
+ 	struct bt_ipc *ipc = &btDesc->ipc;
+ 	struct device *dev = &btDesc->pdev->dev;
+ 
++	init_waitqueue_head(&ipc->wait_q);
+ 	spin_lock_init(&btDesc->lock);
+ 	INIT_LIST_HEAD(&ipc->tx_q);
+ 
+@@ -557,8 +562,12 @@ void bt_ipc_deinit(struct bt_descriptor
+ 	struct bt_ipc *ipc = &btDesc->ipc;
+ 	struct device *dev = &btDesc->pdev->dev;
+ 
+-	atomic_notifier_chain_unregister(&panic_notifier_list,
+-							&btDesc->panic_nb);
++	atomic_set(&btDesc->state, 0);
+ 	devm_free_irq(dev, ipc->irq, btDesc);
++	bt_ipc_purge_tx_queue(btDesc);
++	atomic_notifier_chain_unregister(&panic_notifier_list,
++			&btDesc->panic_nb);
++	flush_work(&ipc->work);
++	destroy_workqueue(ipc->wq);
+ }
+ EXPORT_SYMBOL(bt_ipc_deinit);
+--- a/drivers/soc/qcom/bt_tty.c
++++ b/drivers/soc/qcom/bt_tty.c
+@@ -34,18 +34,68 @@
+ static bool btss_debug;
+ module_param(btss_debug, bool, 0644);
+ 
+-int bt_ipc_avail_size(struct bt_descriptor *btDesc)
++unsigned int pid_distinct(struct bt_descriptor *btDesc, enum pid_ops action)
+ {
+-	return tty_buffer_space_avail(&btDesc->tty_port);
++	int ret;
++	struct list_head *pid_q = &btDesc->pid_q;
++	pid_t pid = current->tgid;
++	struct pid_n *pid_cursor;
++	struct platform_device *rproc_pdev = btDesc->rproc_pdev;
++	struct rproc *rproc = platform_get_drvdata(rproc_pdev);
++	struct device *dev = &btDesc->pdev->dev;
++
++	list_for_each_entry(pid_cursor, pid_q, list) {
++		if (pid_cursor->pid == pid) {
++			switch (action) {
++			case ADD:
++				atomic_inc(&pid_cursor->refcnt);
++				break;
++			case REMOVE:
++				atomic_dec(&pid_cursor->refcnt);
++				break;
++			case TERMINATE:
++				ret = atomic_read(&pid_cursor->refcnt);
++				atomic_sub(ret - 1, &rproc->power);
++				list_del(&pid_cursor->list);
++				kfree(pid_cursor);
++				pid_cursor = NULL;
++				break;
++			default:
++				dev_info(dev, "Invalid operation\n");
++				pr_err("Invalid operation\n");
++				return -ENOENT;
++			}
++			goto out;
++		}
++	}
++
++	pid_cursor = kzalloc(sizeof(struct pid_n), GFP_KERNEL);
++	if (!pid_cursor)
++		return -ENOMEM;
++
++	pid_cursor->pid = pid;
++	atomic_inc(&pid_cursor->refcnt);
++	list_add_tail(&pid_cursor->list, pid_q);
++out:
++	return pid_cursor ? atomic_read(&pid_cursor->refcnt) : 0;
+ }
++EXPORT_SYMBOL(pid_distinct);
+ 
+-static int bt_open(struct tty_struct *tty, struct file *file)
++void pid_show(struct bt_descriptor *btDesc)
+ {
+-	return 0;
++	struct pid_n *pid_cursor;
++	struct list_head *pid_q = &btDesc->pid_q;
++	struct device *dev = &btDesc->pdev->dev;
++
++	dev_info(&btDesc->pdev->dev, "Rgistered PIDS:\n");
++	list_for_each_entry(pid_cursor, pid_q, list) {
++		dev_info(dev, "%d\n", pid_cursor->pid);
++	}
+ }
+ 
+-static void bt_close(struct tty_struct *tty, struct file *file)
++int bt_ipc_avail_size(struct bt_descriptor *btDesc)
+ {
++	return tty_buffer_space_avail(&btDesc->tty_port);
+ }
+ 
+ static
+@@ -111,10 +161,12 @@ int bt_ioctl(struct tty_struct *tty, uns
+ 			ret = rproc_boot(rproc);
+ 			if (ret)
+ 				dev_err(dev, "m0 boot fail, ret = %d\n", ret);
++			else
++				pid_distinct(btDesc, ADD);
+ 		} else {
++			pid_distinct(btDesc, tty->closing ? TERMINATE : REMOVE);
+ 			rproc_shutdown(rproc);
+ 		}
+-
+ 		break;
+ 	default:
+ 		ret = -ENOIOCTLCMD;
+@@ -140,6 +192,25 @@ void bt_unthrottle(struct tty_struct *tt
+ 	enable_irq(btDesc->ipc.irq);
+ }
+ 
++static int bt_open(struct tty_struct *tty, struct file *file)
++{
++	int ret = 0;
++
++	tty->closing = 0;
++	ret = bt_ioctl(tty, IOCTL_IPC_BOOT, 1);
++	return ret;
++}
++
++static void bt_close(struct tty_struct *tty, struct file *file)
++{
++	struct bt_descriptor *btDesc = container_of(tty->port,
++						struct bt_descriptor, tty_port);
++
++	tty->closing = 1;
++	bt_ioctl(tty, IOCTL_IPC_BOOT, 0);
++	pid_show(btDesc);
++}
++
+ static int bt_tty_activate(struct tty_port *port, struct tty_struct *tty)
+ {
+ 	return 0;
+@@ -549,14 +620,7 @@ static int bt_probe(struct platform_devi
+ 		goto err_deinit_tty;
+ 	}
+ 
+-
+-	init_waitqueue_head(&btDesc->ipc.wait_q);
+-
+-	ret = bt_ipc_init(btDesc);
+-	if (ret) {
+-		dev_err(&pdev->dev, "%s err initializing IPC\n", __func__);
+-		goto err_deinit_tty;
+-	}
++	INIT_LIST_HEAD(&btDesc->pid_q);
+ 
+ 	platform_set_drvdata(pdev, btDesc);
+ 
+@@ -572,7 +636,6 @@ static int bt_remove(struct platform_dev
+ {
+ 	struct bt_descriptor *btDesc = platform_get_drvdata(pdev);
+ 
+-	bt_ipc_deinit(btDesc);
+ 	bt_tty_deinit(btDesc);
+ 	bt_debugfs_deinit(btDesc);
+ 
+--- a/include/linux/bt.h
++++ b/include/linux/bt.h
+@@ -215,6 +215,7 @@ struct bt_descriptor {
+ 	bool debug_en;
+ 	bool nosecure;
+ 	bool is_serdev;
++	struct list_head pid_q;
+ };
+ 
+ struct ipc_intent {
+@@ -223,6 +224,19 @@ struct ipc_intent {
+ 	struct list_head list;
+ };
+ 
++struct pid_n {
++	atomic_t refcnt;
++	pid_t pid;
++	struct list_head list;
++};
++
++enum pid_ops {
++	ADD = 0,
++	REMOVE,
++	TERMINATE,
++	KILLALL,
++};
++
+ extern int bt_ipc_send_msg(struct bt_descriptor *btDesc, uint16_t msg_hdr,
+ 		const uint8_t *pData, uint16_t len, bool dequeue);
+ extern int bt_ipc_avail_size(struct bt_descriptor *btDesc);

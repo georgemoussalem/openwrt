@@ -1,0 +1,141 @@
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -149,6 +149,60 @@
+ 		#size-cells = <1>;
+ 		ranges = <0 0 0 0xffffffff>;
+ 
++		mdio0: mdio@88000 {
++			compatible = "qcom,ipq5018-mdio";
++			reg = <0x00088000 0x64>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			clocks = <&gcc GCC_MDIO0_AHB_CLK>;
++			clock-names = "gcc_mdio_ahb_clk";
++			resets = <&gcc GCC_GEPHY_MDC_SW_ARES>,
++					 <&gcc GCC_GEPHY_DSP_HW_ARES>;
++			reset-names = "gephy_mdc_rst",
++						  "gephy_dsp_rst";
++			status = "disabled";
++
++			gephy: ethernet-phy@0 {
++				reg = <7>;
++				#clock-cells = <1>;
++				clocks = <&gcc GCC_GEPHY_RX_CLK>,
++						 <&gcc GCC_GEPHY_TX_CLK>;
++				resets = <&gcc GCC_GEPHY_BCR>,
++						 <&gcc GCC_GEPHY_MISC_ARES>;
++			};
++		};
++
++		mdio1: mdio@90000 {
++			compatible = "qcom,ipq5018-mdio";
++			reg = <0x00090000 0x64>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			clocks = <&gcc GCC_MDIO1_AHB_CLK>;
++			clock-names = "gcc_mdio_ahb_clk";
++			status = "disabled";
++		};
++
++		uniphy0: ethernet-phy@98000 {
++			compatible = "qcom,ipq5018-eth-uniphy";
++			#clock-cells = <1>;
++			#phy-cells = <0>;
++			reg = <0x00098000 0x800>,
++				  <0x0009b000 0x800>,
++				  <0x019475c4 0x4>;
++			reg-names = "uniphy",
++						"cmn",
++						"tcsr";
++			clocks = <&gcc GCC_CMN_BLK_AHB_CLK>,
++					 <&gcc GCC_CMN_BLK_SYS_CLK>,
++					 <&gcc GCC_UNIPHY_AHB_CLK>,
++				 	 <&gcc GCC_UNIPHY_SYS_CLK>,
++				 	 <&gcc GCC_UNIPHY_RX_CLK>,
++				 	 <&gcc GCC_UNIPHY_TX_CLK>;
++			resets = <&gcc GCC_UNIPHY_BCR>,
++				 	 <&gcc GCC_UNIPHY_SOFT_RESET>;
++			status = "disabled";
++		};
++
+ 		qfprom: efuse@a0000 {
+ 			compatible = "qcom,ipq5018-qfprom", "qcom,qfprom";
+ 			reg = <0xa0000 0x1000>;
+@@ -318,10 +372,10 @@
+ 				 <0>,
+ 				 <0>,
+ 				 <0>,
+-				 <0>,
+-				 <0>,
+-				 <0>,
+-				 <0>;
++				 <&gephy 0>,
++				 <&gephy 1>,
++				 <&uniphy0 0>,
++				 <&uniphy0 1>;
+ 			#clock-cells = <1>;
+ 			#reset-cells = <1>;
+ 			#power-domain-cells = <1>;
+@@ -793,6 +847,62 @@
+ 				#interrupt-cells = <2>;
+ 			};
+ 		};
++
++		gmac0: ethernet@39c00000 {
++			compatible = "qcom,ipq50xx-gmac", "snps,dwmac";
++			reg = <0x39c00000 0x10000>;
++			reg-names = "stmmaceth";
++			clocks = <&gcc GCC_GMAC0_SYS_CLK>,
++				 	 <&gcc GCC_GMAC0_CFG_CLK>,
++				 	 <&gcc GCC_SNOC_GMAC0_AHB_CLK>,
++				 	 <&gcc GCC_SNOC_GMAC0_AXI_CLK>,
++				 	 <&gcc GCC_GMAC0_RX_CLK>,
++				 	 <&gcc GCC_GMAC0_TX_CLK>,
++				 	 <&gcc GCC_GMAC0_PTP_CLK>;
++			clock-names = "sys",
++				      	  "cfg",
++				    	  "ahb",
++				      	  "axi",
++				      	  "rx",
++				      	  "tx",
++				      	  "ptp";
++			resets = <&gcc GCC_GMAC0_BCR>;
++			interrupts = <GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "macirq";
++
++			phy-handle = <&gephy>;
++			phy-mode = "sgmii";
++
++			status = "disabled";
++		};
++
++		gmac1: ethernet@39d00000 {
++			compatible = "qcom,ipq50xx-gmac", "snps,dwmac";
++			reg = <0x39d00000 0x10000>;
++			reg-names = "stmmaceth";
++			clocks = <&gcc GCC_GMAC1_SYS_CLK>,
++				 	 <&gcc GCC_GMAC1_CFG_CLK>,
++				 	 <&gcc GCC_SNOC_GMAC1_AHB_CLK>,
++				 	 <&gcc GCC_SNOC_GMAC1_AXI_CLK>,
++				 	 <&gcc GCC_GMAC1_RX_CLK>,
++				 	 <&gcc GCC_GMAC1_TX_CLK>,
++				 	 <&gcc GCC_GMAC1_PTP_CLK>;
++			clock-names = "sys",
++				    	  "cfg",
++				      	  "ahb",
++				      	  "axi",
++				      	  "rx",
++				      	  "tx",
++				      	  "ptp";
++			resets = <&gcc GCC_GMAC1_BCR>;
++			interrupts = <GIC_SPI 109 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "macirq";
++
++			phys = <&uniphy0>;
++			phy-names = "uniphy";
++
++			status = "disabled";
++		};
+ 	};
+ 
+ 	thermal-zones {

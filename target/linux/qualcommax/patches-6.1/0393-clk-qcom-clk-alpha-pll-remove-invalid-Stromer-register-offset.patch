@@ -1,0 +1,10 @@
+--- a/drivers/clk/qcom/clk-alpha-pll.c
++++ b/drivers/clk/qcom/clk-alpha-pll.c
+@@ -195,7 +195,6 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MA
+ 		[PLL_OFF_USER_CTL] = 0x18,
+ 		[PLL_OFF_USER_CTL_U] = 0x1c,
+ 		[PLL_OFF_CONFIG_CTL] = 0x20,
+-		[PLL_OFF_CONFIG_CTL_U] = 0xff,
+ 		[PLL_OFF_TEST_CTL] = 0x30,
+ 		[PLL_OFF_TEST_CTL_U] = 0x34,
+ 		[PLL_OFF_STATUS] = 0x28,

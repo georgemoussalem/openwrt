@@ -1,0 +1,40 @@
+From 0369a5906e46a2431a8fe04aa79cba6583e53e73 Mon Sep 17 00:00:00 2001
+From: Robert Marko <robimarko@gmail.com>
+Date: Sat, 29 Apr 2023 21:33:36 +0200
+Subject: [PATCH] soc: qcom: socinfo: Add IDs for IPQ5018 family
+
+Add SOC IDs for the IPQ5018 family.
+
+Signed-off-by: Robert Marko <robimarko@gmail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20230429193336.600629-2-robimarko@gmail.com
+---
+ drivers/soc/qcom/socinfo.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+--- a/drivers/soc/qcom/socinfo.c
++++ b/drivers/soc/qcom/socinfo.c
+@@ -268,6 +268,9 @@ static const struct soc_id soc_id[] = {
+ 	{ 425, "SC7180" },
+ 	{ 434, "SM6350" },
+ 	{ 439, "SM8350" },
++	{ 446, "IPQ5010" },
++	{ 447, "IPQ5018" },
++	{ 448, "IPQ5028" },
+ 	{ 449, "SC8280XP" },
+ 	{ 453, "IPQ6005" },
+ 	{ 455, "QRB5165" },
+@@ -279,7 +282,12 @@ static const struct soc_id soc_id[] = {
+ 	{ 482, "SM8450" },
+ 	{ 487, "SC7280" },
+ 	{ 495, "SC7180P" },
++	{ 503, "IPQ5000" },
++	{ 504, "IPQ0509" },
++	{ 505, "IPQ0518" },
+ 	{ 507, "SM6375" },
++	{ 520, "IPQ5016" },
++	{ 569, "IPQ5019", },
+ };
+ 
+ static const char *socinfo_machine(struct device *dev, unsigned int id)

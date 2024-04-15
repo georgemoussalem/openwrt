@@ -1,0 +1,78 @@
+From 3ebf96c3968656458ec4c5a805e07431efdabef1 Mon Sep 17 00:00:00 2001
+From: "Singh, Amandeep" <amansing@codeaurora.org>
+Date: Mon, 24 May 2021 18:51:13 +0530
+Subject: [PATCH] ipq50xx: scm: Add scm call to copy OTP
+
+Add scm call to copy bluetooth OTP to bluetooth imem address.
+
+Change-Id: I8886f44983a7e1652b76b9e9359311e9f63b0ce4
+Signed-off-by: Singh, Amandeep <amansing@codeaurora.org>
+---
+ drivers/firmware/qcom_scm-32.c | 23 +++++++++++++++++++++++
+ drivers/firmware/qcom_scm-64.c | 15 +++++++++++++++
+ drivers/firmware/qcom_scm.c    | 21 +++++++++++++++++++++
+ drivers/firmware/qcom_scm.h    |  4 ++++
+ include/linux/qcom_scm.h       |  6 ++++++
+ 5 files changed, 69 insertions(+)
+
+--- a/drivers/firmware/qcom_scm.c
++++ b/drivers/firmware/qcom_scm.c
+@@ -1439,6 +1439,37 @@ bool qcom_scm_is_available(void)
+ }
+ EXPORT_SYMBOL(qcom_scm_is_available);
+ 
++/**
++ * qcom_scm_load_otp () - Load OTP to device memory
++ * @peripheral:	peripheral id
++ *
++ * Return 0 on success.
++ */
++int qcom_scm_load_otp(u32 peripheral)
++{
++	int ret;
++	struct qcom_scm_res res;
++	struct qcom_scm_desc desc = {
++		.svc = QCOM_SCM_SVC_OTP,
++		.cmd = QCOM_SCM_CMD_OTP,
++		.owner = ARM_SMCCC_OWNER_SIP,
++	};
++
++	ret = qcom_scm_clk_enable();
++	if (ret)
++		return ret;
++
++	desc.args[0] = peripheral;
++	desc.arginfo = QCOM_SCM_ARGS(1);
++
++	ret = qcom_scm_call(__scm->dev, &desc, &res);
++
++	qcom_scm_clk_disable();
++
++	return ret ? : res.result[0];
++}
++EXPORT_SYMBOL(qcom_scm_load_otp);
++
+ static int qcom_scm_probe(struct platform_device *pdev)
+ {
+ 	struct qcom_scm *scm;
+--- a/drivers/firmware/qcom_scm.h
++++ b/drivers/firmware/qcom_scm.h
+@@ -136,6 +136,9 @@ extern int scm_legacy_call(struct device
+ #define QCOM_SCM_INT_RAD_PWR_UP_CMD_ID		0x17
+ #define QCOM_SCM_INT_RAD_PWR_DN_CMD_ID		0x18
+ 
++#define QCOM_SCM_SVC_OTP	0x2
++#define QCOM_SCM_CMD_OTP	0x15
++
+ /* common error codes */
+ #define QCOM_SCM_V2_EBUSY	-12
+ #define QCOM_SCM_ENOMEM		-5
+--- a/include/linux/qcom_scm.h
++++ b/include/linux/qcom_scm.h
+@@ -126,5 +126,6 @@ extern int qcom_scm_lmh_dcvsh(u32 payloa
+ 			      u64 limit_node, u32 node_id, u64 version);
+ extern int qcom_scm_lmh_profile_change(u32 profile_id);
+ extern bool qcom_scm_lmh_dcvsh_available(void);
++extern int qcom_scm_load_otp(u32 peripheral);
+ 
+ #endif

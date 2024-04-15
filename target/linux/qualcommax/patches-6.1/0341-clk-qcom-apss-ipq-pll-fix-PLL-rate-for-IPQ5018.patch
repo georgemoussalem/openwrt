@@ -1,0 +1,11 @@
+--- a/drivers/clk/qcom/apss-ipq-pll.c
++++ b/drivers/clk/qcom/apss-ipq-pll.c
+@@ -97,7 +97,7 @@ static struct clk_alpha_pll ipq_pll_stro
+ };
+ 
+ static const struct alpha_pll_config ipq5018_pll_config = {
+-	.l = 0x32,
++	.l = 0x2a,
+ 	.config_ctl_val = 0x4001075b,
+ 	.config_ctl_hi_val = 0x304,
+ 	.main_output_mask = BIT(0),

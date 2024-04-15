@@ -1,0 +1,65 @@
+From e6a23fe0dba50c618cb39b6e9eb543ed8badd046 Mon Sep 17 00:00:00 2001
+From: Zijun Hu <quic_zijuhu@quicinc.com>
+Date: Wed, 3 Nov 2021 11:55:43 +0800
+Subject: [PATCH] soc: qcom: bt: Add support for bluez
+
+Add support for bluez.
+
+Change-Id: I3b373de6f2541ebd0f57573f73f55e2fa80fc790
+Signed-off-by: Zijun Hu <quic_zijuhu@quicinc.com>
+---
+ drivers/soc/qcom/bt_tty.c | 18 ++++++++++++++++--
+ include/linux/bt.h        |  1 +
+ 2 files changed, 17 insertions(+), 2 deletions(-)
+
+--- a/drivers/soc/qcom/bt_tty.c
++++ b/drivers/soc/qcom/bt_tty.c
+@@ -215,8 +215,12 @@ int bt_tty_init(struct bt_descriptor *bt
+ 	tty_port_init(&btDesc->tty_port);
+ 	btDesc->tty_port.ops = &bt_port_ops;
+ 
+-	dev = tty_port_register_device(&btDesc->tty_port,
+-					btDesc->tty_drv, 0, NULL);
++	if (btDesc->is_serdev)
++		dev = tty_port_register_device_serdev(&btDesc->tty_port,
++						      btDesc->tty_drv, 0, btdev);
++	else
++		dev = tty_port_register_device(&btDesc->tty_port,
++					       btDesc->tty_drv, 0, NULL);
+ 	if (IS_ERR(dev)) {
+ 		ret = PTR_ERR(dev);
+ 		dev_err(btdev, "failed to register port, ret %d\n", ret);
+@@ -361,6 +365,7 @@ int bt_parse_pinctrl(struct bt_descripto
+ int bt_parse_dt(struct bt_descriptor *btDesc)
+ {
+ 	int ret;
++	struct device_node *child;
+ 	struct device *dev = &btDesc->pdev->dev;
+ 
+ 	ret = of_property_read_string(dev->of_node, "firmware-name",
+@@ -397,6 +402,15 @@ int bt_parse_dt(struct bt_descriptor *bt
+ 		}
+ 	}
+ 
++	btDesc->is_serdev = false;
++	for_each_available_child_of_node(dev->of_node, child){
++		if (of_device_is_compatible(child, "qcom,maple-bt")){
++			dev_info(dev, "%s : serdev node enabled for bluez\n", __func__);
++			btDesc->is_serdev = true;
++			break;
++		}
++	}
++
+ 	btDesc->nosecure = of_property_read_bool(dev->of_node, "qcom,nosecure");
+ 
+ 	dev_info(dev, "%s operating in %s mode\n", __func__,
+--- a/include/linux/bt.h
++++ b/include/linux/bt.h
+@@ -214,6 +214,7 @@ struct bt_descriptor {
+ 	struct pinctrl *pinctrl;
+ 	bool debug_en;
+ 	bool nosecure;
++	bool is_serdev;
+ };
+ 
+ struct ipc_intent {

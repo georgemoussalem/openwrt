@@ -1,0 +1,13 @@
+diff --git a/drivers/clk/qcom/gcc-ipq5018.c b/drivers/clk/qcom/gcc-ipq5018.c
+index cef9a1e7c9fdb..5e81cfa77293a 100644
+--- a/drivers/clk/qcom/gcc-ipq5018.c
++++ b/drivers/clk/qcom/gcc-ipq5018.c
+@@ -2180,7 +2180,7 @@ static struct clk_branch gcc_pcie1_axi_s_clk = {
+ };
+ 
+ static struct clk_branch gcc_pcie1_pipe_clk = {
+-	.halt_reg = 8,
++	.halt_reg = 0x76018,
+ 	.halt_check = BRANCH_HALT_DELAY,
+ 	.halt_bit = 31,
+ 	.clkr = {
