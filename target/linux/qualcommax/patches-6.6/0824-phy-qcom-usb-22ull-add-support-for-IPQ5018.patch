@@ -1,0 +1,59 @@
+From: George Moussalem <george.moussalem@outlook.com>
+Date: Tue, 07 Jan 2025 17:34:13 +0400
+Subject: [PATCH] phy: qualcomm: qcom-uniphy-usb add support for IPQ5018
+
+The Qualcomm UNIPHY USB SS PHY 22ull is found on both IPQ5332 and IPQ5018.
+Adding the PHY init sequence and compatible for IPQ5018.
+
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+---
+--- a/drivers/phy/qualcomm/phy-qcom-uniphy-usb-ss-22ull.c
++++ b/drivers/phy/qualcomm/phy-qcom-uniphy-usb-ss-22ull.c
+@@ -19,6 +19,12 @@
+ #include <linux/reset.h>
+ #include <linux/of_device.h>
+ 
++#define SSCG_CTRL_REG_1		0x9c
++#define SSCG_CTRL_REG_2		0xa0
++#define SSCG_CTRL_REG_3		0xa4
++#define SSCG_CTRL_REG_4		0xa8
++#define SSCG_CTRL_REG_5		0xac
++
+ #define PCIE_USB_COMBO_PHY_CFG_MISC1		0x214
+ #define PCIE_USB_COMBO_PHY_CFG_RX_AFE_2		0x7C4
+ #define PCIE_USB_COMBO_PHY_CFG_RX_DLF_DEMUX_2	0x7E8
+@@ -57,12 +63,26 @@ struct uniphy_usb {
+ 		.val = v,		\
+ 	}
+ 
++static const struct phy_init_tbl ipq5018_usb_uniphy_init_tbl[] = {
++	PHY_INIT_CFG(SSCG_CTRL_REG_4, 0x1cb9),
++	PHY_INIT_CFG(SSCG_CTRL_REG_5, 0x23a),
++	PHY_INIT_CFG(SSCG_CTRL_REG_3, 0xd360),
++	PHY_INIT_CFG(SSCG_CTRL_REG_1, 0x1),
++	PHY_INIT_CFG(SSCG_CTRL_REG_2, 0xeb),
++};
++
+ static const struct phy_init_tbl ipq5332_usb_uniphy_init_tbl[] = {
+ 	PHY_INIT_CFG(PCIE_USB_COMBO_PHY_CFG_RX_AFE_2, 0x1076),
+ 	PHY_INIT_CFG(PCIE_USB_COMBO_PHY_CFG_RX_DLF_DEMUX_2, 0x3142),
+ 	PHY_INIT_CFG(PCIE_USB_COMBO_PHY_CFG_MISC1, 0x3),
+ };
+ 
++static const struct uniphy_cfg ipq5018_usb_uniphy_cfg = {
++	.init_seq	= ipq5018_usb_uniphy_init_tbl,
++	.num_init_seq	= ARRAY_SIZE(ipq5018_usb_uniphy_init_tbl),
++	.pipe_clk_rate = 250000000,
++};
++
+ static const struct uniphy_cfg ipq5332_usb_uniphy_cfg = {
+ 	.init_seq	= ipq5332_usb_uniphy_init_tbl,
+ 	.num_init_seq	= ARRAY_SIZE(ipq5332_usb_uniphy_init_tbl),
+@@ -284,6 +304,7 @@ static int qcom_uniphy_usb_probe(struct
+ }
+ 
+ static const struct of_device_id qcom_uniphy_usb_of_match[] = {
++	{ .compatible = "qcom,ipq5018-uniphy-usb-ss-phy", .data = &ipq5018_usb_uniphy_cfg},
+ 	{ .compatible = "qcom,ipq5332-uniphy-usb-ss-phy", .data = &ipq5332_usb_uniphy_cfg},
+ 	{ },
+ };

@@ -1,0 +1,349 @@
+From: Praveenkumar I <quic_ipkumar@quicinc.com>
+Date: Fri, 29 Sep 2023 14:12:03 +0530
+Subject: [PATCH] phy: qcom: Introduce Super-Speed USB UNIPHY driver
+
+Adds Qualcomm 22ull Super-Speed USB UNIPHY driver support which
+is present in Qualcomm IPQ5332 SoC. This PHY is interfaced with
+SNPS DWC3 USB and SNPS DWC PCIe. Either one of the interface
+can use the it and selection is done via mux present in TCSR
+register. This driver selects the PHY for DWC3 USB and handles
+the reset, clocks and regulator.
+
+Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+---
+--- a/drivers/phy/qualcomm/Kconfig
++++ b/drivers/phy/qualcomm/Kconfig
+@@ -166,6 +166,17 @@ config PHY_QCOM_UNIPHY_PCIE_28LP
+ 	  handles PHY initialization, clock management required after
+ 	  resetting the hardware and power management.
+ 
++config PHY_QCOM_UNIPHY_USB_22ULL
++	tristate "Qualcomm USB Super-Speed UNIPHY driver"
++	depends on USB && (ARCH_QCOM || COMPILE_TEST)
++	select GENERIC_PHY
++	help
++	  Enable this to support the Qualcomm USB Super-Speed UNIPHY transceiver
++	  with DWC3 USB core. It handles PHY initialization, clock
++	  management required after resetting the hardware and power
++	  management. This driver is required even for peripheral only or
++	  host only mode configurations.
++
+ config PHY_QCOM_USB_HS
+ 	tristate "Qualcomm USB HS PHY module"
+ 	depends on USB_ULPI_BUS
+--- a/drivers/phy/qualcomm/Makefile
++++ b/drivers/phy/qualcomm/Makefile
+@@ -18,6 +18,7 @@ obj-$(CONFIG_PHY_QCOM_QUSB2)		+= phy-qco
+ obj-$(CONFIG_PHY_QCOM_SNPS_EUSB2)	+= phy-qcom-snps-eusb2.o
+ obj-$(CONFIG_PHY_QCOM_EUSB2_REPEATER)	+= phy-qcom-eusb2-repeater.o
+ obj-$(CONFIG_PHY_QCOM_UNIPHY_PCIE_28LP)	+= phy-qcom-uniphy-pcie-28lp.o
++obj-$(CONFIG_PHY_QCOM_UNIPHY_USB_22ULL)	+= phy-qcom-uniphy-usb-ss-22ull.o
+ obj-$(CONFIG_PHY_QCOM_USB_HS) 		+= phy-qcom-usb-hs.o
+ obj-$(CONFIG_PHY_QCOM_USB_HSIC) 	+= phy-qcom-usb-hsic.o
+ obj-$(CONFIG_PHY_QCOM_USB_HS_28NM)	+= phy-qcom-usb-hs-28nm.o
+--- /dev/null
++++ b/drivers/phy/qualcomm/phy-qcom-uniphy-usb-ss-22ull.c
+@@ -0,0 +1,302 @@
++// SPDX-License-Identifier: GPL-2.0+
++/*
++ * Copyright (c) 2023, Qualcomm Innovation Center, Inc. All rights reserved.
++ */
++
++#include <linux/clk.h>
++#include <linux/clk-provider.h>
++#include <linux/delay.h>
++#include <linux/err.h>
++#include <linux/io.h>
++#include <linux/kernel.h>
++#include <linux/mfd/syscon.h>
++#include <linux/module.h>
++#include <linux/of.h>
++#include <linux/phy/phy.h>
++#include <linux/platform_device.h>
++#include <linux/regmap.h>
++#include <linux/regulator/consumer.h>
++#include <linux/reset.h>
++#include <linux/of_device.h>
++
++#define PCIE_USB_COMBO_PHY_CFG_MISC1		0x214
++#define PCIE_USB_COMBO_PHY_CFG_RX_AFE_2		0x7C4
++#define PCIE_USB_COMBO_PHY_CFG_RX_DLF_DEMUX_2	0x7E8
++
++/* TCSR_USB_MUX_SEL regiter bits */
++#define TCSR_USB_MUX_SEL				BIT(0)
++
++struct phy_init_tbl {
++	unsigned int offset;
++	unsigned int val;
++};
++
++struct uniphy_cfg {
++	const struct phy_init_tbl *init_seq;
++	int num_init_seq;
++	u32 pipe_clk_rate;
++};
++
++struct uniphy_usb {
++	struct device		*dev;
++	const struct uniphy_cfg	*cfg;
++	struct phy		*phy;
++	void __iomem		*base;
++	struct clk_bulk_data	*clks;
++	unsigned int		num_clks;
++	struct reset_control	*reset;
++	struct regulator	*vreg;
++	struct clk_fixed_rate	pipe_clk_fixed;
++	struct regmap		*tcsr;
++	unsigned int		usb_mux_offset;
++};
++
++#define PHY_INIT_CFG(o, v)		\
++	{				\
++		.offset = o,		\
++		.val = v,		\
++	}
++
++static const struct phy_init_tbl ipq5332_usb_uniphy_init_tbl[] = {
++	PHY_INIT_CFG(PCIE_USB_COMBO_PHY_CFG_RX_AFE_2, 0x1076),
++	PHY_INIT_CFG(PCIE_USB_COMBO_PHY_CFG_RX_DLF_DEMUX_2, 0x3142),
++	PHY_INIT_CFG(PCIE_USB_COMBO_PHY_CFG_MISC1, 0x3),
++};
++
++static const struct uniphy_cfg ipq5332_usb_uniphy_cfg = {
++	.init_seq	= ipq5332_usb_uniphy_init_tbl,
++	.num_init_seq	= ARRAY_SIZE(ipq5332_usb_uniphy_init_tbl),
++	.pipe_clk_rate = 250000000,
++};
++
++static int uniphy_usb_mux_enable(struct uniphy_usb *uniphy, bool enable)
++{
++	struct device *dev = uniphy->dev;
++	int ret;
++
++	if (!uniphy->tcsr)
++		return -EINVAL;
++
++	ret = regmap_update_bits(uniphy->tcsr, uniphy->usb_mux_offset, TCSR_USB_MUX_SEL, enable);
++	if (ret) {
++		dev_err(dev, "Mux write failed: %d\n", ret);
++		return ret;
++	}
++
++	return 0;
++}
++
++static int uniphy_usb_init(struct phy *phy)
++{
++	struct uniphy_usb *uniphy = phy_get_drvdata(phy);
++	const struct uniphy_cfg *cfg = uniphy->cfg;
++	const struct phy_init_tbl *tbl = cfg->init_seq;
++	void __iomem *base = uniphy->base;
++	struct device *dev = uniphy->dev;
++	int i, ret;
++
++	ret = regulator_enable(uniphy->vreg);
++	if (ret) {
++		dev_err(dev, "failed to enable regulator, %d\n", ret);
++		return ret;
++	}
++
++	/* Perform phy reset */
++	reset_control_assert(uniphy->reset);
++	if (ret) {
++		dev_err(dev, "Failed to assert reset\n");
++		return ret;
++	}
++
++	usleep_range(1, 5);
++
++	reset_control_deassert(uniphy->reset);
++	if (ret) {
++		dev_err(dev, "Failed to deassert reset\n");
++		return ret;
++	}
++
++	ret = uniphy_usb_mux_enable(uniphy, true);
++	if (ret < 0)
++		goto err_assert_reset;
++
++	ret = clk_bulk_prepare_enable(uniphy->num_clks, uniphy->clks);
++	if (ret) {
++		dev_err(dev, "failed to enable clocks: %d\n", ret);
++		goto err_assert_reset;
++	}
++
++	/* phy autoload delay */
++	usleep_range(35, 40);
++
++	for (i = 0; i < cfg->num_init_seq; i++)
++		writel(tbl[i].val, base + tbl[i].offset);
++
++	return 0;
++
++err_assert_reset:
++	/* Assert phy reset */
++	reset_control_assert(uniphy->reset);
++
++	return ret;
++}
++
++static int uniphy_usb_shutdown(struct phy *phy)
++{
++	struct uniphy_usb *uniphy = phy_get_drvdata(phy);
++
++	clk_bulk_disable_unprepare(uniphy->num_clks, uniphy->clks);
++
++	uniphy_usb_mux_enable(uniphy, false);
++
++	/* Assert phy reset */
++	reset_control_assert(uniphy->reset);
++
++	regulator_disable(uniphy->vreg);
++
++	return 0;
++}
++
++static const struct phy_ops uniphy_usb_ops = {
++	.power_on	= uniphy_usb_init,
++	.power_off	= uniphy_usb_shutdown,
++	.owner		= THIS_MODULE,
++};
++
++static inline int qcom_uniphy_usb_mux_init(struct uniphy_usb *uniphy)
++{
++	struct device *dev = uniphy->dev;
++	int ret;
++
++	uniphy->tcsr = syscon_regmap_lookup_by_phandle_args(dev->of_node, "qcom,phy-usb-mux-sel",
++							    1, &uniphy->usb_mux_offset);
++	if (IS_ERR(uniphy->tcsr)) {
++		ret = PTR_ERR(uniphy->tcsr);
++		uniphy->tcsr = NULL;
++		return ret;
++	}
++
++	return 0;
++}
++
++static inline int qcom_uniphy_usb_clk_init(struct uniphy_usb *uniphy)
++{
++	struct device *dev = uniphy->dev;
++	int ret;
++
++	ret = devm_clk_bulk_get_all(dev, &uniphy->clks);
++	if (ret < 0)
++		return ret;
++
++	uniphy->num_clks = ret;
++
++	return 0;
++}
++
++/*
++ * Register a fixed rate pipe clock.
++ *
++ * The <s>_pipe_clksrc generated by PHY goes to the GCC that gate
++ * controls it. The <s>_pipe_clk coming out of the GCC is requested
++ * by the PHY driver for its operations.
++ * We register the <s>_pipe_clksrc here. The gcc driver takes care
++ * of assigning this <s>_pipe_clksrc as parent to <s>_pipe_clk.
++ * Below picture shows this relationship.
++ *
++ *         +---------------+
++ *         |   PHY block   |<<---------------------------------------+
++ *         |               |                                         |
++ *         |   +-------+   |                   +-----+               |
++ *   I/P---^-->|  PLL  |---^--->pipe_clksrc--->| GCC |--->pipe_clk---+
++ *    clk  |   +-------+   |                   +-----+
++ *         +---------------+
++ */
++static int phy_pipe_clk_register(struct uniphy_usb *uniphy, int id)
++{
++	struct device *dev = uniphy->dev;
++	struct clk_hw *hw;
++	char name[64];
++
++	snprintf(name, sizeof(name), "usbphy%d_pipe_clk_src", id);
++	hw = devm_clk_hw_register_fixed_rate(dev, name, NULL, 0,
++							uniphy->cfg->pipe_clk_rate);
++	if (IS_ERR(hw))
++		return dev_err_probe(dev, PTR_ERR(hw),
++				     "Unable to register %s\n", name);
++
++	return devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, hw);
++}
++
++static int qcom_uniphy_usb_probe(struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	struct phy_provider *phy_provider;
++	struct uniphy_usb *uniphy;
++	int ret;
++
++	uniphy = devm_kzalloc(dev, sizeof(*uniphy), GFP_KERNEL);
++	if (!uniphy)
++		return -ENOMEM;
++
++	uniphy->dev = dev;
++
++	uniphy->cfg = of_device_get_match_data(dev);
++	if (!uniphy->cfg)
++		return -EINVAL;
++
++	uniphy->base = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(uniphy->base))
++		return PTR_ERR(uniphy->base);
++
++	ret = qcom_uniphy_usb_clk_init(uniphy);
++	if (ret)
++		return dev_err_probe(dev, ret, "failed to get clock\n");
++
++	ret = qcom_uniphy_usb_mux_init(uniphy);
++	if (ret)
++		return dev_err_probe(dev, ret, "failed to get USB mux\n");
++
++	uniphy->reset = devm_reset_control_get_exclusive_by_index(dev, 0);
++	if (IS_ERR(uniphy->reset))
++		return dev_err_probe(dev, PTR_ERR(uniphy->reset), "failed to get reset\n");
++
++	uniphy->vreg = devm_regulator_get(dev, "vdd");
++	if (IS_ERR(uniphy->vreg))
++		return dev_err_probe(dev, PTR_ERR(uniphy->phy), "failed to get vreg\n");
++
++	uniphy->phy = devm_phy_create(dev, NULL, &uniphy_usb_ops);
++	if (IS_ERR(uniphy->phy)) {
++		ret = PTR_ERR(uniphy->phy);
++		return dev_err_probe(dev, ret, "failed to create PHY\n");
++	}
++
++	ret = phy_pipe_clk_register(uniphy, uniphy->phy->id);
++	if (ret)
++		return dev_err_probe(dev, ret, "failed to register pipe clk\n");
++
++	phy_set_drvdata(uniphy->phy, uniphy);
++
++	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
++
++	ret = PTR_ERR_OR_ZERO(phy_provider);
++
++	return ret;
++}
++
++static const struct of_device_id qcom_uniphy_usb_of_match[] = {
++	{ .compatible = "qcom,ipq5332-uniphy-usb-ss-phy", .data = &ipq5332_usb_uniphy_cfg},
++	{ },
++};
++MODULE_DEVICE_TABLE(of, qcom_uniphy_usb_of_match);
++
++static struct platform_driver qcom_uniphy_usb_driver = {
++	.probe	= qcom_uniphy_usb_probe,
++	.driver = {
++		.of_match_table	= qcom_uniphy_usb_of_match,
++		.name  = "qcom,uniphy-usb",
++	}
++};
++module_platform_driver(qcom_uniphy_usb_driver);
++
++MODULE_DESCRIPTION("Qualcomm UNIPHY Super-Speed USB PHY driver");
++MODULE_LICENSE("GPL");

@@ -1,0 +1,36 @@
+From: Praveenkumar I <quic_ipkumar@quicinc.com>
+Date: Fri, 29 Sep 2023 14:12:06 +0530
+Subject: [PATCH] arm64: dts: qcom: ipq5332: Add clocks for USB Super-Speed
+
+Add aux and lfps clocks in USB node for Super-Speed support.
+AUX and LFPS clocks are only required when the USB controller uses this UNIPHY
+in 3.0 Super-Speed mode.
+
+Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+---
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -572,13 +572,17 @@
+ 			interrupt-names = "hs_phy_irq";
+ 
+ 			clocks = <&gcc GCC_USB0_MASTER_CLK>,
+-				 <&gcc GCC_SYS_NOC_USB0_AXI_CLK>,
+-				 <&gcc GCC_USB0_SLEEP_CLK>,
+-				 <&gcc GCC_USB0_MOCK_UTMI_CLK>;
++				 	 <&gcc GCC_SYS_NOC_USB0_AXI_CLK>,
++				 	 <&gcc GCC_USB0_SLEEP_CLK>,
++				 	 <&gcc GCC_USB0_MOCK_UTMI_CLK>,
++				 	 <&gcc GCC_USB0_AUX_CLK>,
++				 	 <&gcc GCC_USB0_LFPS_CLK>;
+ 			clock-names = "core",
+-				      "iface",
+-				      "sleep",
+-				      "mock_utmi";
++				      	  "iface",
++				      	  "sleep",
++				      	  "mock_utmi",
++				      	  "aux_clk",
++				      	  "lfps_clk";
+ 
+ 			resets = <&gcc GCC_USB0_BCR>;
+ 
