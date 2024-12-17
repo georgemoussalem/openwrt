@@ -1,0 +1,22 @@
+From: George Moussalem <george.moussalem@outlook.com>
+Date: Tue, 07 Jan 2025 17:34:13 +0400
+Subject: [PATCH] dt-bindings: phy: qcom-uniphy-usb add IPQ5018 compatible
+
+The Qualcomm UNIPHY USB SS PHY 22ull is found on both IPQ5332 and IPQ5018.
+Add the missing compatible for IPQ5018.
+
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+---
+--- a/Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-usb-ss-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-usb-ss-phy.yaml
+@@ -15,7 +15,9 @@ description:
+ 
+ properties:
+   compatible:
+-    - const: qcom,ipq5332-uniphy-usb-ss-phy
++    - enum:
++      - qcom,ipq5018-uniphy-usb-ss-phy
++      - qcom,ipq5332-uniphy-usb-ss-phy
+ 
+   reg:
+     maxItems: 1
