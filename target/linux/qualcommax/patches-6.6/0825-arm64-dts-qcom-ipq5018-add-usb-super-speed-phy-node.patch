@@ -1,0 +1,45 @@
+From: Praveenkumar I <quic_ipkumar@quicinc.com>
+Date: Fri, 29 Sep 2023 14:12:04 +0530
+Subject: [PATCH] arm64: dts: qcom: ipq5332: Add USB Super-Speed PHY node
+
+Add USB Super-Speed UNIPHY node and populate the phandle on
+gcc node for the parent clock map.
+
+Signed-off-by: Praveenkumar I <quic_ipkumar@quicinc.com>
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+---
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -161,6 +161,23 @@
+ 			status = "disabled";
+ 		};
+ 
++		usbphy1: phy@5d000 {
++			compatible = "qcom,ipq5018-uniphy-usb-ss-phy";
++			reg = <0x0005d000 0x800>;
++
++			clocks = <&gcc GCC_USB0_PIPE_CLK>,
++					 <&gcc GCC_USB0_PHY_CFG_AHB_CLK>;
++			resets = <&gcc GCC_USB0_PHY_BCR>;
++
++			#clock-cells = <0>;
++
++			qcom,phy-usb-mux-sel = <&tcsr 0x10540>;
++
++			#phy-cells = <0>;
++
++			status = "disabled";
++		};
++
+ 		pcie1_phy: phy@7e000{
+ 			compatible = "qcom,ipq5018-uniphy-pcie-phy";
+ 			reg = <0x0007e000 0x800>;
+@@ -410,7 +427,7 @@
+ 				 <&sleep_clk>,
+ 				 <&pcie0_phy>,
+ 				 <&pcie1_phy>,
+-				 <0>,
++				 <&usbphy1>,
+ 				 <&ge_phy 0>,
+ 				 <&ge_phy 1>,
+ 				 <0>,
