@@ -8,7 +8,8 @@ ipq50xx_setup_interfaces()
 	local board="$1"
 	case $board in
 		linksys,mx2000|\
-		linksys,mx5500)
+		linksys,mx5500|\
+		linksys,spnmx56)
 			ucidef_set_interfaces_lan_wan "lan1 lan2 lan3" "wan"
 			;;
 	esac
