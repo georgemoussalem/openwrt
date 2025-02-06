@@ -1,0 +1,32 @@
+From: George Moussalem <george.moussalem@outlook.com>
+Date: Thu, 06 Feb 2025 12:03:54 +0400
+Subject: [PATCH] nvmem: layouts fix mac base ascii cells handling
+
+The ascii-type value passed from the ascii-env driver for the mac address
+is 18 bytes of length instead of 17 including the trailing null character.
+So, let's fix the validation to properly parse the mac address.
+
+Tested on Linksys MX2000 and MX5500.
+
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+---
+--- a/drivers/nvmem/layouts.c
++++ b/drivers/nvmem/layouts.c
+@@ -41,7 +41,7 @@ static int nvmem_mac_base_ascii_read(voi
+ {
+ 	u8 mac[ETH_ALEN];
+ 
+-	if (WARN_ON(bytes != 3 * ETH_ALEN - 1))
++	if (WARN_ON(bytes != 3 * ETH_ALEN))
+ 		return -EINVAL;
+ 
+ 	if (!mac_pton(buf, mac))
+@@ -93,7 +93,7 @@ void nvmem_layout_parse_mac_base(struct
+ 		info->raw_len = info->bytes;
+ 		info->bytes = ETH_ALEN;
+ 		info->read_post_process = nvmem_mac_base_hex_read;
+-	} else if (info->bytes == 3 * ETH_ALEN - 1) {
++	} else if (info->bytes == 3 * ETH_ALEN) {
+ 		info->raw_len = info->bytes;
+ 		info->bytes = ETH_ALEN;
+ 		info->read_post_process = nvmem_mac_base_ascii_read;
