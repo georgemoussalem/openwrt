@@ -1,0 +1,153 @@
+From: George Moussalem <george.moussalem@outlook.com>
+Date: Tue, 11 Feb 2025 15:39:21 +0400
+Subject: [PATCH] clk: qcom: ipq-cmn-pll: add IPQ5018 support
+
+Add support for IPQ5018.
+
+The common network block in IPQ5018 must be enabled first by writing to a
+specific register in the TCSR area, read from the DTS.
+
+Co-developed-by: Ziyang Huang <hzyitc@outlook.com>
+Signed-off-by: Ziyang Huang <hzyitc@outlook.com>
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+---
+ drivers/clk/qcom/ipq-cmn-pll.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
+
+--- a/drivers/clk/qcom/ipq-cmn-pll.c
++++ b/drivers/clk/qcom/ipq-cmn-pll.c
+@@ -47,6 +47,9 @@
+ 
+ #include <dt-bindings/clock/qcom,ipq-cmn-pll.h>
+ 
++#define TCSR_ETH_CMN				0x0
++#define  TCSR_ETH_CMN_ENABLE			BIT(0)
++
+ #define CMN_PLL_REFCLK_SRC_SELECTION		0x28
+ #define CMN_PLL_REFCLK_SRC_DIV			GENMASK(9, 8)
+ 
+@@ -89,6 +92,11 @@ struct clk_cmn_pll {
+ 	struct clk_hw hw;
+ };
+ 
++struct clk_cmn_pll_match_data {
++	const struct cmn_pll_fixed_output_clk *output_clks;
++	unsigned int num_clks;
++};
++
+ #define CLK_PLL_OUTPUT(_id, _name, _rate) {		\
+ 	.id =		_id,				\
+ 	.name =		_name,				\
+@@ -105,6 +113,15 @@ static const struct regmap_config ipq_cm
+ 	.fast_io = true,
+ };
+ 
++static const struct cmn_pll_fixed_output_clk ipq5018_output_clks[] = {
++	CLK_PLL_OUTPUT(XO_24MHZ_CLK, "xo-24mhz", 24000000UL),
++	CLK_PLL_OUTPUT(SLEEP_32KHZ_CLK, "sleep-32khz", 32000UL),
++	CLK_PLL_OUTPUT(PCS_31P25MHZ_CLK, "pcs-31p25mhz", 31250000UL),
++	CLK_PLL_OUTPUT(NSS_1200MHZ_CLK, "nss-1200mhz", 1200000000UL),
++	CLK_PLL_OUTPUT(PPE_353MHZ_CLK, "ppe-353mhz", 353000000UL),
++	CLK_PLL_OUTPUT(ETH0_50MHZ_CLK, "eth0-50mhz", 50000000UL),
++};
++
+ static const struct cmn_pll_fixed_output_clk ipq9574_output_clks[] = {
+ 	CLK_PLL_OUTPUT(XO_24MHZ_CLK, "xo-24mhz", 24000000UL),
+ 	CLK_PLL_OUTPUT(SLEEP_32KHZ_CLK, "sleep-32khz", 32000UL),
+@@ -117,6 +134,38 @@ static const struct cmn_pll_fixed_output
+ 	CLK_PLL_OUTPUT(ETH_25MHZ_CLK, "eth-25mhz", 25000000UL),
+ };
+ 
++static const struct clk_cmn_pll_match_data ipq5018_cmn_pll_data = {
++	.output_clks	= ipq5018_output_clks,
++	.num_clks	= ARRAY_SIZE(ipq5018_output_clks),
++};
++
++static const struct clk_cmn_pll_match_data ipq9574_cmn_pll_data = {
++	.output_clks	= ipq9574_output_clks,
++	.num_clks	= ARRAY_SIZE(ipq9574_output_clks),
++};
++
++static int ipq_cmn_pll_tcsr_enable(struct platform_device *pdev)
++{
++	struct resource *res;
++	void __iomem *tcsr_base;
++	u32 val;
++
++	/* For IPQ50xx, tcsr is necessary to enable cmn block */
++	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "tcsr");
++	if (!res)
++		return 0;
++
++	tcsr_base = devm_ioremap_resource(&pdev->dev, res);
++	if (IS_ERR_OR_NULL(tcsr_base))
++		return PTR_ERR(tcsr_base);
++
++	val = readl(tcsr_base + TCSR_ETH_CMN);
++	val |= TCSR_ETH_CMN_ENABLE;
++	writel(val, (tcsr_base + TCSR_ETH_CMN));
++
++	return 0;
++}
++
+ /*
+  * CMN PLL has the single parent clock, which supports the several
+  * possible parent clock rates, each parent clock rate is reflected
+@@ -297,6 +346,7 @@ static struct clk_hw *ipq_cmn_pll_clk_hw
+ 
+ static int ipq_cmn_pll_register_clks(struct platform_device *pdev)
+ {
++	const struct clk_cmn_pll_match_data *cmn_pll_data;
+ 	const struct cmn_pll_fixed_output_clk *fixed_clk;
+ 	struct clk_hw_onecell_data *hw_data;
+ 	struct device *dev = &pdev->dev;
+@@ -305,8 +355,9 @@ static int ipq_cmn_pll_register_clks(str
+ 	struct clk_hw *hw;
+ 	int ret, i;
+ 
+-	fixed_clk = ipq9574_output_clks;
+-	num_clks = ARRAY_SIZE(ipq9574_output_clks);
++	cmn_pll_data = of_device_get_match_data(dev);
++	fixed_clk = cmn_pll_data->output_clks;
++	num_clks = cmn_pll_data->num_clks;
+ 
+ 	hw_data = devm_kzalloc(dev, struct_size(hw_data, hws, num_clks + 1),
+ 			       GFP_KERNEL);
+@@ -336,7 +387,7 @@ static int ipq_cmn_pll_register_clks(str
+ 
+ 	/*
+ 	 * Provide the CMN PLL clock. The clock rate of CMN PLL
+-	 * is configured to 12 GHZ by DT property assigned-clock-rates-u64.
++	 * is configured by DT property assigned-clock-rates-u64.
+ 	 */
+ 	hw_data->hws[CMN_PLL_CLK] = cmn_pll_hw;
+ 	hw_data->num = num_clks + 1;
+@@ -361,6 +412,10 @@ static int ipq_cmn_pll_clk_probe(struct
+ 	struct device *dev = &pdev->dev;
+ 	int ret;
+ 
++	ret = ipq_cmn_pll_tcsr_enable(pdev);
++	if (ret)
++		return dev_err_probe(dev, ret, "Enable CMN PLL failed\n");
++
+ 	ret = devm_pm_runtime_enable(dev);
+ 	if (ret)
+ 		return ret;
+@@ -415,14 +470,15 @@ static const struct dev_pm_ops ipq_cmn_p
+ };
+ 
+ static const struct of_device_id ipq_cmn_pll_clk_ids[] = {
+-	{ .compatible = "qcom,ipq9574-cmn-pll", },
++	{ .compatible = "qcom,ipq5018-cmn-pll", .data = &ipq5018_cmn_pll_data },
++	{ .compatible = "qcom,ipq9574-cmn-pll", .data = &ipq9574_cmn_pll_data },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, ipq_cmn_pll_clk_ids);
+ 
+ static struct platform_driver ipq_cmn_pll_clk_driver = {
+ 	.probe = ipq_cmn_pll_clk_probe,
+-	.remove = ipq_cmn_pll_clk_remove,
++	.remove_new = ipq_cmn_pll_clk_remove,
+ 	.driver = {
+ 		.name = "ipq_cmn_pll",
+ 		.of_match_table = ipq_cmn_pll_clk_ids,

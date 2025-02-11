@@ -1,0 +1,55 @@
+--- a/Documentation/devicetree/bindings/clock/qcom,ipq9574-cmn-pll.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,ipq9574-cmn-pll.yaml
+@@ -24,10 +24,15 @@ description:
+ properties:
+   compatible:
+     enum:
++      - qcom,ipq5018-cmn-pll
+       - qcom,ipq9574-cmn-pll
+ 
+   reg:
+-    maxItems: 1
++    minItems: 1
++    maxItems: 2
++
++  reg-names:
++    maxItems: 2
+ 
+   clocks:
+     items:
+@@ -58,6 +63,35 @@ required:
+ 
+ additionalProperties: false
+ 
++allOf:
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,ipq5018-cmn-pll
++    then:
++      properties:
++        reg:
++          minItems: 2
++          maxItems: 2
++        reg-names:
++          minItems: 2
++          items:
++            - const: cmn  # CMN PLL registers
++            - const: tcsr # TCSR register to enable/disable CMN PLL
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,ipq9574-cmn-pll
++    then:
++      properties:
++        reg:
++          minItems: 1
++          maxItems: 1
++
+ examples:
+   - |
+     #include <dt-bindings/clock/qcom,ipq-cmn-pll.h>

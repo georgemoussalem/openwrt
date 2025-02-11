@@ -1,0 +1,86 @@
+From: George Moussalem <george.moussalem@outlook.com>
+Date: Tue, 11 Feb 2025 15:39:21 +0400
+Subject: [PATCH] arm64: dts: qcom: ipq5018: Add CMN PLL node
+
+The CMN PLL clock controller allows selection of an input clock rate
+from a defined set of input clock rates. It in-turn supplies fixed
+rate output clocks to the hardware blocks that provide the ethernet
+functions such as PPE (Packet Process Engine) and connected switch or
+PHY, and to GCC.
+
+The reference clock of CMN PLL is routed from XO to the CMN PLL through
+the internal WiFi block.
+.XO (96 MHZ)-->WiFi (multiplier/divider)-->48 MHZ to CMN PLL.
+
+The reference input clock from WiFi to CMN PLL is fully controlled by
+the bootstrap pins which select the XO frequency (96 MHZ).
+Based on this frequency, the divider in the internal Wi-Fi block is
+automatically configured by hardware (1 for 48 MHZ, 2 for 96 MHZ), to
+ensure output clock to CMN PLL is 48 MHZ.
+
+Co-developed-by: Ziyang Huang <hzyitc@outlook.com>
+Signed-off-by: Ziyang Huang <hzyitc@outlook.com>
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+---
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -8,6 +8,7 @@
+ #include <dt-bindings/clock/qcom,apss-ipq.h>
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
+ #include <dt-bindings/clock/qcom,gcc-ipq5018.h>
++#include <dt-bindings/clock/qcom,ipq-cmn-pll.h>
+ #include <dt-bindings/reset/qcom,gcc-ipq5018.h>
+ 
+ / {
+@@ -16,14 +17,29 @@
+ 	#size-cells = <2>;
+ 
+ 	clocks {
++		ref_96mhz_clk: ref-96mhz-clk {
++			compatible = "fixed-factor-clock";
++			clocks = <&xo_clk>;
++			#clock-cells = <0>;
++			clock-div = <1>;
++			clock-mult = <2>;
++		};
++
+ 		sleep_clk: sleep-clk {
+ 			compatible = "fixed-clock";
+ 			#clock-cells = <0>;
+ 		};
+ 
+ 		xo_board_clk: xo-board-clk {
++			compatible = "fixed-factor-clock";
++			clocks = <&ref_96mhz_clk>;
++			#clock-cells = <0>;
++		};
++
++		xo_clk: xo-clk {
+ 			compatible = "fixed-clock";
+ 			#clock-cells = <0>;
++			clock-frequency = <48000000>;
+ 		};
+ 	};
+ 
+@@ -186,6 +202,21 @@
+ 			status = "disabled";
+ 		};
+ 
++		cmn_pll: clock-controller@9b000 {
++			compatible = "qcom,ipq5018-cmn-pll";
++			reg = <0x0009b000 0x800>,
++			      <0x19475c4 0x4>;
++			reg-names = "cmn",
++				    "tcsr";
++			clocks = <&ref_96mhz_clk>,
++				 <&gcc GCC_CMN_BLK_AHB_CLK>,
++				 <&gcc GCC_CMN_BLK_SYS_CLK>;
++			clock-names = "ref", "ahb", "sys";
++			#clock-cells = <1>;
++			assigned-clocks = <&cmn_pll CMN_PLL_CLK>;
++			assigned-clock-rates-u64 = /bits/ 64 <6000000000>;
++		};
++
+ 		qfprom: qfprom@a0000 {
+ 			compatible = "qcom,ipq5018-qfprom", "qcom,qfprom";
+ 			reg = <0xa0000 0x1000>;
