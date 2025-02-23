@@ -281,6 +281,12 @@
 	vdd-supply = <&regulator_fixed_5p0>;
 };
 
+&usbphy1 {
+	status = "okay";
+
+	vdd-supply = <&regulator_fixed_5p0>;
+};
+
 &usb {
 	status = "okay";
 
