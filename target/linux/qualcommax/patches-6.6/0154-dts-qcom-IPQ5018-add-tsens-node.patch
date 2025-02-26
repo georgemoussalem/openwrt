@@ -21,22 +21,22 @@ Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
  
 +		qfprom: qfprom@a0000 {
 +			compatible = "qcom,ipq5018-qfprom", "qcom,qfprom";
-+			reg = <0xa0000 0x1000>;
++			reg = <0x000a0000 0x1000>;
 +			#address-cells = <1>;
 +			#size-cells = <1>;
 +
 +			tsens_mode: mode@249 {
-+				reg = <0x249 1>;
++				reg = <0x249 0x1>;
 +				bits = <0 3>;
 +			};
 +
 +			tsens_base1: base1@249 {
-+				reg = <0x249 2>;
++				reg = <0x249 0x2>;
 +				bits = <3 8>;
 +			};
 +
 +			tsens_base2: base2@24a {
-+				reg = <0x24a 2>;
++				reg = <0x24a 0x2>;
 +				bits = <3 8>;
 +			};
 +
@@ -93,8 +93,8 @@ Signed-off-by: Sricharan Ramabadhran <quic_srichara@quicinc.com>
 +
 +		tsens: thermal-sensor@4a9000 {
 +			compatible = "qcom,ipq5018-tsens";
-+			reg = <0x4a9000 0x1000>, /* TM */
-+			      <0x4a8000 0x1000>; /* SROT */
++			reg = <0x004a9000 0x1000>, /* TM */
++			      <0x004a8000 0x1000>; /* SROT */
 +
 +			nvmem-cells = <&tsens_mode>,
 +				      <&tsens_base1>,
