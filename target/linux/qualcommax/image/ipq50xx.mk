@@ -118,6 +118,24 @@ define Device/linksys_mx5500
 endef
 TARGET_DEVICES += linksys_mx5500
 
+define Device/linksys_mx6200
+	$(call Device/FitImageLzma)
+	DEVICE_VENDOR := Linksys
+	DEVICE_MODEL := MX6200
+	BLOCKSIZE := 128k
+	PAGESIZE := 2048
+	DEVICE_DTS_CONFIG := config@mp03.5-c1
+	KERNEL_SIZE := 8192k
+	IMAGE_SIZE := 51200k
+	NAND_SIZE := 256m
+	SOC := ipq5018
+	IMAGES += factory.bin
+	IMAGE/factory.bin := append-kernel | pad-to $$$$(KERNEL_SIZE) | append-ubi | linksys-image type=$$$$(DEVICE_MODEL)
+	DEVICE_PACKAGES := ath11k-firmware-qcn6122 \
+		ipq-wifi-linksys_mx6200
+endef
+TARGET_DEVICES += linksys_mx6200
+
 define Device/linksys_spnmx56
 	$(call Device/linksys_ipq50xx_mx_base)
 	DEVICE_MODEL := SPNMX56
