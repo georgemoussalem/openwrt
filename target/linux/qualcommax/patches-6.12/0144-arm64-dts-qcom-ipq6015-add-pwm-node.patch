@@ -1,11 +1,23 @@
+From 835f27302103f660de22321864858e2138841c77 Mon Sep 17 00:00:00 2001
 From: George Moussalem <george.moussalem@outlook.com>
-Subject: [PATCH] arm64: dts: qcom: ipq5018: Add PWM node
-Date: Sun, 06 Oct 2024 16:34:11 +0400
+Date: Wed, 01 Oct 2025 17:49:24 +0400
+Subject: [PATCH v16 7/9] arm64: dts: qcom: ipq5018: add pwm node
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251001-ipq-pwm-v16-7-b6e45bbda130@outlook.com>
 
-Add PWM node.
+Describe the PWM block on IPQ5018.
+
+Although PWM is in the TCSR area, make pwm its own node as simple-mfd
+has been removed from the bindings and as such hardware components
+should have its own node.
 
 Signed-off-by: George Moussalem <george.moussalem@outlook.com>
 ---
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
 --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
 @@ -453,6 +453,16 @@

@@ -1,0 +1,43 @@
+From 4308496195684a95b14cc54c172bbbfdad0eb0a7 Mon Sep 17 00:00:00 2001
+From: Devi Priya <quic_devipriy@quicinc.com>
+Date: Wed, 01 Oct 2025 17:49:23 +0400
+Subject: [PATCH v16 6/9] arm64: dts: qcom: ipq6018: add pwm node
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251001-ipq-pwm-v16-6-b6e45bbda130@outlook.com>
+
+Describe the PWM block on IPQ6018.
+
+Although PWM is in the TCSR area, make pwm its own node as simple-mfd
+has been removed from the bindings and as such hardware components
+should have its own node.
+
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Co-developed-by: Baruch Siach <baruch.siach@siklu.com>
+Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
+Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+---
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+--- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+@@ -421,6 +421,16 @@
+ 			reg = <0x0 0x01937000 0x0 0x21000>;
+ 		};
+ 
++		pwm: pwm@1941010 {
++			compatible = "qcom,ipq6018-pwm";
++			reg = <0x01941010 0x20>;
++			clocks = <&gcc GCC_ADSS_PWM_CLK>;
++			assigned-clocks = <&gcc GCC_ADSS_PWM_CLK>;
++			assigned-clock-rates = <100000000>;
++			#pwm-cells = <2>;
++			status = "disabled";
++		};
++
+ 		usb2: usb@70f8800 {
+ 			compatible = "qcom,ipq6018-dwc3", "qcom,dwc3";
+ 			reg = <0x0 0x070f8800 0x0 0x400>;

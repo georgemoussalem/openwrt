@@ -1,22 +1,106 @@
+From 6fa55c998f92bcedd3ddb26d1162448aed72ace0 Mon Sep 17 00:00:00 2001
 From: Devi Priya <quic_devipriy@quicinc.com>
-Date: Thu, 5 Oct 2023 21:35:47 +0530
-Subject: [PATCH] pwm: driver for qualcomm ipq6018 pwm block
+Date: Wed, 01 Oct 2025 17:49:19 +0400
+Subject: [PATCH v16 2/9] pwm: driver for qualcomm ipq6018 pwm block
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Message-Id: <20251001-ipq-pwm-v16-2-b6e45bbda130@outlook.com>
 
 Driver for the PWM block in Qualcomm IPQ6018 line of SoCs. Based on
 driver from downstream Codeaurora kernel tree. Removed support for older
 (V1) variants because I have no access to that hardware.
 
-Tested on IPQ6010 based hardware.
+Tested on IPQ5018 and IPQ6010 based hardware.
 
 Co-developed-by: Baruch Siach <baruch.siach@siklu.com>
 Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
 Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
 ---
- drivers/pwm/Kconfig   |  12 ++
+v16:
+
+  Simplified code to calculate divs and duty cycle as per Uwe's comments
+
+  Removed unused pwm_chip struct from ipq_pwm_chip struct
+
+  Removed unnecessary cast as per Uwe's comment
+
+  Replaced devm_clk_get & clk_prepare_enable by devm_clk_get_enabled
+
+  Replaced pwmchip_add by devm_pwmchip_add and removed .remove function
+
+  Removed .owner from driver struct
+
+v15:
+
+  No change
+
+v14:
+
+  Picked up the R-b tag
+
+v13:
+
+  Updated the file name to match the compatible
+
+  Sorted the properties and updated the order in the required field
+
+  Dropped the syscon node from examples
+
+v12:
+
+  Picked up the R-b tag
+
+v11:
+
+  No change
+
+v10:
+
+  No change
+
+v9:
+
+  Add 'ranges' property to example (Rob)
+
+  Drop label in example (Rob)
+
+v8:
+
+  Add size cell to 'reg' (Rob)
+
+v7:
+
+  Use 'reg' instead of 'offset' (Rob)
+
+  Drop 'clock-names' and 'assigned-clock*' (Bjorn)
+
+  Use single cell address/size in example node (Bjorn)
+
+  Move '#pwm-cells' lower in example node (Bjorn)
+
+  List 'reg' as required
+
+v6:
+
+  Device node is child of TCSR; remove phandle (Rob Herring)
+
+  Add assigned-clocks/assigned-clock-rates (Uwe Kleine-König)
+
+v5: Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
+    Andersson, Kathiravan T)
+
+v4: Update the binding example node as well (Rob Herring's bot)
+
+v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
+
+v2: Make #pwm-cells const (Rob Herring)
+---
+ drivers/pwm/Kconfig   |  12 +++
  drivers/pwm/Makefile  |   1 +
- drivers/pwm/pwm-ipq.c | 282 ++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 295 insertions(+)
- create mode 100644 drivers/pwm/pwm-ipq.c
+ drivers/pwm/pwm-ipq.c | 214 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 227 insertions(+)
 
 --- a/drivers/pwm/Kconfig
 +++ b/drivers/pwm/Kconfig
@@ -51,7 +135,7 @@ Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
  obj-$(CONFIG_PWM_KEEMBAY)	+= pwm-keembay.o
 --- /dev/null
 +++ b/drivers/pwm/pwm-ipq.c
-@@ -0,0 +1,261 @@
+@@ -0,0 +1,214 @@
 +// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0
 +/*
 + * Copyright (c) 2016-2017, 2020 The Linux Foundation. All rights reserved.
@@ -153,10 +237,9 @@ Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
 +			 const struct pwm_state *state)
 +{
 +	struct ipq_pwm_chip *ipq_chip = ipq_pwm_from_chip(chip);
-+	unsigned int pre_div, pwm_div, best_pre_div, best_pwm_div;
 +	unsigned long rate = clk_get_rate(ipq_chip->clk);
-+	u64 period_ns, duty_ns, period_rate;
-+	u64 min_diff;
++	unsigned int pre_div, pwm_div;
++	u64 period_ns, duty_ns;
 +
 +	if (state->polarity != PWM_POLARITY_NORMAL)
 +		return -EINVAL;
@@ -164,69 +247,22 @@ Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
 +	if (state->period < DIV64_U64_ROUND_UP(NSEC_PER_SEC, rate))
 +		return -ERANGE;
 +
++	if ((unsigned long long)rate > 16ULL * GIGA)
++		return -EINVAL;
++
 +	period_ns = min(state->period, IPQ_PWM_MAX_PERIOD_NS);
 +	duty_ns = min(state->duty_cycle, period_ns);
 +
-+	/*
-+	 * period_ns is 1G or less. As long as rate is less than 16 GHz,
-+	 * period_rate does not overflow. Make that explicit.
-+	 */
-+	if ((unsigned long long)rate > 16ULL * GIGA)
-+		return -EINVAL;
-+	period_rate = period_ns * rate;
-+	best_pre_div = IPQ_PWM_MAX_DIV;
-+	best_pwm_div = IPQ_PWM_MAX_DIV;
-+	/*
-+	 * We don't need to consider pre_div values smaller than
-+	 *
-+	 *                              period_rate
-+	 *  pre_div_min := ------------------------------------
-+	 *                 NSEC_PER_SEC * (IPQ_PWM_MAX_DIV + 1)
-+	 *
-+	 * because pre_div = pre_div_min results in a better
-+	 * approximation.
-+	 */
-+	pre_div = div64_u64(period_rate,
-+			    (u64)NSEC_PER_SEC * (IPQ_PWM_MAX_DIV + 1));
-+	min_diff = period_rate;
++	/* Restrict pwm_div to 0xfffe for fine-grained duty cycle */
++	pwm_div = IPQ_PWM_MAX_DIV - 1;
++	/* Compute pre_div with rounding up to ensure accurate period */
++	pre_div = DIV64_U64_ROUND_UP(period_ns * rate, (u64)NSEC_PER_SEC * (pwm_div + 1));
 +
-+	for (; pre_div <= IPQ_PWM_MAX_DIV; pre_div++) {
-+		u64 remainder;
++	if (pre_div > IPQ_PWM_MAX_DIV)
++		return -ERANGE;
 +
-+		pwm_div = div64_u64_rem(period_rate,
-+					(u64)NSEC_PER_SEC * (pre_div + 1), &remainder);
-+		/* pwm_div is unsigned; the check below catches underflow */
-+		pwm_div--;
-+
-+		/*
-+		 * Swapping values for pre_div and pwm_div produces the same
-+		 * period length. So we can skip all settings with pre_div >
-+		 * pwm_div which results in bigger constraints for selecting
-+		 * the duty_cycle than with the two values swapped.
-+		 */
-+		if (pre_div > pwm_div)
-+			break;
-+
-+		/*
-+		 * Make sure we can do 100% duty cycle where
-+		 * hi_dur == pwm_div + 1
-+		 */
-+		if (pwm_div > IPQ_PWM_MAX_DIV - 1)
-+			continue;
-+
-+		if (remainder < min_diff) {
-+			best_pre_div = pre_div;
-+			best_pwm_div = pwm_div;
-+			min_diff = remainder;
-+
-+			if (min_diff == 0) /* bingo */
-+				break;
-+		}
-+	}
-+
-+	/* config divider values for the closest possible frequency */
-+	config_div_and_duty(pwm, best_pre_div, best_pwm_div,
-+			    rate, duty_ns, state->enabled);
++	/* Configure divider and duty cycle */
++	config_div_and_duty(pwm, pre_div, pwm_div, rate, duty_ns, state->enabled);
 +
 +	return 0;
 +}
@@ -251,7 +287,7 @@ Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
 +	pre_div = FIELD_GET(IPQ_PWM_REG1_PRE_DIV, reg1);
 +
 +	/* No overflow here, both pre_div and pwm_div <= 0xffff */
-+	effective_div = (u64)(pre_div + 1) * (pwm_div + 1);
++	effective_div = (pre_div + 1) * (pwm_div + 1);
 +	state->period = DIV64_U64_ROUND_UP(effective_div * NSEC_PER_SEC, rate);
 +
 +	hi_div = hi_dur * (pre_div + 1);
@@ -267,9 +303,9 @@ Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
 +
 +static int ipq_pwm_probe(struct platform_device *pdev)
 +{
-+	struct pwm_chip *chip;
-+	struct ipq_pwm_chip *pwm;
 +	struct device *dev = &pdev->dev;
++	struct ipq_pwm_chip *pwm;
++	struct pwm_chip *chip;
 +	int ret;
 +
 +	chip = devm_pwmchip_alloc(dev, 4, sizeof(*pwm));
@@ -288,10 +324,11 @@ Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
 +				"failed to get clock");
 +
 +	chip->ops = &ipq_pwm_ops;
++	chip->npwm = 4;
 +
 +	ret = devm_pwmchip_add(dev, chip);
 +	if (ret < 0)
-+		dev_err_probe(dev, ret, "devm_pwmchip_add() failed\n");
++		return dev_err_probe(dev, ret, "failed to add pwm chip\n");
 +
 +	return ret;
 +}
@@ -312,4 +349,4 @@ Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
 +
 +module_platform_driver(ipq_pwm_driver);
 +
-+MODULE_LICENSE("Dual BSD/GPL");
++MODULE_LICENSE("GPL");

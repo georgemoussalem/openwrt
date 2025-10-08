@@ -1,6 +1,11 @@
+From a00a91e6e100309f153258cbdd1c4ad8b102ab05 Mon Sep 17 00:00:00 2001
 From: Devi Priya <quic_devipriy@quicinc.com>
-Date: Thu, 5 Oct 2023 21:35:48 +0530
-Subject: [PATCH] dt-bindings: pwm: add IPQ6018 binding
+Date: Wed, 01 Oct 2025 17:49:18 +0400
+Subject: [PATCH v16 1/9] dt-bindings: pwm: add IPQ6018 binding
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251001-ipq-pwm-v16-1-b6e45bbda130@outlook.com>
 
 DT binding for the PWM block in Qualcomm IPQ6018 SoC.
 
@@ -10,9 +15,12 @@ Co-developed-by: Baruch Siach <baruch.siach@siklu.com>
 Signed-off-by: Baruch Siach <baruch.siach@siklu.com>
 Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
 ---
+ .../devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml  | 44 ++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
+
 --- /dev/null
 +++ b/Documentation/devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml
-@@ -0,0 +1,45 @@
+@@ -0,0 +1,44 @@
 +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
 +%YAML 1.2
 +---
@@ -29,7 +37,6 @@ Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
 +    const: qcom,ipq6018-pwm
 +
 +  reg:
-+    description: Offset of PWM register in the TCSR block.
 +    maxItems: 1
 +
 +  clocks:
@@ -50,9 +57,9 @@ Signed-off-by: Devi Priya <quic_devipriy@quicinc.com>
 +  - |
 +    #include <dt-bindings/clock/qcom,gcc-ipq6018.h>
 +
-+    pwm: pwm@a010 {
++    pwm: pwm@1941010 {
 +        compatible = "qcom,ipq6018-pwm";
-+        reg = <0xa010 0x20>;
++        reg = <0x01941010 0x20>;
 +        clocks = <&gcc GCC_ADSS_PWM_CLK>;
 +        assigned-clocks = <&gcc GCC_ADSS_PWM_CLK>;
 +        assigned-clock-rates = <100000000>;

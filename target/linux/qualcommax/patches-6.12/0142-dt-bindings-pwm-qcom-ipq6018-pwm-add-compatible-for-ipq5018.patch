@@ -1,0 +1,34 @@
+From 154bb48cb2fc24dc38b9cb304a8eaccdf16b7f18 Mon Sep 17 00:00:00 2001
+From: George Moussalem <george.moussalem@outlook.com>
+Date: Wed, 01 Oct 2025 17:49:20 +0400
+Subject: [PATCH v16 3/9] dt-bindings: pwm: qcom,ipq6018-pwm: Add compatible for ipq5018
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20251001-ipq-pwm-v16-3-b6e45bbda130@outlook.com>
+
+The IPQ5018 SoC contains a PWM block which is exactly the same as the
+one found in IPQ6018. So let's add a compatible for IPQ5018 and use
+IPQ6018 as the fallback.
+
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+---
+ Documentation/devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+--- a/Documentation/devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml
++++ b/Documentation/devicetree/bindings/pwm/qcom,ipq6018-pwm.yaml
+@@ -11,7 +11,12 @@ maintainers:
+ 
+ properties:
+   compatible:
+-    const: qcom,ipq6018-pwm
++    oneOf:
++      - items:
++          - enum:
++              - qcom,ipq5018-pwm
++          - const: qcom,ipq6018-pwm
++      - const: qcom,ipq6018-pwm
+ 
+   reg:
+     maxItems: 1
