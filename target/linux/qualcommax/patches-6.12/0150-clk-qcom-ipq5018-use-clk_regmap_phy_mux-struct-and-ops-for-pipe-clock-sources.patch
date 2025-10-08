@@ -1,0 +1,109 @@
+--- a/drivers/clk/qcom/gcc-ipq5018.c
++++ b/drivers/clk/qcom/gcc-ipq5018.c
+@@ -398,36 +398,6 @@ static const struct parent_map gcc_xo_un
+ 	{ P_GPLL0, 4 },
+ };
+ 
+-static const struct clk_parent_data gcc_pcie20_phy0_pipe_clk_xo[] = {
+-	{ .index = DT_PCIE20_PHY0_PIPE_CLK },
+-	{ .index = DT_XO },
+-};
+-
+-static const struct parent_map gcc_pcie20_phy0_pipe_clk_xo_map[] = {
+-	{ P_PCIE20_PHY0_PIPE, 0 },
+-	{ P_XO, 2 },
+-};
+-
+-static const struct clk_parent_data gcc_pcie20_phy1_pipe_clk_xo[] = {
+-	{ .index = DT_PCIE20_PHY1_PIPE_CLK },
+-	{ .index = DT_XO },
+-};
+-
+-static const struct parent_map gcc_pcie20_phy1_pipe_clk_xo_map[] = {
+-	{ P_PCIE20_PHY1_PIPE, 0 },
+-	{ P_XO, 2 },
+-};
+-
+-static const struct clk_parent_data gcc_usb3phy_0_cc_pipe_clk_xo[] = {
+-	{ .index = DT_USB3_PHY0_CC_PIPE_CLK },
+-	{ .index = DT_XO },
+-};
+-
+-static const struct parent_map gcc_usb3phy_0_cc_pipe_clk_xo_map[] = {
+-	{ P_USB3PHY_0_PIPE, 0 },
+-	{ P_XO, 2 },
+-};
+-
+ static const struct freq_tbl ftbl_adss_pwm_clk_src[] = {
+ 	F(24000000, P_XO, 1, 0, 0),
+ 	F(100000000, P_GPLL0, 8, 0, 0),
+@@ -919,32 +889,31 @@ static struct clk_rcg2 pcie1_axi_clk_src
+ 	},
+ };
+ 
+-static struct clk_regmap_mux pcie0_pipe_clk_src = {
++static struct clk_regmap_phy_mux pcie0_pipe_clk_src = {
+ 	.reg = 0x7501c,
+-	.shift = 8,
+-	.width = 2,
+-	.parent_map = gcc_pcie20_phy0_pipe_clk_xo_map,
+ 	.clkr = {
+ 		.hw.init = &(struct clk_init_data) {
+ 			.name = "pcie0_pipe_clk_src",
+-			.parent_data = gcc_pcie20_phy0_pipe_clk_xo,
+-			.num_parents = ARRAY_SIZE(gcc_pcie20_phy0_pipe_clk_xo),
+-			.ops = &clk_regmap_mux_closest_ops,
++			.parent_data = &(const struct clk_parent_data) {
++				.index = DT_PCIE20_PHY0_PIPE_CLK,
++			},
++			.num_parents = 1,
++			.ops = &clk_regmap_phy_mux_ops,
+ 			.flags = CLK_SET_RATE_PARENT,
+ 		},
+ 	},
+ };
+ 
+-static struct clk_regmap_mux pcie1_pipe_clk_src = {
++static struct clk_regmap_phy_mux pcie1_pipe_clk_src = {
+ 	.reg = 0x7601c,
+-	.shift = 8,
+-	.width = 2,
+-	.parent_map = gcc_pcie20_phy1_pipe_clk_xo_map, .clkr = {
++	.clkr = {
+ 		.hw.init = &(struct clk_init_data) {
+ 			.name = "pcie1_pipe_clk_src",
+-			.parent_data = gcc_pcie20_phy1_pipe_clk_xo,
+-			.num_parents = ARRAY_SIZE(gcc_pcie20_phy1_pipe_clk_xo),
+-			.ops = &clk_regmap_mux_closest_ops,
++			.parent_data = &(const struct clk_parent_data) {
++				.index = DT_PCIE20_PHY1_PIPE_CLK,
++			},
++			.num_parents = 1,
++			.ops = &clk_regmap_phy_mux_ops,
+ 			.flags = CLK_SET_RATE_PARENT,
+ 		},
+ 	},
+@@ -1279,17 +1248,16 @@ static struct clk_rcg2 usb0_mock_utmi_cl
+ 	},
+ };
+ 
+-static struct clk_regmap_mux usb0_pipe_clk_src = {
++static struct clk_regmap_phy_mux usb0_pipe_clk_src = {
+ 	.reg = 0x3e048,
+-	.shift = 8,
+-	.width = 2,
+-	.parent_map = gcc_usb3phy_0_cc_pipe_clk_xo_map,
+ 	.clkr = {
+ 		.hw.init = &(struct clk_init_data) {
+ 			.name = "usb0_pipe_clk_src",
+-			.parent_data = gcc_usb3phy_0_cc_pipe_clk_xo,
+-			.num_parents = ARRAY_SIZE(gcc_usb3phy_0_cc_pipe_clk_xo),
+-			.ops = &clk_regmap_mux_closest_ops,
++			.parent_data = &(const struct clk_parent_data) {
++				.index = DT_USB3_PHY0_CC_PIPE_CLK,
++			},
++			.num_parents = 1,
++			.ops = &clk_regmap_phy_mux_ops,
+ 			.flags = CLK_SET_RATE_PARENT,
+ 		},
+ 	},
