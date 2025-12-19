@@ -1,0 +1,64 @@
+From a276a12f68c57e12b73dd23117e7a51b095e96e7 Mon Sep 17 00:00:00 2001
+From: George Moussalem <george.moussalem@outlook.com>
+Date: Mon, 29 Jun 2026 17:07:55 +0400
+Subject: [PATCH v3 5/6] arm64: dts: qcom: ipq5018: add nodes required for Bluetooth support
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260629-ipq5018-bluetooth-v3-5-6303e3a03b44@outlook.com>
+
+Add nodes for the reserved memory carveout and Bluetooth.
+
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+---
+ arch/arm64/boot/dts/qcom/ipq5018.dtsi | 25 ++++++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
+
+--- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
+@@ -18,6 +18,23 @@
+ 	#address-cells = <2>;
+ 	#size-cells = <2>;
+ 
++	bluetooth: bluetooth {
++		compatible = "qcom,ipq5018-bt";
++
++		firmware-name = "qca/bt_fw_patch.mbn";
++
++		clocks = <&gcc GCC_BTSS_LPO_CLK>;
++		clock-names = "lpo";
++		resets = <&gcc GCC_BTSS_BCR>;
++
++		qcom,ipc = <&apcs_glb 8 23>;
++		interrupts = <GIC_SPI 162 IRQ_TYPE_EDGE_RISING>;
++
++		memory-region = <&btss_region>;
++
++		status = "disabled";
++	};
++
+ 	clocks {
+ 		gephy_rx_clk: gephy-rx-clk {
+ 			compatible = "fixed-clock";
+@@ -142,6 +159,11 @@
+ 			no-map;
+ 		};
+ 
++		btss_region: bluetooth@7000000 {
++			reg = <0x0 0x07000000 0x0 0x58000>;
++			no-map;
++		};
++
+ 		bootloader@4a800000 {
+ 			reg = <0x0 0x4a800000 0x0 0x200000>;
+ 			no-map;
+@@ -694,7 +716,8 @@
+ 
+ 		apcs_glb: mailbox@b111000 {
+ 			compatible = "qcom,ipq5018-apcs-apps-global",
+-				     "qcom,ipq6018-apcs-apps-global";
++				     "qcom,ipq6018-apcs-apps-global",
++				     "syscon";
+ 			reg = <0x0b111000 0x1000>;
+ 			#clock-cells = <1>;
+ 			clocks = <&a53pll>, <&xo_board_clk>, <&gcc GPLL0>;

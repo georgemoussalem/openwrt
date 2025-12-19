@@ -13,10 +13,10 @@ Signed-off-by: Robert Senderek <robert.senderek@10g.pl>
 
 --- a/arch/arm64/boot/dts/qcom/ipq5018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq5018.dtsi
-@@ -94,12 +94,6 @@
+@@ -112,12 +112,6 @@
  		compatible = "operating-points-v2";
  		opp-shared;
- 
+
 -		opp-800000000 {
 -			opp-hz = /bits/ 64 <800000000>;
 -			opp-microvolt = <1100000>;
