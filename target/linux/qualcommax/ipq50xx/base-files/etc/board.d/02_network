@@ -21,7 +21,8 @@ ipq50xx_setup_interfaces()
 	linksys,mx2000|\
 	linksys,mx5500|\
 	linksys,spnmx56|\
-	xiaomi,ax6000)
+	xiaomi,ax6000|\
+	xunison,exigo-hub-d50-5g)
 		ucidef_set_interfaces_lan_wan "lan1 lan2 lan3" "wan"
 		;;
 	linksys,mx6200|\

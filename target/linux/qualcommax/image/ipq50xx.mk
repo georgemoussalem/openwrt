@@ -206,6 +206,22 @@ endif
 endef
 TARGET_DEVICES += xiaomi_ax6000
 
+define Device/xunison_exigo-hub-d50-5g
+	$(call Device/FitImage)
+	$(call Device/UbiFit)
+	DEVICE_VENDOR := Xunison
+	DEVICE_MODEL := Exigo Hub D50 5G
+	BLOCKSIZE := 128k
+	PAGESIZE := 2048
+	SOC := ipq5018
+	DEVICE_DTS_CONFIG := config@mp03.1
+	DEVICE_PACKAGES := ath11k-firmware-ipq5018 \
+		kmod-ath11k-pci \
+		ath11k-firmware-qcn9074 \
+		ipq-wifi-xunison_exigo-hub-d50-5g
+endef
+TARGET_DEVICES += xunison_exigo-hub-d50-5g
+
 define Device/yuncore_ax830
 	$(call Device/FitImage)
 	$(call Device/UbiFit)
