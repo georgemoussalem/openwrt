@@ -229,11 +229,10 @@ define Device/xunison_exigo-hub-d50-5g
 	    kmod-ath11k-pci \
 	    ath11k-firmware-qcn9074 \
 	    ipq-wifi-xunison_exigo-hub-d50-5g \
+	    kmod-ledtrig-network \
 	    pciutils usbutils dumpimage \
 	    kmod-mhi-net \
-	    kmod-mhi-bus \
-	    kmod-rmnet \
-	    kmod-usb-serial-option
+	    kmod-mhi-bus
 endef
 TARGET_DEVICES += xunison_exigo-hub-d50-5g
 
