@@ -12,6 +12,7 @@
 	compatible = "xunison,exigo-hub-d50-5g", "qcom,ipq5018";
 
 	aliases {
+		ethernet1 = &dp2;
 		label-mac-device = &dp2;
 		led-boot = &led_mesh_g;
 		led-failsafe = &led_mesh_r;
@@ -85,15 +86,32 @@
 			gpios = <&tlmm 35 GPIO_ACTIVE_HIGH>;
 		};
 
+/*
 		wifi-green {
 			color = <LED_COLOR_ID_GREEN>;
 			function = LED_FUNCTION_WLAN;
 			gpios = <&tlmm 30 GPIO_ACTIVE_HIGH>;
 		};
+*/
+
+// Alternative Wi-Fi LED control
+		wifi-green {
+			color = <LED_COLOR_ID_GREEN>;
+			function = LED_FUNCTION_WLAN;
+			gpios = <&tlmm 30 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "network";
+		};
+
+// Alternative WAN LED control
+		wan-green {
+			color = <LED_COLOR_ID_GREEN>;
+			function = LED_FUNCTION_WAN;
+			gpios = <&tlmm 46 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "network";
+		};
 
 		internet-green {
-			color = <LED_COLOR_ID_GREEN>;
-			function = LED_FUNCTION_WAN_ONLINE;
+			label = "green:internet";
 			gpios = <&tlmm 1 GPIO_ACTIVE_HIGH>;
 		};
 	};
@@ -139,23 +157,6 @@
 	};
 };
 
-/*
-&ge_phy {
-	leds {
-		#address-cells = <1>;
-		#size-cells = <0>;
-
-		led@0 {
-			reg = <0>;
-			color = <LED_COLOR_ID_GREEN>;
-			function = LED_FUNCTION_WAN;
-			default-state = "keep";
-			active-high;
-		};
-	};
-};
-*/
-
 &mdio0 {
 	status = "okay";
 };
@@ -192,8 +193,9 @@
 			#address-cells = <1>;
 			#size-cells = <0>;
 
-			port@0 {
+			switch0cpu: port@0 {
 				reg = <0>;
+				label = "cpu";
 				phy-mode = "sgmii";
 				ethernet = <&dp2>;
 				qca,sgmii-enable-pll;
@@ -209,6 +211,9 @@
 				reg = <1>;
 				label = "lan3";
 				phy-handle = <&qca8337_0>;
+
+				nvmem-cells = <&macaddr_dp2 0>;
+				nvmem-cell-names = "mac-address";
 			};
 
 			// QCA8337 Phy1 -> LAN2
@@ -216,6 +221,9 @@
 				reg = <2>;
 				label = "lan2";
 				phy-handle = <&qca8337_1>;
+
+				nvmem-cells = <&macaddr_dp2 0>;
+				nvmem-cell-names = "mac-address";
 			};
 
 			// QCA8337 Phy3 -> LAN1
@@ -223,6 +231,9 @@
 				reg = <3>;
 				label = "lan1";
 				phy-handle = <&qca8337_2>;
+
+				nvmem-cells = <&macaddr_dp2 0>;
+				nvmem-cell-names = "mac-address";
 			};
 		};
 	};
@@ -271,11 +282,11 @@
 	nand@0 {
 		compatible = "spi-nand";
 		reg = <0>;
+		#address-cells = <1>;
+		#size-cells = <1>;
+
 		nand-ecc-engine = <&qpic_nand>;
-		nand-ecc-strength = <4>;
-        	nand-ecc-step-size = <512>;
 		nand-bus-width = <8>;
-		qcom,boot-partitions-no-subpage;
 
 		partitions {
 			compatible = "qcom,smem-part";
@@ -307,39 +318,6 @@
 };
 
 &tlmm {
-	button_pins: button-pins {
-		pins = "gpio22", "gpio38";
-		function = "gpio";
-		drive-strength = <8>;
-		bias-pull-up;
-	};
-
-	/*
-	gephy_led_pin {
-		pins = "gpio46";
-		function = "led0";
-		drive-strength = <8>;
-		bias-pull-down;
-	};
-	*/
-	
-	/* Modem Control Pins: GPIO 31 (Power) */
-	modem_pins: modem-pins {
-		mux {
-			pins = "gpio31";
-			function = "gpio";
-			drive-strength = <8>;
-			bias-pull-up;
-		};
-	};
-
-	leds_pins: leds-pins {
-		pins = "gpio1", "gpio27", "gpio28", "gpio30", "gpio33", "gpio34", "gpio35";
-		function = "gpio";
-		drive-strength = <8>;
-		bias-pull-down;
-	};
-
 	mdio1_pins: mdio-state {
 		mdc-pins {
 			pins = "gpio36";
@@ -354,6 +332,30 @@
 			drive-strength = <8>;
 			bias-pull-up;
 		};
+	};
+
+	leds_pins: leds-pins {
+		pins = "gpio1", "gpio27", "gpio28", "gpio30", "gpio33", "gpio34", "gpio35";
+		function = "gpio";
+		drive-strength = <8>;
+		bias-pull-down;
+	};
+	
+	/* Modem Control Pins: GPIO 31 (Power) */
+	modem_pins: modem-pins {
+		mux {
+			pins = "gpio31";
+			function = "gpio";
+			drive-strength = <8>;
+			bias-pull-up;
+		};
+	};
+
+	button_pins: button-pins {
+		pins = "gpio22", "gpio38";
+		function = "gpio";
+		drive-strength = <8>;
+		bias-pull-up;
 	};
 
 	qpic_pins: qpic-state {
@@ -439,8 +441,8 @@
 	
 	pcie@0 {
 		modem@0 {
-			compatible = "pci17cb,0306";
-			reg = <0 0 0 0 0>;
+			/* compatible = "pci17cb,0306"; */
+			reg = <0x00010000 0 0 0 0>;
 			#address-cells = <3>;
 			#size-cells = <2>;
 		};
