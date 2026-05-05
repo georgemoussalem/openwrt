@@ -1,0 +1,62 @@
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -7521,11 +7521,20 @@ int stmmac_dvr_probe(struct device *devi
+ {
+ 	struct net_device *ndev = NULL;
+ 	struct stmmac_priv *priv;
++	int assign_type;
+ 	u32 rxq;
+ 	int i, ret = 0;
+ 
+-	ndev = devm_alloc_etherdev_mqs(device, sizeof(struct stmmac_priv),
+-				       MTL_MAX_TX_QUEUES, MTL_MAX_RX_QUEUES);
++	if (plat_dat->ndev_name) {
++		assign_type = NET_NAME_PREDICTABLE;
++	}
++	else {
++		plat_dat->ndev_name = "eth%d";
++		assign_type = NET_NAME_ENUM;
++	}
++	ndev = alloc_netdev_mqs(sizeof(struct stmmac_priv),
++				plat_dat->ndev_name, assign_type, ether_setup,
++				MTL_MAX_TX_QUEUES, MTL_MAX_RX_QUEUES);
+ 	if (!ndev)
+ 		return -ENOMEM;
+ 
+@@ -7828,6 +7837,7 @@ error_mdio_register:
+ error_hw_init:
+ 	destroy_workqueue(priv->wq);
+ error_wq_init:
++	free_netdev(ndev);
+ 	bitmap_free(priv->af_xdp_zc_qps);
+ 
+ 	return ret;
+@@ -7864,6 +7874,8 @@ void stmmac_dvr_remove(struct device *de
+ 	stmmac_pcs_clean(ndev);
+ 	stmmac_mdio_unregister(ndev);
+ 
++	free_netdev(ndev);
++
+ 	destroy_workqueue(priv->wq);
+ 	mutex_destroy(&priv->lock);
+ 	bitmap_free(priv->af_xdp_zc_qps);
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+@@ -428,6 +428,8 @@ stmmac_probe_config_dt(struct platform_d
+ 	if (!plat)
+ 		return ERR_PTR(-ENOMEM);
+ 
++	plat->ndev_name = of_get_property(np, "label", NULL);
++
+ 	rc = of_get_mac_address(np, mac);
+ 	if (rc) {
+ 		if (rc == -EPROBE_DEFER)
+--- a/include/linux/stmmac.h
++++ b/include/linux/stmmac.h
+@@ -276,5 +276,6 @@ struct plat_stmmacenet_data {
+ 	int msi_tx_base_vec;
+ 	const struct dwmac4_addrs *dwmac4_addrs;
+ 	unsigned int flags;
++	const char * ndev_name;
+ };
+ #endif
