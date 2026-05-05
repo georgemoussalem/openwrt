@@ -16,7 +16,7 @@ Signed-off-by: George Moussalem <george.moussalem@outlook.com>
  	[GCC_UNIPHY_RX_ARES] = { 0x56104, 4 },
  	[GCC_UNIPHY_TX_ARES] = { 0x56104, 5 },
 -	[GCC_UNIPHY_SOFT_RESET] = {0x56104, 0 },
-+	[GCC_UNIPHY_SOFT_RESET] = {0x56104, .bitmask = 0x32 },
++	[GCC_UNIPHY_SOFT_RESET] = {0x56104, .bitmask = GENMASK(5,4) | BIT(1) },
  	[GCC_USB0_BCR] = { 0x3e070, 0 },
  	[GCC_USB0_PHY_BCR] = { 0x3e034, 0 },
  	[GCC_WCSS_BCR] = { 0x18000, 0 },
