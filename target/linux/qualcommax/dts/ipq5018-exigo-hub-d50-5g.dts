@@ -22,7 +22,7 @@
 	};
 
 	chosen {
-    		bootargs = "console=ttyMSM0,115200n8 ubi.mtd=rootfs ubi.block=0,1 root=/dev/ubiblock0_1 rootfstype=squashfs rootwait swiotlb=1 coherent_pool=2M";
+    		bootargs = "console=ttyMSM0,115200n8 ubi.mtd=rootfs ubi.block=0,1 root=/dev/ubiblock0_1 rootfstype=squashfs rootwait swiotlb=1 coherent_pool=2M pcie_port_pm=off";
 		stdout-path = "serial0:115200n8";
 	};
 	
