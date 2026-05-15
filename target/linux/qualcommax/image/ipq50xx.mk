@@ -216,6 +216,15 @@ ifneq ($(CONFIG_TARGET_ROOTFS_INITRAMFS),)
 endif
 endef
 
+define Device/xiaomi_ax3000
+	$(call Device/xiaomi_ipq50xx_ax_base)
+	DEVICE_MODEL := AX3000
+	DEVICE_DTS_CONFIG := config@mp02.1
+	DEVICE_PACKAGES := ath11k-firmware-ipq5018-qcn6122 \
+		ipq-wifi-xiaomi_ax3000
+endef
+TARGET_DEVICES += xiaomi_ax3000
+
 define Device/xiaomi_ax6000
 	$(call Device/xiaomi_ipq50xx_ax_base)
 	DEVICE_MODEL := AX6000
