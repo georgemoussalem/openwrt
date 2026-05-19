@@ -106,6 +106,7 @@ ALLWIFIBOARDS:= \
 	ubnt_utr \
 	wallys_dr40x9 \
 	xiaomi_aiot-ac2350 \
+	xiaomi_ax3000tv2 \
 	xiaomi_ax3600 \
 	xiaomi_ax6000 \
 	xiaomi_ax9000 \
@@ -306,6 +307,7 @@ $(eval $(call generate-ipq-wifi-package,tplink_tl-wa1201-v2,TP-Link TL-WA1201 V2
 $(eval $(call generate-ipq-wifi-package,ubnt_utr,Ubiquiti UniFi Travel Router))
 $(eval $(call generate-ipq-wifi-package,wallys_dr40x9,Wallys DR40X9))
 $(eval $(call generate-ipq-wifi-package,xiaomi_aiot-ac2350,Xiaomi AIoT AC2350))
+$(eval $(call generate-ipq-wifi-package,xiaomi_ax3000tv2,Xiaomi AX3000Tv2))
 $(eval $(call generate-ipq-wifi-package,xiaomi_ax3600,Xiaomi AX3600))
 $(eval $(call generate-ipq-wifi-package,xiaomi_ax6000,Xiaomi AX6000))
 $(eval $(call generate-ipq-wifi-package,xiaomi_ax9000,Xiaomi AX9000))
