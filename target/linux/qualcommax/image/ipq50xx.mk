@@ -255,6 +255,15 @@ define Device/xiaomi_ax6000
 endef
 TARGET_DEVICES += xiaomi_ax6000
 
+define Device/xiaomi_cr8818
+	$(call Device/xiaomi_ipq50xx_ax_base)
+	DEVICE_MODEL := CR8818
+	DEVICE_DTS_CONFIG := config@mp03.3
+	DEVICE_PACKAGES := ath11k-firmware-ipq5018-qcn6122 \
+		ipq-wifi-xiaomi_cr8818
+endef
+TARGET_DEVICES += xiaomi_cr8818
+
 define Device/xiaomi_redmi-ax5400
 	$(call Device/xiaomi_ipq50xx_ax_base)
 	DEVICE_MODEL := Redmi AX5400

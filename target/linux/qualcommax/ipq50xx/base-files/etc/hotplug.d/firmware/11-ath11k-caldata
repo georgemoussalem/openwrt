@@ -50,6 +50,7 @@ case "$FIRMWARE" in
 	xiaomi,ax3000|\
 	xiaomi,ax3000tv2|\
 	xiaomi,ax6000|\
+	xiaomi,cr8818|\
 	xiaomi,redmi-ax5400)
 		caldata_extract "0:art" 0x1000 0x20000
 		;;
@@ -101,7 +102,8 @@ case "$FIRMWARE" in
 		ath11k_set_macflag
 		;;
 	xiaomi,ax3000|\
-	xiaomi,ax3000tv2)
+	xiaomi,ax3000tv2|\
+	xiaomi,cr8818)
 		caldata_extract "0:art" 0x26800 0x20000
 		;;
 	yuncore,ax830)

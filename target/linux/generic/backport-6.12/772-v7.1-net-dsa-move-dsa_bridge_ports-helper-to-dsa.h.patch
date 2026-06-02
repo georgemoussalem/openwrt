@@ -18,7 +18,7 @@ Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 
 --- a/include/net/dsa.h
 +++ b/include/net/dsa.h
-@@ -833,6 +833,19 @@ dsa_tree_offloads_bridge_dev(struct dsa_
+@@ -835,6 +835,19 @@ dsa_tree_offloads_bridge_dev(struct dsa_
  	return false;
  }
  
@@ -38,3 +38,25 @@ Signed-off-by: Jakub Kicinski <kuba@kernel.org>
  static inline bool dsa_port_tree_same(const struct dsa_port *a,
  				      const struct dsa_port *b)
  {
+--- a/drivers/net/dsa/yt921x.c
++++ b/drivers/net/dsa/yt921x.c
+@@ -1965,19 +1965,6 @@ yt921x_bridge_join(struct yt921x_priv *p
+ 	return 0;
+ }
+ 
+-static u32
+-dsa_bridge_ports(struct dsa_switch *ds, const struct net_device *bdev)
+-{
+-	struct dsa_port *dp;
+-	u32 mask = 0;
+-
+-	dsa_switch_for_each_user_port(dp, ds)
+-		if (dsa_port_offloads_bridge_dev(dp, bdev))
+-			mask |= BIT(dp->index);
+-
+-	return mask;
+-}
+-
+ static int
+ yt921x_bridge_flags(struct yt921x_priv *priv, int port,
+ 		    struct switchdev_brport_flags flags)

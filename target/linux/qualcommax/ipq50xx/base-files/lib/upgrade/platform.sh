@@ -76,7 +76,7 @@ linksys_bootconfig_set_primaryboot() {
 		echo "failed to toggle primaryboot on 0:HLOS part"
 		return 1
 	}
-	
+
 	set_bootconfig_primaryboot "$tempfile" "rootfs" $2
 	[ $? -ne 0 ] && {
 		echo "failed to toggle primaryboot for rootfs part"
@@ -173,7 +173,8 @@ platform_pre_upgrade() {
 	case "$(board_name)" in
 	xiaomi,ax3000|\
 	xiaomi,ax3000tv2|\
-	xiaomi,ax6000)
+	xiaomi,ax6000|\
+	xiaomi,cr8818)
 		xiaomi_initramfs_prepare
 		;;
 	esac
@@ -218,6 +219,7 @@ platform_do_upgrade() {
 	xiaomi,ax3000|\
 	xiaomi,ax3000tv2|\
 	xiaomi,ax6000|\
+	xiaomi,cr8818|\
 	xiaomi,redmi-ax5400)
 		# Make sure that UART is enabled
 		fw_setenv boot_wait on
