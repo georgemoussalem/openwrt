@@ -75,6 +75,13 @@
 	pinctrl-names = "default";
 };
 
+&bluetooth {
+	status = "okay";
+
+	nvmem-cells = <&hw_mac_addr 0>;
+	nvmem-cell-names = "local-bd-address";
+};
+
 &crypto {
 	status = "okay";
 };
