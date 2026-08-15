@@ -12,8 +12,8 @@
 	compatible = "xunison,exigo-hub-d50-5g", "qcom,ipq5018";
 
 	aliases {
-		ethernet1 = &dp2;
-		label-mac-device = &dp2;
+		ethernet1 = &gmac1;
+		label-mac-device = &gmac1;
 		led-boot = &led_mesh_g;
 		led-failsafe = &led_mesh_r;
 		led-running = &led_mesh_g;
@@ -86,23 +86,23 @@
 			gpios = <&tlmm 35 GPIO_ACTIVE_HIGH>;
 		};
 
-/*
+                /*
 		wifi-green {
 			color = <LED_COLOR_ID_GREEN>;
 			function = LED_FUNCTION_WLAN;
 			gpios = <&tlmm 30 GPIO_ACTIVE_HIGH>;
 		};
-*/
+                */
 
-// Alternative Wi-Fi LED control
+                // Alternative Wi-Fi LED control
 		wifi-green {
 			color = <LED_COLOR_ID_GREEN>;
 			function = LED_FUNCTION_WLAN;
 			gpios = <&tlmm 30 GPIO_ACTIVE_HIGH>;
 			linux,default-trigger = "network";
 		};
-
-// Alternative WAN LED control
+		
+                // Alternative WAN LED control
 		wan-green {
 			color = <LED_COLOR_ID_GREEN>;
 			function = LED_FUNCTION_WAN;
@@ -117,38 +117,20 @@
 	};
 };
 
-&switch {
+&uniphy0 {
 	status = "okay";
-	switch_mac_mode = <MAC_MODE_SGMII_CHANNEL0>;
 
-	qcom,port_phyinfo {
-		// MAC0 -> GE Phy
-		port@0 {
-			port_id = <1>;
-			mdiobus = <&mdio0>;
-			phy_address = <7>;
-		};
-
-		// MAC1 ---SGMII---> QCA8337 SerDes
-		port@1 {
-			port_id = <2>;
-			forced-speed = <1000>;
-			forced-duplex = <1>;
-		};
-	};
-};
-
-&dp1 {
-	status = "okay";
-	nvmem-cells = <&macaddr_dp1 0>;
-	nvmem-cell-names = "mac-address";
-	label = "wan";
+	assigned-clocks = <&uniphy0 UNIPHY_CLK_REF>;
+	assigned-clock-rates = <UNIPHY_REFCLK_25MHZ>;
 };
 
 // MAC1 ---SGMII---> QCA8337 SerDes
-&dp2 {
+&gmac1 {
 	status = "okay";
-	nvmem-cells = <&macaddr_dp2 0>;
+
+	phy-mode = "sgmii";
+
+	nvmem-cells = <&macaddr_gmac1 0>;
 	nvmem-cell-names = "mac-address";
 
 	fixed-link {
@@ -197,7 +179,7 @@
 				reg = <0>;
 				label = "cpu";
 				phy-mode = "sgmii";
-				ethernet = <&dp2>;
+				ethernet = <&gmac1>;
 				qca,sgmii-enable-pll;
 
 				fixed-link {
@@ -212,7 +194,7 @@
 				label = "lan3";
 				phy-handle = <&qca8337_0>;
 
-				nvmem-cells = <&macaddr_dp2 0>;
+				nvmem-cells = <&macaddr_gmac1 0>;
 				nvmem-cell-names = "mac-address";
 			};
 
@@ -222,7 +204,7 @@
 				label = "lan2";
 				phy-handle = <&qca8337_1>;
 
-				nvmem-cells = <&macaddr_dp2 0>;
+				nvmem-cells = <&macaddr_gmac1 0>;
 				nvmem-cell-names = "mac-address";
 			};
 
@@ -232,7 +214,7 @@
 				label = "lan1";
 				phy-handle = <&qca8337_2>;
 
-				nvmem-cells = <&macaddr_dp2 0>;
+				nvmem-cells = <&macaddr_gmac1 0>;
 				nvmem-cell-names = "mac-address";
 			};
 		};
@@ -251,14 +233,6 @@
 &blsp1_uart1 {
 	pinctrl-0 = <&serial_0_pins>;
 	pinctrl-names = "default";
-	status = "okay";
-};
-
-&crypto {
-	status = "okay";
-};
-
-&cryptobam {
 	status = "okay";
 };
 
@@ -282,11 +256,12 @@
 	nand@0 {
 		compatible = "spi-nand";
 		reg = <0>;
-		#address-cells = <1>;
-		#size-cells = <1>;
 
 		nand-ecc-engine = <&qpic_nand>;
+		nand-ecc-strength = <4>;
+		nand-ecc-step-size = <512>;
 		nand-bus-width = <8>;
+		/* qcom,boot-partitions-no-subpage; */
 
 		partitions {
 			compatible = "qcom,smem-part";
@@ -300,13 +275,7 @@
 					#address-cells = <1>;
 					#size-cells = <1>;
 
-					macaddr_dp1: macaddr@0 {
-						compatible = "mac-base";
-						#nvmem-cell-cells = <1>;
-						reg = <0x0 0x6>;
-					};
-
-					macaddr_dp2: macaddr@1 {
+					macaddr_gmac1: macaddr@0 {
 						compatible = "mac-base";
 						#nvmem-cell-cells = <1>;
 						reg = <0x6 0x6>;
