@@ -12,6 +12,7 @@
 	compatible = "xunison,exigo-hub-d50-5g", "qcom,ipq5018";
 
 	aliases {
+		ethernet0 = &gmac0;
 		ethernet1 = &gmac1;
 		label-mac-device = &gmac1;
 		led-boot = &led_mesh_g;
@@ -122,6 +123,16 @@
 
 	assigned-clocks = <&uniphy0 UNIPHY_CLK_REF>;
 	assigned-clock-rates = <UNIPHY_REFCLK_25MHZ>;
+};
+
+// MAC0 -> GE Phy (WAN)
+&gmac0 {
+	nvmem-cells = <&macaddr_gmac0 0>;
+	nvmem-cell-names = "mac-address";
+
+	label = "wan";
+
+	status = "okay";
 };
 
 // MAC1 ---SGMII---> QCA8337 SerDes
@@ -275,7 +286,13 @@
 					#address-cells = <1>;
 					#size-cells = <1>;
 
-					macaddr_gmac1: macaddr@0 {
+					macaddr_gmac0: macaddr@0 {
+						compatible = "mac-base";
+						#nvmem-cell-cells = <1>;
+						reg = <0x0 0x6>;
+					};
+
+					macaddr_gmac1: macaddr@6 {
 						compatible = "mac-base";
 						#nvmem-cell-cells = <1>;
 						reg = <0x6 0x6>;
