@@ -51,8 +51,7 @@ case "$FIRMWARE" in
 		;;
 	xunison,exigo-hub-d50-5g)
 		caldata_extract "0:art" 0x1000 0x20000
-		label_mac=$(mtd_get_mac_binary 0:art 0)
-		ath11k_patch_mac $(macaddr_add $label_mac 2) 0
+        	ath11k_patch_mac $(macaddr_add $(get_mac_label_dt) 2) 0
 		ath11k_remove_regdomain
 		ath11k_set_macflag
 		;;
@@ -143,8 +142,7 @@ case "$FIRMWARE" in
 		;;
 	xunison,exigo-hub-d50-5g)
 		caldata_extract "0:art" 0x26800 0x20000
-		label_mac=$(mtd_get_mac_binary 0:art 0)
-		ath11k_patch_mac $(macaddr_add $label_mac 3) 0
+		ath11k_patch_mac $(macaddr_add $(get_mac_label_dt) 3) 0
 		ath11k_remove_regdomain
 		ath11k_set_macflag
 		;;

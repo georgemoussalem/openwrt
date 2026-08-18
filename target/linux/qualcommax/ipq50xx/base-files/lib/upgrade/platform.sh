@@ -196,7 +196,9 @@ platform_do_upgrade() {
 		remove_oem_ubi_volume wifi_fw
 		nand_do_upgrade "$1"
 		;;
-	glinet,gl-b3000)
+	glinet,gl-b3000|\
+	xunison,exigo-hub-d50-5g)
+		CI_ROOTPART="rootfs"
 		glinet_do_upgrade "$1"
 		;;
 	linksys,mr5500|\

@@ -12,7 +12,9 @@
 	compatible = "xunison,exigo-hub-d50-5g", "qcom,ipq5018";
 
 	aliases {
-		label-mac-device = &dp2;
+		ethernet0 = &gmac0;
+		ethernet1 = &gmac1;
+		label-mac-device = &gmac1;
 		led-boot = &led_mesh_g;
 		led-failsafe = &led_mesh_r;
 		led-running = &led_mesh_g;
@@ -21,8 +23,20 @@
 	};
 
 	chosen {
-		bootargs-append = " root=/dev/ubiblock0_1 swiotlb=1 coherent_pool=2M";
+    		bootargs = "console=ttyMSM0,115200n8 ubi.mtd=rootfs ubi.block=0,1 root=/dev/ubiblock0_1 rootfstype=squashfs rootwait swiotlb=1 coherent_pool=2M pcie_port_pm=off";
 		stdout-path = "serial0:115200n8";
+	};
+	
+	modem {
+		compatible = "gpio-export";
+		pinctrl-names = "default";
+		pinctrl-0 = <&modem_pins>;
+
+		modem-power {
+			gpio-export,name = "modem_power_up";
+			gpio-export,output = <1>;
+			gpios = <&tlmm 31 GPIO_ACTIVE_HIGH>;
+		};
 	};
 
 	keys {
@@ -73,52 +87,61 @@
 			gpios = <&tlmm 35 GPIO_ACTIVE_HIGH>;
 		};
 
+                /*
 		wifi-green {
 			color = <LED_COLOR_ID_GREEN>;
 			function = LED_FUNCTION_WLAN;
 			gpios = <&tlmm 30 GPIO_ACTIVE_HIGH>;
 		};
+                */
+
+                // Alternative Wi-Fi LED control
+		wifi-green {
+			color = <LED_COLOR_ID_GREEN>;
+			function = LED_FUNCTION_WLAN;
+			gpios = <&tlmm 30 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "network";
+		};
+		
+                // Alternative WAN LED control
+		wan-green {
+			color = <LED_COLOR_ID_GREEN>;
+			function = LED_FUNCTION_WAN;
+			gpios = <&tlmm 46 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "network";
+		};
 
 		internet-green {
-			color = <LED_COLOR_ID_GREEN>;
-			function = LED_FUNCTION_WAN_ONLINE;
+			label = "green:internet";
 			gpios = <&tlmm 1 GPIO_ACTIVE_HIGH>;
 		};
 	};
 };
 
-&switch {
+&uniphy0 {
 	status = "okay";
-	switch_mac_mode = <MAC_MODE_SGMII_CHANNEL0>;
 
-	qcom,port_phyinfo {
-		// MAC0 -> GE Phy
-		port@0 {
-			port_id = <1>;
-			mdiobus = <&mdio0>;
-			phy_address = <7>;
-		};
-
-		// MAC1 ---SGMII---> QCA8337 SerDes
-		port@1 {
-			port_id = <2>;
-			forced-speed = <1000>;
-			forced-duplex = <1>;
-		};
-	};
+	assigned-clocks = <&uniphy0 UNIPHY_CLK_REF>;
+	assigned-clock-rates = <UNIPHY_REFCLK_25MHZ>;
 };
 
-&dp1 {
-	status = "okay";
-	nvmem-cells = <&macaddr_dp1 0>;
+// MAC0 -> GE Phy (WAN)
+&gmac0 {
+	nvmem-cells = <&macaddr_gmac0 0>;
 	nvmem-cell-names = "mac-address";
+
 	label = "wan";
+
+	status = "okay";
 };
 
 // MAC1 ---SGMII---> QCA8337 SerDes
-&dp2 {
+&gmac1 {
 	status = "okay";
-	nvmem-cells = <&macaddr_dp2 0>;
+
+	phy-mode = "sgmii";
+
+	nvmem-cells = <&macaddr_gmac1 0>;
 	nvmem-cell-names = "mac-address";
 
 	fixed-link {
@@ -126,23 +149,6 @@
 		full-duplex;
 	};
 };
-
-/*
-&ge_phy {
-	leds {
-		#address-cells = <1>;
-		#size-cells = <0>;
-
-		led@0 {
-			reg = <0>;
-			color = <LED_COLOR_ID_GREEN>;
-			function = LED_FUNCTION_WAN;
-			default-state = "keep";
-			active-high;
-		};
-	};
-};
-*/
 
 &mdio0 {
 	status = "okay";
@@ -180,10 +186,11 @@
 			#address-cells = <1>;
 			#size-cells = <0>;
 
-			port@0 {
+			switch0cpu: port@0 {
 				reg = <0>;
+				label = "cpu";
 				phy-mode = "sgmii";
-				ethernet = <&dp2>;
+				ethernet = <&gmac1>;
 				qca,sgmii-enable-pll;
 
 				fixed-link {
@@ -197,6 +204,9 @@
 				reg = <1>;
 				label = "lan3";
 				phy-handle = <&qca8337_0>;
+
+				nvmem-cells = <&macaddr_gmac1 0>;
+				nvmem-cell-names = "mac-address";
 			};
 
 			// QCA8337 Phy1 -> LAN2
@@ -204,6 +214,9 @@
 				reg = <2>;
 				label = "lan2";
 				phy-handle = <&qca8337_1>;
+
+				nvmem-cells = <&macaddr_gmac1 0>;
+				nvmem-cell-names = "mac-address";
 			};
 
 			// QCA8337 Phy3 -> LAN1
@@ -211,6 +224,9 @@
 				reg = <3>;
 				label = "lan1";
 				phy-handle = <&qca8337_2>;
+
+				nvmem-cells = <&macaddr_gmac1 0>;
+				nvmem-cell-names = "mac-address";
 			};
 		};
 	};
@@ -228,14 +244,6 @@
 &blsp1_uart1 {
 	pinctrl-0 = <&serial_0_pins>;
 	pinctrl-names = "default";
-	status = "okay";
-};
-
-&crypto {
-	status = "okay";
-};
-
-&cryptobam {
 	status = "okay";
 };
 
@@ -259,8 +267,12 @@
 	nand@0 {
 		compatible = "spi-nand";
 		reg = <0>;
+
 		nand-ecc-engine = <&qpic_nand>;
+		nand-ecc-strength = <4>;
+		nand-ecc-step-size = <512>;
 		nand-bus-width = <8>;
+		/* qcom,boot-partitions-no-subpage; */
 
 		partitions {
 			compatible = "qcom,smem-part";
@@ -274,13 +286,13 @@
 					#address-cells = <1>;
 					#size-cells = <1>;
 
-					macaddr_dp1: macaddr@0 {
+					macaddr_gmac0: macaddr@0 {
 						compatible = "mac-base";
 						#nvmem-cell-cells = <1>;
 						reg = <0x0 0x6>;
 					};
 
-					macaddr_dp2: macaddr@1 {
+					macaddr_gmac1: macaddr@6 {
 						compatible = "mac-base";
 						#nvmem-cell-cells = <1>;
 						reg = <0x6 0x6>;
@@ -292,29 +304,6 @@
 };
 
 &tlmm {
-	button_pins: button-pins {
-		pins = "gpio22", "gpio38";
-		function = "gpio";
-		drive-strength = <8>;
-		bias-pull-up;
-	};
-
-	/*
-	gephy_led_pin {
-		pins = "gpio46";
-		function = "led0";
-		drive-strength = <8>;
-		bias-pull-down;
-	};
-	*/
-
-	leds_pins: leds-pins {
-		pins = "gpio1", "gpio27", "gpio28", "gpio30", "gpio33", "gpio34", "gpio35";
-		function = "gpio";
-		drive-strength = <8>;
-		bias-pull-down;
-	};
-
 	mdio1_pins: mdio-state {
 		mdc-pins {
 			pins = "gpio36";
@@ -329,6 +318,30 @@
 			drive-strength = <8>;
 			bias-pull-up;
 		};
+	};
+
+	leds_pins: leds-pins {
+		pins = "gpio1", "gpio27", "gpio28", "gpio30", "gpio33", "gpio34", "gpio35";
+		function = "gpio";
+		drive-strength = <8>;
+		bias-pull-down;
+	};
+	
+	/* Modem Control Pins: GPIO 31 (Power) */
+	modem_pins: modem-pins {
+		mux {
+			pins = "gpio31";
+			function = "gpio";
+			drive-strength = <8>;
+			bias-pull-up;
+		};
+	};
+
+	button_pins: button-pins {
+		pins = "gpio22", "gpio38";
+		function = "gpio";
+		drive-strength = <8>;
+		bias-pull-up;
 	};
 
 	qpic_pins: qpic-state {
@@ -399,6 +412,25 @@
 			reg = <0x00010000 0 0 0 0>;
 
 			qcom,ath11k-calibration-variant = "Xunison-Exigo-Hub-D50-5G";
+		};
+	};
+};
+
+&pcie1_phy {
+	status = "okay";
+};
+
+&pcie1 {
+	status = "okay";
+	perst-gpios = <&tlmm 18 GPIO_ACTIVE_LOW>;
+	wake-gpios = <&tlmm 19 GPIO_ACTIVE_HIGH>;
+	
+	pcie@0 {
+		modem@0 {
+			/* compatible = "pci17cb,0306"; */
+			reg = <0x00010000 0 0 0 0>;
+			#address-cells = <3>;
+			#size-cells = <2>;
 		};
 	};
 };

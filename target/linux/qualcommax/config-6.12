@@ -65,6 +65,8 @@ CONFIG_BLK_MQ_PCI=y
 CONFIG_BLK_MQ_VIRTIO=y
 CONFIG_BLK_PM=y
 CONFIG_BUILTIN_RETURN_ADDRESS_STRIPS_PAC=y
+CONFIG_CMDLINE_FORCE=y
+CONFIG_CMDLINE="console=ttyMSM0,115200n8 ubi.mtd=rootfs ubi.block=0,1 root=/dev/ubiblock0_1 rootfstype=squashfs rootwait swiotlb=1 coherent_pool=2M pcie_port_pm=off"
 CONFIG_CC_HAVE_SHADOW_CALL_STACK=y
 CONFIG_CC_HAVE_STACKPROTECTOR_SYSREG=y
 # CONFIG_CLK_QCM2290_GPUCC is not set

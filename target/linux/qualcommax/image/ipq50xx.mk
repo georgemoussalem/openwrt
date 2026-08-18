@@ -1,5 +1,5 @@
 DTS_DIR := $(DTS_DIR)/qcom
-DEVICE_VARS += BOOT_SCRIPT
+DEVICE_VARS += BOOT_SCRIPT DEVICE_FIT_DESC
 
 define Build/mstc-header
 	$(eval version=$(word 1,$(1)))
@@ -208,17 +208,31 @@ TARGET_DEVICES += xiaomi_ax6000
 
 define Device/xunison_exigo-hub-d50-5g
 	$(call Device/FitImage)
-	$(call Device/UbiFit)
+	KERNEL_IN_UBI := 1
 	DEVICE_VENDOR := Xunison
 	DEVICE_MODEL := Exigo Hub D50 5G
+	SOC := ipq5018
 	BLOCKSIZE := 128k
 	PAGESIZE := 2048
 	SOC := ipq5018
+	SUBPAGESIZE := 2048
+	VID_HDR_OFFSET := 2048
+	NAND_SIZE := 128m
+	IMAGE_SIZE := 59392k
 	DEVICE_DTS_CONFIG := config@mp03.1
-	DEVICE_PACKAGES := ath11k-firmware-ipq5018 \
-		kmod-ath11k-pci \
-		ath11k-firmware-qcn9074 \
-		ipq-wifi-xunison_exigo-hub-d50-5g
+	BOOT_SCRIPT := xunison_exigo-hub-d50-5g.bootscript
+	DEVICE_FIT_DESC := "Flashing nand 800 20000"
+	IMAGES := factory.img sysupgrade.bin
+	IMAGE/factory.img := append-ubi | gl-qsdk-factory | append-metadata
+	DEVICE_PACKAGES := \
+	    ath11k-firmware-ipq5018 \
+	    kmod-ath11k-pci \
+	    ath11k-firmware-qcn9074 \
+	    ipq-wifi-xunison_exigo-hub-d50-5g \
+	    kmod-ledtrig-network \
+	    pciutils usbutils dumpimage \
+	    kmod-mhi-net \
+	    kmod-mhi-bus
 endef
 TARGET_DEVICES += xunison_exigo-hub-d50-5g
 
