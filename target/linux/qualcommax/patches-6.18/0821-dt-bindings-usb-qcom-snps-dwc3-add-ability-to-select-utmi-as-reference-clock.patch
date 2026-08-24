@@ -1,0 +1,54 @@
+From 48710cb984174f6c7be533115016e38a45b1eacd Mon Sep 17 00:00:00 2001
+From: George Moussalem <george.moussalem@outlook.com>
+Date: Mon, 24 Aug 2026 15:47:46 +0400
+Subject: [PATCH v3 01/23] dt-bindings: usb: qcom,snps-dwc3: Add ability to select UTMI as reference clock
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260824-ipq5018-usb3-v3-1-be4cc084b539@outlook.com>
+
+Add ability to select the UTMI clock as reference clock which is passed
+by the glue layer to the DWC3 core to calculate the reference clock
+period and frame length adjustment based on its clock rate.
+
+In the flattened snsp-dwc3 model, it is currently not possible to pass a
+reference clock that differs from the default since:
+commit 613a2e655d4d ("usb: dwc3: core: Expose core driver as library")
+
+This prevents moving chipsets such as IPQ5018, IPQ6018, IPQ5332, IPQ5424
+and IPQ9574 with a reference clock rate different from 19.2 MHz from
+moving to the flattened model.
+
+The Qualcomm takes care of clock and resets management itself and sets
+the ignore_clocks_and_resets flag in dwc3_probe_data to true, so the
+core doesn't acquire the reference clock from the devicetree.
+
+The existing DT property 'snps,quirk-ref-clk-period-ns' has been
+deprecated.
+
+So, add a property to select the UTMI clock used by many (if not all)
+Qualcomm USB controllers as the reference clock.
+
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+---
+ Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+--- a/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml
++++ b/Documentation/devicetree/bindings/usb/qcom,snps-dwc3.yaml
+@@ -147,6 +147,15 @@ properties:
+       HS/FS/LS modes are supported.
+     type: boolean
+ 
++  qcom,select-utmi-as-ref-clk:
++    description:
++      If present, pass the UTMI clock as the reference clock to the DWC3 core to
++      use its clock rate to calculate the reference clock period and frame
++      length adjustment in GUCTL and GFLADJ registers. This is needed when these
++      values based on the standard clock rate deviate from the hardware default
++      values. If not set, the hardware default values are used.
++    type: boolean
++
+   wakeup-source: true
+ 
+ # Required child node:

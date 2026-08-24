@@ -1,0 +1,60 @@
+From f7e939c6f7992f0e430f227108dd4601af77c2a3 Mon Sep 17 00:00:00 2001
+From: George Moussalem <george.moussalem@outlook.com>
+Date: Mon, 24 Aug 2026 15:47:48 +0400
+Subject: [PATCH v3 03/23] usb: dwc3: qcom: Add support for selecting UTMI as reference clock
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260824-ipq5018-usb3-v3-3-be4cc084b539@outlook.com>
+
+On many Qualcomm chipsets, the UTMI clock is used as the reference clock
+(ex. IPQ5018, IPQ6018, and IPQ9574 and more). Since moving to the new
+flattened snps-dwc3 model, it is no longer possible to pass the
+reference clock to the dwc3 core driver.
+
+The clock rate is used by dwc3 core to derive the reference clock period
+and frame length adjusment. This is needed when the reference clock
+deviates from the hardware default (typically 19.2MHz). Above mentioned
+SoCs use different rates and, as such, the core initializes with the
+wrong values which leads to non-functional USB operation.
+
+Read the "qcom,select-utmi-as-ref-clk" property to determine if the UTMI
+clock should be used as the reference clock. If so, set it as the
+reference clock in the dwc3_probe_data structure.
+The dwc3 core driver will then use this clock to derive the clock rate.
+
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+---
+ drivers/usb/dwc3/dwc3-qcom.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
+
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -617,6 +617,8 @@ static int dwc3_qcom_probe(struct platfo
+ 	int			ret;
+ 	bool			ignore_pipe_clk;
+ 	bool			wakeup_source;
++	bool			select_utmi_as_ref_clk;
++	struct clk		*ref_clk;
+ 
+ 	qcom = devm_kzalloc(&pdev->dev, sizeof(*qcom), GFP_KERNEL);
+ 	if (!qcom)
+@@ -698,6 +700,18 @@ static int dwc3_qcom_probe(struct platfo
+ 			qcom->current_role = USB_ROLE_DEVICE;
+ 	}
+ 
++	select_utmi_as_ref_clk = device_property_read_bool(dev,
++					"qcom,select-utmi-as-ref-clk");
++	if (select_utmi_as_ref_clk) {
++		ref_clk = devm_clk_get_optional(dev, "mock_utmi");
++		if (IS_ERR(ref_clk)) {
++			ret = PTR_ERR(ref_clk);
++			dev_warn(dev, "failed to get ref clock: %d\n", ret);
++		} else {
++			probe_data.ref_clk = ref_clk;
++		}
++	}
++
+ 	qcom->dwc.glue_ops = &dwc3_qcom_glue_ops;
+ 
+ 	qcom->dwc.dev = dev;

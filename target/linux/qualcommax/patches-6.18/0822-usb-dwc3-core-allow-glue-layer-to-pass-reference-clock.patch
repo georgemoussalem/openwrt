@@ -1,0 +1,103 @@
+From dd07f44f61502ed8ef4cff624defb886fda954af Mon Sep 17 00:00:00 2001
+From: George Moussalem <george.moussalem@outlook.com>
+Date: Mon, 24 Aug 2026 15:47:47 +0400
+Subject: [PATCH v3 02/23] usb: dwc3: core: Allow glue layer to pass reference clock
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260824-ipq5018-usb3-v3-2-be4cc084b539@outlook.com>
+
+Add ability to pass a reference clock from the glue layer to the DWC3
+core driver. The core calculates the reference clock period and frame
+length adjustment based on the reference clock rate.
+
+In the flattened snsp-dwc3 model, it is currently not possible to pass a
+reference clock that differs from the default since:
+commit 613a2e655d4d ("usb: dwc3: core: Expose core driver as library")
+
+The new glue layers (incl. Qualcomm's) set the ignore_clocks_and_resets
+flag in dwc3_probe_data to true, which disables the core driver's clock
+management, thus it also doesn't acquire the reference clock from the
+devicetree needed in dwc3_ref_clk_period.
+
+There's an existing DT property 'snps,quirk-ref-clk-period-ns', but
+that's been deprecated. In addition, basing the rate from the period is
+often not accurate enough to derive the frame length adjustment value.
+
+This prevents moving chipsets such as IPQ5018, IPQ6018, IPQ5332, IPQ5424
+and IPQ9574 with a different reference clock rate from moving to the
+flattened model.
+
+So, add ability to set the reference clock in dwc3_probe_data, then
+have the core obtain the clock rate and use that to calculate the
+required period and frame length adjustment.
+
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+---
+ drivers/usb/dwc3/core.c | 12 ++++++++++++
+ drivers/usb/dwc3/core.h |  2 ++
+ drivers/usb/dwc3/glue.h |  2 ++
+ 3 files changed, 16 insertions(+)
+
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -419,6 +419,10 @@ static void dwc3_ref_clk_period(struct d
+ 	} else if (dwc->ref_clk_per) {
+ 		period = dwc->ref_clk_per;
+ 		rate = NSEC_PER_SEC / period;
++	} else if (dwc->ref_clk_rate) {
++		rate = dwc->ref_clk_rate;
++		period = NSEC_PER_SEC / rate;
++
+ 	} else {
+ 		return;
+ 	}
+@@ -2260,6 +2264,14 @@ int dwc3_core_probe(const struct dwc3_pr
+ 		ret = dwc3_get_clocks(dwc);
+ 		if (ret)
+ 			goto err_put_psy;
++	} else if (data->ref_clk) {
++		dwc->ref_clk_rate = clk_get_rate(data->ref_clk);
++		if (!dwc->ref_clk_rate) {
++			dev_err(dev,
++				"failed to get rate from ref clock provided by glue layer\n");
++			ret = -EINVAL;
++			goto err_put_psy;
++		}
+ 	}
+ 
+ 	ret = reset_control_deassert(dwc->reset);
+--- a/drivers/usb/dwc3/core.h
++++ b/drivers/usb/dwc3/core.h
+@@ -1033,6 +1033,7 @@ struct dwc3_glue_ops {
+  * @regs_size: address space size
+  * @fladj: frame length adjustment
+  * @ref_clk_per: reference clock period configuration
++ * @ref_clk_rate: clock rate taken from reference clock provided by glue layer
+  * @irq_gadget: peripheral controller's IRQ number
+  * @otg_irq: IRQ number for OTG IRQs
+  * @current_otg_role: current role of operation while using the OTG block
+@@ -1254,6 +1255,7 @@ struct dwc3 {
+ 
+ 	u32			fladj;
+ 	u32			ref_clk_per;
++	unsigned long		ref_clk_rate;
+ 	u32			irq_gadget;
+ 	u32			otg_irq;
+ 	u32			current_otg_role;
+--- a/drivers/usb/dwc3/glue.h
++++ b/drivers/usb/dwc3/glue.h
+@@ -15,11 +15,13 @@
+  * @res: resource for the DWC3 core mmio region
+  * @ignore_clocks_and_resets: clocks and resets defined for the device should
+  *		be ignored by the DWC3 core, as they are managed by the glue
++ * @ref_clk: optional reference clock for the DWC3 core
+  */
+ struct dwc3_probe_data {
+ 	struct dwc3 *dwc;
+ 	struct resource *res;
+ 	bool ignore_clocks_and_resets;
++	struct clk *ref_clk;
+ };
+ 
+ int dwc3_core_probe(const struct dwc3_probe_data *data);

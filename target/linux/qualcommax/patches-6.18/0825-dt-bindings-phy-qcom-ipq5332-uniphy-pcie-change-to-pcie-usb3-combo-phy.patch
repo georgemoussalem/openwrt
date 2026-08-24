@@ -1,0 +1,397 @@
+From 42029bd427ccd90b1db10848ba82d37acb2c864a Mon Sep 17 00:00:00 2001
+From: George Moussalem <george.moussalem@outlook.com>
+Date: Mon, 24 Aug 2026 16:20:23 +0400
+Subject: [PATCH v3 06/23] dt-bindings: phy: qcom,ipq5332-uniphy-pcie: Change to PCIe/USB3 combo PHY
+MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260824-ipq5018-usb3-v3-6-b1b14ab1d660@outlook.com>
+
+This PHY is a PCIE/USB3 multi-purpose PHY. Initial support was added for
+PCIe only, so rename the binding and add support for USB3 PHY mode.
+
+The PCIe and USB physical pads are muxed and selection is done via a
+control register in TCSR. Add a new property to the binding to enable
+switching the default PCIe mux selection to USB3 mode.
+
+In addition, USB3 mode requires a 5V supply, so add a vdd-supply
+property for it.
+
+Signed-off-by: George Moussalem <george.moussalem@outlook.com>
+---
+ .../bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml | 109 ---------
+ .../phy/qcom,ipq5332-uniphy-pcie-usb3-phy.yaml     | 245 +++++++++++++++++++++
+ include/dt-bindings/phy/phy-qcom-qmp.h             |   4 +
+ 3 files changed, 249 insertions(+), 109 deletions(-)
+
+--- a/Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-pcie-phy.yaml
++++ /dev/null
+@@ -1,109 +0,0 @@
+-# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+-%YAML 1.2
+----
+-$id: http://devicetree.org/schemas/phy/qcom,ipq5332-uniphy-pcie-phy.yaml#
+-$schema: http://devicetree.org/meta-schemas/core.yaml#
+-
+-title: Qualcomm UNIPHY PCIe 28LP PHY
+-
+-maintainers:
+-  - Nitheesh Sekar <quic_nsekar@quicinc.com>
+-  - Varadarajan Narayanan <quic_varada@quicinc.com>
+-
+-description:
+-  PCIe and USB combo PHY found in Qualcomm IPQ5018 & IPQ5332 SoCs
+-
+-properties:
+-  compatible:
+-    enum:
+-      - qcom,ipq5018-uniphy-pcie-phy
+-      - qcom,ipq5332-uniphy-pcie-phy
+-
+-  reg:
+-    maxItems: 1
+-
+-  clocks:
+-    minItems: 1
+-    maxItems: 2
+-
+-  resets:
+-    minItems: 2
+-    maxItems: 3
+-
+-  "#phy-cells":
+-    const: 0
+-
+-  "#clock-cells":
+-    const: 0
+-
+-  num-lanes:
+-    $ref: /schemas/types.yaml#/definitions/uint32
+-    enum: [1, 2]
+-
+-required:
+-  - compatible
+-  - reg
+-  - clocks
+-  - resets
+-  - "#phy-cells"
+-  - "#clock-cells"
+-  - num-lanes
+-
+-additionalProperties: false
+-
+-allOf:
+-  - if:
+-      properties:
+-        compatible:
+-          contains:
+-            enum:
+-              - qcom,ipq5018-uniphy-pcie-phy
+-    then:
+-      properties:
+-        clocks:
+-          items:
+-            - description: pcie pipe clock
+-        resets:
+-          items:
+-            - description: phy reset
+-            - description: cfg reset
+-
+-  - if:
+-      properties:
+-        compatible:
+-          contains:
+-            enum:
+-              - qcom,ipq5332-uniphy-pcie-phy
+-    then:
+-      properties:
+-        clocks:
+-          items:
+-            - description: pcie pipe clock
+-            - description: pcie ahb clock
+-        resets:
+-          items:
+-            - description: phy reset
+-            - description: ahb reset
+-            - description: cfg reset
+-
+-examples:
+-  - |
+-    #include <dt-bindings/clock/qcom,ipq5332-gcc.h>
+-
+-    pcie0_phy: phy@4b0000 {
+-        compatible = "qcom,ipq5332-uniphy-pcie-phy";
+-        reg = <0x004b0000 0x800>;
+-
+-        clocks = <&gcc GCC_PCIE3X1_0_PIPE_CLK>,
+-                 <&gcc GCC_PCIE3X1_PHY_AHB_CLK>;
+-
+-        resets = <&gcc GCC_PCIE3X1_0_PHY_BCR>,
+-                 <&gcc GCC_PCIE3X1_PHY_AHB_CLK_ARES>,
+-                 <&gcc GCC_PCIE3X1_0_PHY_PHY_BCR>;
+-
+-        #clock-cells = <0>;
+-
+-        #phy-cells = <0>;
+-
+-        num-lanes = <1>;
+-    };
+--- /dev/null
++++ b/Documentation/devicetree/bindings/phy/qcom,ipq5332-uniphy-pcie-usb3-phy.yaml
+@@ -0,0 +1,245 @@
++# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/phy/qcom,ipq5332-uniphy-pcie-usb3-phy.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm IPQ5332 UNIPHY PCIe/USB3 28LP PHY controller
++
++maintainers:
++  - Nitheesh Sekar <quic_nsekar@quicinc.com>
++  - Varadarajan Narayanan <varadarajan.narayanan@oss.qualcomm.com>
++
++description:
++  The QMP PHY controller supports physical layer functionality for PCIe and USB
++  controllers on Qualcomm IPQ5018 & IPQ5332 chipsets.
++
++properties:
++  compatible:
++    enum:
++      - qcom,ipq5018-uniphy-pcie-phy
++      - qcom,ipq5018-uniphy-usb3-phy
++      - qcom,ipq5332-uniphy-pcie-phy
++      - qcom,ipq5332-uniphy-pcie-usb3-phy
++
++  reg:
++    maxItems: 1
++
++  clocks:
++    minItems: 1
++    maxItems: 4
++
++  clock-names:
++    maxItems: 4
++
++  resets:
++    minItems: 1
++    maxItems: 4
++
++  reset-names:
++    maxItems: 4
++
++  num-lanes:
++    $ref: /schemas/types.yaml#/definitions/uint32
++    enum: [1, 2]
++
++  vdd-supply:
++    description:
++      Phandle to 5V regulator supply to PHY digital circuit.
++
++  qcom,phy-usb-mux-sel:
++    description:
++      TCSR register address for mux selection control for PCIe / USB3 mode.
++      If the property is set, the driver will configure USB3 mux selection.
++      If not set, the setting defaults to PCIe mux selection (BIT(0) = 0).
++    $ref: /schemas/types.yaml#/definitions/phandle-array
++    items:
++      - items:
++          - description: phandle of TCSR syscon
++          - description: offset of PHY mux selection register
++
++  "#clock-cells":
++    enum: [0, 1]
++
++  "#phy-cells":
++    enum: [0, 1]
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - resets
++  - "#clock-cells"
++  - "#phy-cells"
++
++allOf:
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,ipq5018-uniphy-pcie-phy
++    then:
++      properties:
++        clocks:
++          items:
++            - description: pcie pipe clock
++        resets:
++          items:
++            - description: pcie phy reset
++            - description: pcie cfg reset
++        "#clock-cells":
++          const: 0
++        "#phy-cells":
++          const: 0
++      required:
++        - num-lanes
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,ipq5018-uniphy-usb3-phy
++    then:
++      properties:
++        clocks:
++          items:
++            - description: usb3 pipe clock
++            - description: usb3 cfg ahb clock
++        resets:
++          items:
++            - description: usb3 phy reset
++        "#clock-cells":
++          const: 0
++        "#phy-cells":
++          const: 0
++      required:
++        - vdd-supply
++        - qcom,phy-usb-mux-sel
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,ipq5332-uniphy-pcie-phy
++    then:
++      properties:
++        clocks:
++          items:
++            - description: pcie pipe clock
++            - description: pcie ahb clock
++        resets:
++          items:
++            - description: pcie phy reset
++            - description: pcie ahb reset
++            - description: pcie cfg reset
++        "#clock-cells":
++          const: 0
++        "#phy-cells":
++          const: 0
++      required:
++        - num-lanes
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,ipq5332-uniphy-pcie-usb3-phy
++    then:
++      properties:
++        clocks:
++          items:
++            - description: pcie pipe clock
++            - description: pcie ahb clock
++            - description: usb3 pipe clock
++            - description: usb3 cfg ahb clock
++        clock-names:
++          items:
++            - const: pcie-pipe
++            - const: pcie-ahb
++            - const: usb3-pipe
++            - const: usb3-cfg-ahb
++        resets:
++          items:
++            - description: pcie phy reset
++            - description: pcie ahb reset
++            - description: pcie cfg reset
++            - description: usb3 phy reset
++        reset-names:
++          items:
++            - const: pcie-phy
++            - const: pcie-ahb
++            - const: pcie-cfg
++            - const: usb3-phy
++        "#clock-cells":
++          const: 1
++        "#phy-cells":
++          const: 1
++      anyOf:
++        - required:
++            - num-lanes
++        - required:
++            - qcom,phy-usb-mux-sel
++            - vdd-supply
++      required:
++        - clock-names
++        - reset-names
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,ipq5332-gcc.h>
++
++    pcie1_phy: phy@4b1000 {
++        compatible = "qcom,ipq5332-uniphy-pcie-phy";
++        reg = <0x004b1000 0x800>;
++
++        clocks = <&gcc GCC_PCIE3X2_PIPE_CLK>,
++                 <&gcc GCC_PCIE3X2_PHY_AHB_CLK>;
++
++        resets = <&gcc GCC_PCIE3X2_PHY_BCR>,
++                 <&gcc GCC_PCIE3X2_PHY_AHB_CLK_ARES>,
++                 <&gcc GCC_PCIE3X2PHY_PHY_BCR>;
++
++        #clock-cells = <0>;
++        #phy-cells = <0>;
++
++        num-lanes = <2>;
++    };
++
++  - |
++    #include <dt-bindings/clock/qcom,ipq5332-gcc.h>
++
++    phy@4b0000 {
++        compatible = "qcom,ipq5332-uniphy-pcie-usb3-phy";
++        reg = <0x004b0000 0x800>;
++
++        clocks = <&gcc GCC_PCIE3X1_0_PIPE_CLK>,
++                 <&gcc GCC_PCIE3X1_PHY_AHB_CLK>,
++                 <&gcc GCC_USB0_PIPE_CLK>,
++                 <&gcc GCC_USB0_PHY_CFG_AHB_CLK>;
++        clock-names = "pcie-pipe",
++                      "pcie-ahb",
++                      "usb3-pipe",
++                      "usb3-cfg-ahb";
++
++        resets = <&gcc GCC_PCIE3X1_0_PHY_BCR>,
++                 <&gcc GCC_PCIE3X1_PHY_AHB_CLK_ARES>,
++                 <&gcc GCC_PCIE3X1_0_PHY_PHY_BCR>,
++                 <&gcc GCC_USB0_PHY_BCR>;
++        reset-names = "pcie-phy",
++                      "pcie-ahb",
++                      "pcie-cfg",
++                      "usb3-phy";
++
++        #clock-cells = <1>;
++        #phy-cells = <1>;
++
++        vdd-supply = <&vreg_5p0>;
++
++        qcom,phy-usb-mux-sel = <&tcsr 0x10540>;
++    };
+--- a/include/dt-bindings/phy/phy-qcom-qmp.h
++++ b/include/dt-bindings/phy/phy-qcom-qmp.h
+@@ -21,4 +21,8 @@
+ #define QMP_PCIE_PIPE_CLK		0
+ #define QMP_PCIE_PHY_AUX_CLK		1
+ 
++/* QMP PHY MUX */
++#define QMP_PHY_MUX_PCIE		0
++#define QMP_PHY_MUX_USB3		1
++
+ #endif /* _DT_BINDINGS_PHY_QMP */
